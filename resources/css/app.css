@@ -1,0 +1,245 @@
+/* General Styles */
+
+img {
+    width: 60px;
+    height: 60px;
+    margin-left: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .navbar {
+    padding: 0.5rem 1rem;
+    height: 90px;
+  }
+  
+  .navbar a {
+    color: red !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px;
+    font-weight: lighter;
+  }
+  
+  .margin-bottom-15 {
+    margin-bottom: 15px;
+  }
+  
+  .heading {
+    text-align: center;
+  }
+  
+  .btn-primary {
+    background: red;
+    border-color: white;
+    width: 100px;
+    height: 50px;
+    border-radius: 20px;
+    font-size: 16px;
+    position: absolute;
+    left: 120px; /* Align to the left side of the page */
+  }
+  
+  .btn-primary:hover {
+    background-color: white;
+    color: red;
+  }
+  
+  h1 {
+    color: red;
+    font-family: cursive;
+  }
+  
+  h1.italic {
+    font-style: italic;
+  }
+  
+  select {
+    border-radius: 10px;
+  }
+  
+  .question-list {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+  
+  .question-list a {
+    font-size: 16px;
+    text-decoration: none;
+  }
+  
+  div.question-list a {
+    color: rgb(0, 0, 0);
+  }
+  
+  .btn-answer {
+    color: white;
+    background: red;
+    border-color: white;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 30px;
+    position: absolute;
+    Right: 450px; /* Align to the Right side of the page */
+  }
+  
+  .form-control {
+    width: 70%;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .form-control-nav {
+    margin-right: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .btn-outline-success {
+    background: red;
+    border-color: white;
+    width: 90px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: aliceblue;
+  }
+  
+  .answer-div {
+    left: 95px;
+    margin-top: 100px;
+    position: absolute;
+    width: 60%;
+  }
+  
+  .answers {
+  left: 10px;
+  position: relative;
+  font-family: cursive;
+  color: red;
+  }
+  
+  .answer-list {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+  
+  .question-title {
+    font-family: cursive;
+    color: red;
+  }
+  
+  /* Responsive Styles */
+  
+  @media (max-width: 1200px) {
+    /* Adjust navbar */
+    .navbar {
+      height: 70px;
+      padding: 0.5rem;
+    }
+  
+    .navbar a {
+      padding: 20px;
+      font-size: 14px;
+    }
+  
+    .btn-primary, .btn-answer {
+      width: 80px;
+      height: 40px;
+      font-size: 14px;
+    }
+  
+    .form-control {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* Stack navbar items */
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+    }
+  
+    .navbar a {
+      padding: 10px;
+      font-size: 12px;
+    }
+  
+    .btn-primary, .btn-outline-success, .btn-answer {
+      width: 70px;
+      height: 35px;
+      font-size: 12px;
+    }
+  
+    .form-control {
+      width: 90%;
+    }
+  
+    .answer-div {
+      width: 80%;
+      position: static;
+      margin: 20px auto;
+    }
+  
+    /* Hide image and search bar on smaller screens */
+    img,
+    .form-control-nav {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    /* Mobile adjustments */
+    img {
+      width: 50px;
+      height: 50px;
+      margin-left: 5px;
+    }
+  
+    .navbar a {
+      padding: 5px;
+      font-size: 10px;
+    }
+  
+    .btn-primary, .btn-outline-success, .btn-answer {
+      width: 60px;
+      height: 30px;
+      font-size: 10px;
+    }
+  
+    .form-control {
+      width: 100%;
+    }
+  
+    .answer-div {
+      width: 90%;
+    }
+  
+    .question-list, .answer-list {
+      padding: 10px;
+      margin: 5px;
+    }
+  
+    h1, .question-title {
+      font-size: 18px;
+    }
+  
+    .answers {
+      display: none;
+    }
+  
+    .btn-answer{
+      position: relative;
+      Right: 10px;
+    }
+  
+  
+  
+  }
+  
