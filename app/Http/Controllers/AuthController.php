@@ -45,25 +45,27 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        // Validate the login data
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
+{
+    // Validate the login data
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+    ]);
 
-        // Attempt to log the user in
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Redirect to dashboard or home page after successful login
-            return redirect()->intended('/questions');
-        }
-
-        // If login fails, redirect back with an error message
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+    // Attempt to log the user in
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        // Store the username in session after successful login
+        $request->session()->put('username', Auth::user()->username);
+        
+        // Redirect to dashboard or home page after successful login
+        return redirect()->intended('/questions');
     }
 
+    // If login fails, redirect back with an error message
+    return back()->withErrors([
+        'email' => 'The provided credentials do not match our records.',
+    ]);
+}
 
 
 

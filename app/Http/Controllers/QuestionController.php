@@ -11,4 +11,23 @@ class QuestionController extends Controller
         // Return the questions view
         return view('questions.questions'); // Laravel will look for resources/views/questions/questions.php
     }
+
+    public function askquestion(){
+         return view('questions.askquestion');
+    }
+
+    
+    public function latestquestion(){
+        return view('questions.latestquestion');
+   }
+
+   public function searchquestion(){
+        return view('questions.searchquestion');
+   }
+
+
+   
+
+
+
 }
