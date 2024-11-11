@@ -11,7 +11,10 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 // Route to show the signup form
-Route::get('/signup', [AuthController::class, 'showSignUpForm'])->name('signup');
+Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
+
+// Handle form submission for signup
+Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');
 
 // Route to handle signup form submission
 Route::post('/signup', [AuthController::class, 'signUp'])->name('signup.submit');

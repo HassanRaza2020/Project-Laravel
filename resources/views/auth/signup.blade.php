@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laravel Project</title>
+    
+    @extends('layouts.app')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 
+
+@include('header.navbar')
+
+
+@section('content')
 <div class="container text-align-center">
     <h1 class="heading">Sign Up</h1>
 
@@ -61,6 +68,8 @@
         <button type="submit" class="btn-primary" name="signup">Submit</button>
     </form>
 </div>
+
+@endsection
 
 </body>
 </html>

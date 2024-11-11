@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Laravel</title>
+    <title>Login</title>
+
+    @extends('layouts.app')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-   
+
+
 </head>
-
-
 <body>
 
+@include('header.navbar')
 
-<div class="container text-align-center">
-  <h1 class="heading">Login</h1>
+@section('content')
 
-  <form style="margin-top: 80px;" action="{{ route('login') }}" method="POST">
-    @csrf  <!-- CSRF token for security -->
+<div class="container">
+    <h1 class="text-center">Login</h1>
 
-    <div class="col-10 offset-sm margin-bottom-15">
-      <label for="email">User Email</label>
-      <input
-        type="text"
-        class="form-control"
-        id="email"
-        name="email"
-        aria-describedby="emailHelp"
-        placeholder="Enter user email"
-      />
-    </div>
+    <!-- Display Validation Errors -->
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-    <div class="col-10 offset-sm margin-bottom-15">
-      <label for="password">User Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        name="password"
-        placeholder="Enter user password"
-      />
-    </div>
+    <!-- Login Form -->
+    <form action="{{ route('login')}}" method="POST">
+        @csrf
 
-    <button type="submit" class="btn-primary" name="login">Login</button>
-  </form>
+        <div class="col-10 offset-sm margin-bottom-15">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+        </div>
+
+        <div class="col-10 offset-sm margin-bottom-15">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="login">Login</button>
+    </form>
+
 </div>
-    
+@endsection
+
+
 </body>
 </html>
