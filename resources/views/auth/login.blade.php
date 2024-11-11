@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discuss</title>
+    <title>Project Laravel</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
    
 </head>
@@ -11,7 +12,6 @@
 
 <body>
 
-@include('header.navbar')
 
 <div class="container text-align-center">
   <h1 class="heading">Login</h1>
