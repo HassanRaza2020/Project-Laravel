@@ -15,14 +15,59 @@
     @include('header.navbar')
 
     @section('content')
-
-
     <div class="container">
+    <h1>Ask a Question</h1>
 
-        <h1>Ask Questions</h1>
-    </div>
+    <!-- Question Form -->
+    <form action="{{ route('submit') }}" method="POST">
+        @csrf
 
+        <!-- Title Input -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+
+        <!-- Description Input -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+        </div>
+
+        @include('questions.category')
+
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Ask Question</button>
+    </form>
+</div>
     @endsection
+
+
+
+    
+<script>
+    
+    document.getElementById('category').addEventListener('change', function() {
+    let categoryId = this.value;
+
+    if (categoryId) {
+        // Send AJAX request to fetch content for the selected category
+        fetch(`/get-content/${categoryId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Process and display the fetched content
+                console.log(data); // You can update the page with the content here
+            })
+            .catch(error => console.error('Error:', error));
+    }
+});
+
+
+</script>
+
+
+
 
 </body>
 </html>

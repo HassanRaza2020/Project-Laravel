@@ -19,7 +19,7 @@
 
     <div class="container">
 
-        <h1>Latest Questions</h1>
+        <h1> Questions</h1>
     </div>
 
     @endsection

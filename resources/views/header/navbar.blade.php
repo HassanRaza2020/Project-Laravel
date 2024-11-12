@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active anchorColor" aria-current="page" href="{{ url('/') }}">Home</a>
+          <a class="nav-link active anchorColor" aria-current="page" href="{{ url('/questions') }}">Home</a>
         </li>
 
         @if(session('username'))
@@ -37,7 +37,7 @@
 
         @if(session('username'))
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('askquestion') }}">Ask A Question</a>
+            <a class="nav-link" href="{{ route('ask-questions') }}">Ask A Question</a>
           </li>
         @endif
         <li class="nav-item">

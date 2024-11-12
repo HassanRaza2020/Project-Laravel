@@ -23,5 +23,6 @@ class LogoutController extends Controller
     // Redirect to login page with success message
     return redirect()->route('login')->with('success', 'You have been logged out successfully.');
 
+   }
+     
 }
-     }

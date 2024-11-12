@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
+use App\Models\Content;
+use App\Models\Question;
+use GuzzleHttp\Psr7\Query;
 
 // Route to show the login form
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -26,10 +29,34 @@ Route::get('/questions', [QuestionController::class, 'index'])->name('questions'
 // Route to handle logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/AskQuestion', [QuestionController::class,'askquestion'])->name('askquestion');
+//Route::get('/AskQuestion', [QuestionController::class,'askquestion'])->name('askquestion');
 
 Route::get('/LatestQuestion', [QuestionController::class,'latestquestion'])->name('latestquestion');
 
 Route::get('/SearchQuestion', [QuestionController::class,'searchquestion'])->name('searchquestion');
 
 Route::get('/Logout', [LogoutController::class,'logout'])->name('logout');
+
+
+
+Route::get('/get-content/{categoryId}', function($categoryId) {
+    // Retrieve content based on the category ID
+    $content = Content::find($categoryId); // This fetches a single record by ID
+
+    // If no content is found, you can return an empty response or an error message
+    if (!$content) {
+        return response()->json(['error' => 'Content not found'], 404);
+    }
+
+    // Return the content as JSON (you can customize what fields to return)
+    return response()->json($content);
+});
+
+
+
+Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])->name('ask-questions');
+
+Route::post('/submit-form',[QuestionController::class,'store'])->name('submit');
+
+
+
