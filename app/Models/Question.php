@@ -19,7 +19,7 @@ class Question extends Model
         'username',
         'title',
         'description',
-        'content_id', // Foreign key linking to content table
+        'content', // Foreign key linking to content table
     ];
 
     // Define the relationship with the Content model

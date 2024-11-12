@@ -39,7 +39,7 @@ Route::get('/Logout', [LogoutController::class,'logout'])->name('logout');
 
 
 
-Route::get('/get-content/{categoryId}', function($categoryId) {
+Route::get('/AskQuestion/{categoryId}', function($categoryId) {
     // Retrieve content based on the category ID
     $content = Content::find($categoryId); // This fetches a single record by ID
 

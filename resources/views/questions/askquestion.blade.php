@@ -38,7 +38,7 @@
 
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Ask Question</button>
+        <button type="submit" class="btn btn-primary">Ask</button>
     </form>
 </div>
     @endsection
@@ -47,21 +47,15 @@
 
     
 <script>
-    
-    document.getElementById('category').addEventListener('change', function() {
+   
+   document.getElementById('category').addEventListener('change', function() {
     let categoryId = this.value;
+    console.log(categoryId);  // Log the selected category ID
 
-    if (categoryId) {
-        // Send AJAX request to fetch content for the selected category
-        fetch(`/get-content/${categoryId}`)
-            .then(response => response.json())
-            .then(data => {
-                // Process and display the fetched content
-                console.log(data); // You can update the page with the content here
-            })
-            .catch(error => console.error('Error:', error));
-    }
+
 });
+
+
 
 
 </script>
