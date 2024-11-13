@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
+use App\Models\Answer;
 use App\Models\Content;
 use App\Models\Question;
 use GuzzleHttp\Psr7\Query;
@@ -62,8 +63,13 @@ Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])->name(
 
 Route::post('/submit-form',[QuestionController::class,'store'])->name('submit');
 
-Route::get('/ask-answer/{question_id}',[AnswerController::class,'Answerform'])->name('ask-answer');
+
+Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->name('ask-answer');
 
 
+Route::post('/answer-submit', [AnswerController::class,'Answer_Submit'])
+->name('answer-submit');
+
+Route::get('/show',[AnswerController::class,'show_answer']);
 
 

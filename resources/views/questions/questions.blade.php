@@ -25,9 +25,8 @@
 
    <div class='question-list'>
 
-   <a href="{{ route('ask-answer', ['question_id' => $title->question_id]) }}">
-   {{ $title->title }}
-</a>
+   <a href="{{ route('ask-answer', ['key' => $title->question_id]) }}">
+    {{ $title->title }}
 
 
     </div>

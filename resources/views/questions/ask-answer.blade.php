@@ -21,13 +21,14 @@
 
 
     
-<form action="" method="POST">
+<form  action="{{route('answer-submit')}}" method="POST">
 
+@csrf
 <!-- Hidden input field to pass the 'id' value -->
-<input type="hidden" name="id" value="">
+<input type="hidden" name="question_id" value="{{ $question[0]['question_id'] }}">
 
 <!-- Textarea for the user's answer -->
-<textarea placeholder="Your answer..." class="form-control" name="Description"></textarea>
+<textarea  placeholder="Your answer..." class="form-control" name="Description"></textarea>
 
 <!-- Submit button -->
 <button class="btn-answer" name="answer">Answer</button>
