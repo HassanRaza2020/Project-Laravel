@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
 use App\Models\Content;
 use App\Models\Question;
 use GuzzleHttp\Psr7\Query;
@@ -24,7 +25,7 @@ Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');
 Route::post('/signup', [AuthController::class, 'signUp'])->name('signup.submit');
 
 // Route for questions page
-Route::get('/questions', [QuestionController::class, 'index'])->name('questions');
+Route::get('/questions', [QuestionController::class, 'show'])->name('questions');
 
 // Route to handle logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -34,6 +35,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/LatestQuestion', [QuestionController::class,'latestquestion'])->name('latestquestion');
 
 Route::get('/SearchQuestion', [QuestionController::class,'searchquestion'])->name('searchquestion');
+
+
+
 
 Route::get('/Logout', [LogoutController::class,'logout'])->name('logout');
 
@@ -57,6 +61,9 @@ Route::get('/AskQuestion/{categoryId}', function($categoryId) {
 Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])->name('ask-questions');
 
 Route::post('/submit-form',[QuestionController::class,'store'])->name('submit');
+
+Route::get('/ask-answer/{question_id}',[AnswerController::class,'Answerform'])->name('ask-answer');
+
 
 
 

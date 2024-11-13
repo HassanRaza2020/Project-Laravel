@@ -17,25 +17,29 @@
     @section('content')
 
 
-    <div class="container">
-
-        <h1> Questions</h1>
-   
-     @foreach($questions as $title )
-
-   <div class='question-list'>
-
-   <a href="{{ route('ask-answer', ['question_id' => $title->question_id]) }}">
-   {{ $title->title }}
-</a>
+<div class="container">
 
 
-    </div>
-   @endforeach
+    
+<form action="" method="POST">
 
-    </div>
+<!-- Hidden input field to pass the 'id' value -->
+<input type="hidden" name="id" value="">
+
+<!-- Textarea for the user's answer -->
+<textarea placeholder="Your answer..." class="form-control" name="Description"></textarea>
+
+<!-- Submit button -->
+<button class="btn-answer" name="answer">Answer</button>
+</form>
+
+
+</div>
+ 
 
     @endsection
+
+
 
 </body>
 </html>

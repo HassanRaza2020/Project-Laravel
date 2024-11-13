@@ -63,10 +63,19 @@ class QuestionController extends Controller
  // Redirect with success message
       return redirect()->route('questions')->with('success', 'Question submitted successfully!');
 
-
-
-
     }
+
+
+    public function show()
+    {
+
+     $questions = Question::all();
+
+     return view('questions.questions', compact('questions'));
+    
+     }
+
+
 
 
 
