@@ -24,6 +24,7 @@
      @foreach($questions as $title )
 
      <i>{{$user}} </i>
+     
    <div class='question-list'>
   
    <a href="{{ route('show-answers', ['key' => $title->question_id]) }}">
@@ -33,7 +34,11 @@
     </div>
    @endforeach
 
+
+
     </div>
+
+
 
     @endsection
 

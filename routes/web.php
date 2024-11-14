@@ -76,6 +76,10 @@ Route::get('/answer-list',[AnswerController::class,'show_answer']);
 Route::get('/show-answers',[AnswerController::class,'showPage'])->
 name('show-answers');
 
+Route::get('/search_questions', [QuestionController::class, 'Search_Question'])->name('search_questions');
+
+
+
 
 
 

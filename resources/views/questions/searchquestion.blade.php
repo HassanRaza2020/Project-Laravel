@@ -12,7 +12,24 @@
 <body>
 @include('header.navbar')
 
-<h1>Search Question</h1>
+
+
+
+
+@if($search_questions->isEmpty())
+    <p>No questions found.</p>
+@else
+    @foreach($search_questions as $title)
+    <div class='question-list'>
+  
+  <a href="{{ route('show-answers', ['key' => $title->question_id]) }}">{{ $title->title }} </a>
+    </div>
+    @endforeach
+@endif
+
+
+
+
 
     
 </body>

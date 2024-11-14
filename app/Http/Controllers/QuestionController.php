@@ -66,16 +66,37 @@ class QuestionController extends Controller
     }
 
 
-    public function show()
-    {
+    public function show(){
 
      $questions = Question::all();
 
      $user =  auth()->user()->username;
 
+     
+
      return view('questions.questions', compact('questions','user'));
-    
+     
      }
+
+     public function Search_Question(Request $request){
+    
+   
+          $query = $request->input('query');
+
+          //dd($query);
+          
+      
+          // Check if there is a query, and filter results accordingly
+          if ($query) {
+              $search_questions = Question::where('title', 'LIKE', "%{$query}%")->get();
+              //dd($search_questions);
+          } else {
+              $search_questions = Question::all();
+          }
+      
+          // Return to the question list view with the search results
+          return view('questions.searchquestion', compact('search_questions', 'query'));
+      }
 
 
 

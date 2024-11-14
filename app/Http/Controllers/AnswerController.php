@@ -14,10 +14,7 @@ public function Answerform(Request $request){
     
   
     $question = Question::all();
-    
-
-
- 
+     
     return view('questions.ask-answer',compact('question'));
     
 }
@@ -51,12 +48,9 @@ public function show_answer()
 {
 
     $key = session('key_value');
-    //dd($key);
-
+    
     $query = Answer::where('question_id', $key)->select('Description')->get();
     
-    //dd($query);
-
     return view('questions.answers-list', compact('query'));
         
 }
@@ -75,6 +69,8 @@ public function showPage(Request $request){
     return view('questions.main-page',compact('question','query','user'));
     
 }
+
+
 
 
 
