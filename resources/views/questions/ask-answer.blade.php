@@ -28,17 +28,15 @@
 <input type="hidden" name="question_id" value="{{ $question[0]['question_id'] }}">
 
 <!-- Textarea for the user's answer -->
-<textarea  placeholder="Your answer..." class="form-control" name="Description"></textarea>
+<textarea  placeholder="Your answer..." class="Description" name="Description"></textarea>
 
 <!-- Submit button -->
-<button class="btn-answer" name="answer">Answer</button>
+<button class="answer-button" name="answer">Answer</button>
 </form>
 
 
 </div>
- 
 
-    @endsection
 
 
 

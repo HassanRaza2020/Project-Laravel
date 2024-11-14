@@ -70,6 +70,12 @@ Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->name('ask-an
 Route::post('/answer-submit', [AnswerController::class,'Answer_Submit'])
 ->name('answer-submit');
 
-Route::get('/show',[AnswerController::class,'show_answer']);
+Route::get('/answer-list',[AnswerController::class,'show_answer']);
+
+
+Route::get('/show-answers',[AnswerController::class,'showPage'])->
+name('show-answers');
+
+
 
 

@@ -4,22 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @extends('layouts.app')
+
+
 </head>
 <body>
- 
-@if($user->isEmpty())
-    <p>No users found.</p>
-@else
-    @php
-        $count = 0;
-    @endphp
-
-    @foreach($user as $name)
-        {{ $name->username }} {{ $count++ }}
-    @endforeach
-@endif
 
 
+@section('content')
+
+
+<h3 class="answers">Answers</h3>
+    
+
+@foreach($query as $answers)
+
+
+        
+
+
+    <div class="answer-section">
+        <i>{{$user}}</i>
+        <div class='answer-list'>
+            <h6>{{ $answers->Description }}</h6>
+        </div>
+    </div>
+
+   
+@endforeach
+
+
+@endsection
 
 </body>
 </html>

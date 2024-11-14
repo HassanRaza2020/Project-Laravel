@@ -71,7 +71,9 @@ class QuestionController extends Controller
 
      $questions = Question::all();
 
-     return view('questions.questions', compact('questions'));
+     $user =  auth()->user()->username;
+
+     return view('questions.questions', compact('questions','user'));
     
      }
 

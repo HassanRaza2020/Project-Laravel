@@ -74,7 +74,7 @@ img {
     color: rgb(0, 0, 0);
   }
   
-  .btn-answer {
+  .answer-button {
     color: white;
     background: red;
     border-color: white;
@@ -85,10 +85,19 @@ img {
     margin-top: 30px;
     position: absolute;
     right: 620px;
+    margin-top: 120px;
+  }
+
+  .Description{
+    width: 60%;
+    border-radius: 10px;
+    margin-top: 20px;
+    border-radius: 8px;
+    margin-top:50px;
   }
   
   .form-control {
-    width: 50%;
+    width: 60%;
     border-radius: 10px;
     margin-top: 20px;
     border-radius: 10px;
@@ -123,6 +132,7 @@ img {
   position: relative;
   font-family: cursive;
   color: red;
+  margin-top: 70px;
   }
   
   .answer-list {
@@ -130,12 +140,22 @@ img {
     padding: 15px;
     margin: 10px;
     border-radius: 10px;
+    
   }
   
   .question-title {
     font-family: cursive;
     color: red;
   }
+
+  .answer-section {
+    position: relative; /* or absolute/fixed */
+    top: 70px; /* Moves the element down */
+}
+
+
+
+
   
   /* Responsive Styles */
   
@@ -242,7 +262,7 @@ img {
       position: relative;
       Right: 10px;
     }
-  
+
   
   
   }

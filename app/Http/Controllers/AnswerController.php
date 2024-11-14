@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Answer;
-
-
+use Illuminate\Contracts\View\View;
 
 class AnswerController extends Controller
 {
@@ -14,10 +13,11 @@ class AnswerController extends Controller
 public function Answerform(Request $request){
     
   
-    //dd($request->key);
     $question = Question::all();
+    
 
-     
+
+ 
     return view('questions.ask-answer',compact('question'));
     
 }
@@ -44,17 +44,39 @@ public function Answer_Submit(Request $request)
    // dd($request);
 
     // Redirect back to the same page with a success message
-    return back()->with('success', 'Answer submitted successfully!');
+    return redirect()->back()->with('success', 'Your answer has been submitted!');
 }
 
 public function show_answer()
 {
-    $user = Answer::where('username', 'Hassan Raza')->get();
 
-    return view('questions.answers-list', compact('user'));
+    $key = session('key_value');
+    //dd($key);
 
+    $query = Answer::where('question_id', $key)->select('Description')->get();
+    
+    //dd($query);
 
+    return view('questions.answers-list', compact('query'));
+        
 }
+
+public function showPage(Request $request){
+
+    $key = $request->key;
+    
+    $question = Question::all();
+    
+    $query = Answer::where('question_id', $key)->select('Description')->get();
+   
+    $user =  auth()->user()->username;
+    
+
+    return view('questions.main-page',compact('question','query','user'));
+    
+}
+
+
 
 
 
