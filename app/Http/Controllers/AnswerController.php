@@ -29,7 +29,7 @@ public function Answer_Submit(Request $request)
     //dd($request);
     // Validate the request
     $request->validate([
-        'Description' => 'required|string|max:255',
+        'Description' => 'required|string|max:2000'
     ]);
 
     // Create the answer using the key as question_id
@@ -40,8 +40,13 @@ public function Answer_Submit(Request $request)
         'question_id' => $request->input('question_id'),
          ]);
 
-
-        // dd($data);
+/*
+      $data=['user_id' => auth()->id(), // Assuming the user is logged in
+        'Username' => auth()->user()->username,
+        'Description' => $request->input('Description'),
+        'question_id' => $request->input('question_id'),];   
+*/
+     //dd($data);
 
          
 
@@ -51,7 +56,8 @@ public function Answer_Submit(Request $request)
 
 
 
-public function showPage(Request $request){
+public function showPage(Request $request)
+{
 
     $key = $request->key;
 
@@ -60,10 +66,11 @@ public function showPage(Request $request){
     //$question = Question::where('question_id',$key)->first();     
     
     $query = Answer::where('question_id', $key)->select('Description','username')->get();
+
    
     return view('questions.main-page',compact('question','query'));
     
-       }
+}
 
 
 }

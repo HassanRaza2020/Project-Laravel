@@ -28,7 +28,7 @@
    <div class='question-list'>
   
    <a href="{{ route('show-answers', ['key' => $title->question_id]) }}">
-    {{ $title->title }} </a>
+    {{ $title->title}} </a>
 
    
     </div>

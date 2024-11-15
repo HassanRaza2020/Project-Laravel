@@ -20,9 +20,12 @@
 
         @if(session('username'))
           <!-- Display username and logout when logged in -->
-           
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout') }}"> {{ session('username') }} Logout</a>
+            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link">( {{ session('username') }} )</a>
           </li>
           @csrf
         @else

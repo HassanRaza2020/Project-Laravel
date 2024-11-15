@@ -44,7 +44,7 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
         </div>
 
-        <button type="submit" class="btn btn-primary" name="login">Login</button>
+        <button type="submit" class="btn-primary" name="login">Login</button>
     </form>
 
 </div>

@@ -63,6 +63,7 @@ img {
     padding: 15px;
     margin: 10px;
     border-radius: 10px;
+    width: 60%;
   }
   
   .question-list a {
@@ -140,6 +141,7 @@ img {
     padding: 15px;
     margin: 10px;
     border-radius: 10px;
+    width: 60%;
     
   }
   
@@ -151,12 +153,16 @@ img {
   .answer-section {
     position: relative; /* or absolute/fixed */
     top: 70px; /* Moves the element down */
-}
+    width: 100%;
+ 
+
+  }
 
 
 .information{
   margin-top: 30px;
   margin-left: 100px;
+  width: 60%;
 
 }
 
