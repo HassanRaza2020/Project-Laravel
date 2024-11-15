@@ -10,14 +10,17 @@ use Illuminate\Contracts\View\View;
 class AnswerController extends Controller
 {
 
-public function Answerform(Request $request){
-    
-  
-    $question = Question::all();
-     
+    /*
+public function Answerform(Request $request)
+{
+      
+    $key = $request->key;
+    dd($key);
+    $question = Question::where('question_id',$key)->first();     
     return view('questions.ask-answer',compact('question'));
     
 }
+    */
 
 
 public function Answer_Submit(Request $request)
@@ -35,45 +38,32 @@ public function Answer_Submit(Request $request)
         'Username' => auth()->user()->username,
         'Description' => $request->input('Description'),
         'question_id' => $request->input('question_id'),
+         ]);
 
-    ]);
 
-   // dd($request);
+        // dd($data);
+
+         
 
     // Redirect back to the same page with a success message
     return redirect()->back()->with('success', 'Your answer has been submitted!');
 }
 
-public function show_answer()
-{
 
-    $key = session('key_value');
-    
-    $query = Answer::where('question_id', $key)->select('Description')->get();
-    
-    return view('questions.answers-list', compact('query'));
-        
-}
 
 public function showPage(Request $request){
 
     $key = $request->key;
+
+    $question = Question::where('question_id',$key)->select('question_id','title','Description')->first();
+     
+    //$question = Question::where('question_id',$key)->first();     
     
-    $question = Question::all();
-    
-    $query = Answer::where('question_id', $key)->select('Description')->get();
+    $query = Answer::where('question_id', $key)->select('Description','username')->get();
    
-    $user =  auth()->user()->username;
+    return view('questions.main-page',compact('question','query'));
     
-
-    return view('questions.main-page',compact('question','query','user'));
-    
-}
-
-
-
-
-
+       }
 
 
 }

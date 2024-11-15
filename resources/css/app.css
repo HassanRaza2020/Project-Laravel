@@ -101,7 +101,7 @@ img {
     border-radius: 10px;
     margin-top: 20px;
     border-radius: 10px;
-    margin-top:50px;
+    margin-top:20px;
   }
   
   .form-control-nav {
@@ -132,7 +132,7 @@ img {
   position: relative;
   font-family: cursive;
   color: red;
-  margin-top: 70px;
+  margin-top: 50px;
   }
   
   .answer-list {
@@ -153,6 +153,12 @@ img {
     top: 70px; /* Moves the element down */
 }
 
+
+.information{
+  margin-top: 30px;
+  margin-left: 100px;
+
+}
 
 
 

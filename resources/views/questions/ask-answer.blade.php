@@ -17,15 +17,22 @@
     @section('content')
 
 
-<div class="container">
+<div class="information">
+<h4>{{$question->title}}</h4>
 
+<p>{{$question->Description}}</p>
+
+</div>
+
+
+<div class="container">
 
     
 <form  action="{{route('answer-submit')}}" method="POST">
 
 @csrf
 <!-- Hidden input field to pass the 'id' value -->
-<input type="hidden" name="question_id" value="{{ $question[0]['question_id'] }}">
+<input type="hidden" name="question_id" value="{{ $question->question_id }}">
 
 <!-- Textarea for the user's answer -->
 <textarea  placeholder="Your answer..." class="Description" name="Description"></textarea>

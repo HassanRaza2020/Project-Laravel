@@ -23,8 +23,8 @@
    
      @foreach($questions as $title )
 
-     <i>{{$user}} </i>
      
+   <i>{{$title->username}}</i>  
    <div class='question-list'>
   
    <a href="{{ route('show-answers', ['key' => $title->question_id]) }}">

@@ -45,7 +45,7 @@ class QuestionController extends Controller
 
           'title'=>'required|string|max:255',
           'description'=>'required|string|max:2000' ,
-          'category' => 'required|exists:content,content_id',
+          'category' => 'required|exists:content,content_id',   
      
      ]);
 
@@ -68,23 +68,15 @@ class QuestionController extends Controller
 
     public function show(){
 
-     $questions = Question::all();
-
-     $user =  auth()->user()->username;
-
+     $questions = Question::select('username','title','question_id')->get();
      
-
-     return view('questions.questions', compact('questions','user'));
+     return view('questions.questions', compact('questions'));
      
      }
-
      public function Search_Question(Request $request){
     
    
-          $query = $request->input('query');
-
-          //dd($query);
-          
+          $query = $request->input('query');    
       
           // Check if there is a query, and filter results accordingly
           if ($query) {
@@ -97,12 +89,6 @@ class QuestionController extends Controller
           // Return to the question list view with the search results
           return view('questions.searchquestion', compact('search_questions', 'query'));
       }
-
-
-
-
-
-    
 
 
 }

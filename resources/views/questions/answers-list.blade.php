@@ -22,12 +22,8 @@
 
 @foreach($query as $answers)
 
-
-        
-
-
     <div class="answer-section">
-        <i>{{$user}}</i>
+        <i>{{$answers->username}}</i>
         <div class='answer-list'>
             <h6>{{ $answers->Description }}</h6>
         </div>
