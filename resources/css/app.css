@@ -45,7 +45,8 @@ img {
     color: red;
   }
   
-  h1 {
+  h1 
+  {
     color: red;
     font-family: cursive;
   }
@@ -60,10 +61,11 @@ img {
   
   .question-list {
     border: 1px solid #ddd;
-    padding: 15px;
-    margin: 10px;
+    padding: 10px 20px 15px 10px;
+    margin: 10px 0; /* Adds vertical spacing between elements */
     border-radius: 10px;
-    width: 60%;
+    display: block; /* Makes each div take up its own row */
+    width: fit-content; /* Ensures the width matches the content size */
   }
   
   .question-list a {
@@ -157,7 +159,10 @@ img {
  
 
   }
-
+  
+.bi-trash{
+  margin-left: 15px;
+}
 
 .information{
   margin-top: 30px;
@@ -165,7 +170,6 @@ img {
   width: 60%;
 
 }
-
 
 
   

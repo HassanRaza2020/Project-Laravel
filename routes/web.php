@@ -78,6 +78,8 @@ name('show-answers');
 
 Route::get('/search_questions', [QuestionController::class, 'Search_Question'])->name('search_questions');
 
+Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestion'])->name('DeleteQuestion');
+
 
 
 

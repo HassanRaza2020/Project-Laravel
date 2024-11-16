@@ -73,9 +73,9 @@ class QuestionController extends Controller
      return view('questions.questions', compact('questions'));
      
      }
-     public function Search_Question(Request $request){
     
-   
+     public function Search_Question(Request $request){
+      
           $query = $request->input('query');    
       
           // Check if there is a query, and filter results accordingly
@@ -90,5 +90,14 @@ class QuestionController extends Controller
           return view('questions.searchquestion', compact('search_questions', 'query'));
       }
 
+
+
+      public function DeleteQuestion(Request $request){
+        $key = $request->key;
+        dd($key);
+        $delete = Question::where('question_id', $key)->delete();
+        return view('questions.questions',compact('delete'));
+        
+      }
 
 }
