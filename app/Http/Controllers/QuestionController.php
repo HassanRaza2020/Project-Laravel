@@ -90,14 +90,17 @@ class QuestionController extends Controller
           return view('questions.searchquestion', compact('search_questions', 'query'));
       }
 
-
-
-      public function DeleteQuestion(Request $request){
-        $key = $request->key;
-        dd($key);
-        $delete = Question::where('question_id', $key)->delete();
-        return view('questions.questions',compact('delete'));
-        
+      public function DeleteQuestion($key)
+      {
+          // Delete the question
+          dd($key);
+          Question::where('question_id', $key)->delete();
+      
+          // Fetch the updated questions list
+          $questions = Question::all();
+      
+          // Return the view with the updated questions
+          return view('questions.questions', compact('questions'));
       }
-
+      
 }
