@@ -153,23 +153,32 @@ img {
   }
 
   .answer-section {
-    position: relative; /* or absolute/fixed */
-    top: 70px; /* Moves the element down */
+    position: relative; 
+    top: 70px; 
     width: 100%;
  
 
   }
+
+
+  .information{
+    margin-top: 30px;
+    margin-left: 100px;
+    width: 60%;
   
-.bi-trash{
-  margin-left: 15px;
+  }
+
+  
+
+
+.delete-button{
+  background-color:transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;  
+  margin-left: 350px;
 }
 
-.information{
-  margin-top: 30px;
-  margin-left: 100px;
-  width: 60%;
-
-}
 
 
   

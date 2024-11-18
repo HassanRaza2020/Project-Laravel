@@ -68,8 +68,10 @@ class QuestionController extends Controller
 
     public function show(){
 
-     $questions = Question::select('username','title','question_id')->get();
+     $questions = Question::select('username','title','question_id','user_id')->get();
      
+    //dd($questions);
+
      return view('questions.questions', compact('questions'));
      
      }
@@ -93,11 +95,15 @@ class QuestionController extends Controller
       public function DeleteQuestion($key)
       {
           // Delete the question
-          dd($key);
+         // dd($key);
           Question::where('question_id', $key)->delete();
       
           // Fetch the updated questions list
           $questions = Question::all();
+
+    
+
+          
       
           // Return the view with the updated questions
           return view('questions.questions', compact('questions'));
