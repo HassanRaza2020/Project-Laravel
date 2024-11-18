@@ -58,19 +58,41 @@ public function Answer_Submit(Request $request)
 
 public function showPage(Request $request)
 {
-
+    
     $key = $request->key;
+     
+    session(['key'=>$key]);
+
+
 
     $question = Question::where('question_id',$key)->select('question_id','title','Description')->first();
      
     //$question = Question::where('question_id',$key)->first();     
     
-    $query = Answer::where('question_id', $key)->select('Description','username')->get();
+    $query = Answer::where('question_id', $key)->select('answer_id','Description','username')->get();
+
 
    
     return view('questions.main-page',compact('question','query'));
     
 }
 
+
+public function DeleteAnswer($key, Request $request){
+
+    //$question = $request->key;
+    $question = session('key');
+   // dd($question);
+    
+    Answer::where('answer_id', $key)->delete();
+
+    $question = Question::where('question_id',$question)->select('question_id','title','Description')->first();
+
+    $query = Answer::where('question_id', $key)->select('answer_id','Description','username')->get();
+
+    return view('questions.main-page', compact('query','question'));
+
+
+}
 
 }
