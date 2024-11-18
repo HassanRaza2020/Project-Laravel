@@ -19,8 +19,10 @@ class Question extends Model
         'username',
         'title',
         'description',
-        'content', // Foreign key linking to content table
+        'content', 
     ];
+
+    public $timestamps = true;
 
     // Define the relationship with the Content model
     public function content()

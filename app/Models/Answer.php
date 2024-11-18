@@ -17,7 +17,6 @@ class Answer extends Model
 
     public $timestamps = true;  // Enable timestamps (created_at, updated_at
 
-    
 
 
 }
