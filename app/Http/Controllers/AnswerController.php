@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Answer;
-use Illuminate\Contracts\View\View;
 
 class AnswerController extends Controller
 {
@@ -48,8 +47,7 @@ public function Answer_Submit(Request $request)
 */
      //dd($data);
 
-         
-
+        
     // Redirect back to the same page with a success message
     return redirect()->back()->with('success', 'Your answer has been submitted!');
 }
@@ -61,9 +59,7 @@ public function showPage(Request $request)
     
     $key = $request->key;
      
-    session(['key'=>$key]);
-
-
+    //session(['key'=>$key]);
 
     $question = Question::where('question_id',$key)->select('question_id','title','Description')->first();
      
@@ -71,28 +67,26 @@ public function showPage(Request $request)
     
     $query = Answer::where('question_id', $key)->select('answer_id','Description','username')->get();
 
-
-   
+    
     return view('questions.main-page',compact('question','query'));
     
 }
 
 
-public function DeleteAnswer($key, Request $request){
+public function DeleteAnswer($key,$question_key){
 
-    //$question = $request->key;
-    $question = session('key');
-   // dd($question);
-    
+
     Answer::where('answer_id', $key)->delete();
 
-    $question = Question::where('question_id',$question)->select('question_id','title','Description')->first();
+    Question::where('question_id',$question_key)->select('question_id','title','Description')->first();
 
-    $query = Answer::where('question_id', $key)->select('answer_id','Description','username')->get();
+     Answer::where('question_id', $key)->select('answer_id','Description','username')->get();
 
-    return view('questions.main-page', compact('query','question'));
-
+    return redirect()->back();
 
 }
+
+
+
 
 }

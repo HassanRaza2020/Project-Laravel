@@ -80,7 +80,8 @@ Route::get('/search_questions', [QuestionController::class, 'Search_Question'])-
 
 Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestion'])->name('DeleteQuestion');
 
-Route::delete('/delete_answer/{key}', [AnswerController::class,'DeleteAnswer'])->name('DeleteAnswer');
+Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])->name('DeleteAnswer');
+
 
 
 
