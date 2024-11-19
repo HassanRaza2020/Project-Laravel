@@ -5,43 +5,42 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Middleware\EnsureKeyIsValid;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Answer;
 use App\Models\Content;
 use App\Models\Question;
 use GuzzleHttp\Psr7\Query;
 
-// Route to show the login form
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+  // Route to show the login form
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
 
-// Route to handle login form submission
+ // Route to handle login form submission
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
-// Route to show the signup form
+  // Route to show the signup form
 Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
 
-// Handle form submission for signup
+  // Handle form submission for signup
 Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');
 
-// Route to handle signup form submission
+ // Route to handle signup form submission
 Route::post('/signup', [AuthController::class, 'signUp'])->name('signup.submit');
 
-// Route for questions page
-Route::get('/questions', [QuestionController::class, 'show'])->name('questions');
+  // Route for questions page
+Route::get('/questions', [QuestionController::class, 'show'])->name('questions')-> middleware('auth');
 
 // Route to handle logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 //Route::get('/AskQuestion', [QuestionController::class,'askquestion'])->name('askquestion');
 
-Route::get('/LatestQuestion', [QuestionController::class,'latestquestion'])->name('latestquestion');
+Route::get('/LatestQuestion', [QuestionController::class,'latestquestion'])->name('latestquestion')-> middleware('auth');;
 
 Route::get('/SearchQuestion', [QuestionController::class,'searchquestion'])->name('searchquestion');
 
 
-
-
 Route::get('/Logout', [LogoutController::class,'logout'])->name('logout');
-
 
 
 Route::get('/AskQuestion/{categoryId}', function($categoryId) {
@@ -59,24 +58,21 @@ Route::get('/AskQuestion/{categoryId}', function($categoryId) {
 
 
 
-Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])->name('ask-questions');
+Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])->name('ask-questions')-> middleware('auth');
 
 Route::post('/submit-form',[QuestionController::class,'store'])->name('submit');
 
+Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->
+name('ask-answer')->middleware('auth');
 
-Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->name('ask-answer');
+Route::post('/answer-submit', [AnswerController::class,'Answer_Submit'])->name('answer-submit');
 
-
-Route::post('/answer-submit', [AnswerController::class,'Answer_Submit'])
-->name('answer-submit');
-
-Route::get('/answer-list',[AnswerController::class,'show_answer']);
-
+Route::get('/answer-list',[AnswerController::class,'show_answer'])-> middleware('auth');
 
 Route::get('/show-answers',[AnswerController::class,'showPage'])->
-name('show-answers');
+name('show-answers')-> middleware('auth');
 
-Route::get('/search_questions', [QuestionController::class, 'Search_Question'])->name('search_questions');
+Route::get('/search_questions', [QuestionController::class, 'Search_Question'])->name('search_questions')-> middleware('auth');
 
 Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestion'])->name('DeleteQuestion');
 
