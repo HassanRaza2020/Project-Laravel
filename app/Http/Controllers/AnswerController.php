@@ -58,14 +58,14 @@ public function showPage(Request $request)
 {
     
     $key = $request->key;
-     
+    
     //session(['key'=>$key]);
 
     $question = Question::where('question_id',$key)->select('question_id','title','Description')->first();
      
     //$question = Question::where('question_id',$key)->first();     
     
-    $query = Answer::where('question_id', $key)->select('answer_id','Description','username')->get();
+    $query = Answer::where('question_id', $key)->select('user_id','answer_id','Description','username','created_at')->get();
 
     
     return view('questions.main-page',compact('question','query'));
