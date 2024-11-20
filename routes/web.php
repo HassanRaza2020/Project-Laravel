@@ -12,8 +12,12 @@ use App\Models\Content;
 use App\Models\Question;
 use GuzzleHttp\Psr7\Query;
 
+
+
   // Route to show the login form
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
+Route::get('/login', [AuthController::class, 'showLoginForm'])
+->name('login')
+->middleware('guest');
 
  // Route to handle login form submission
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
@@ -40,7 +44,7 @@ Route::get('/LatestQuestion', [QuestionController::class,'latestquestion'])->nam
 Route::get('/SearchQuestion', [QuestionController::class,'searchquestion'])->name('searchquestion');
 
 
-Route::get('/Logout', [LogoutController::class,'logout'])->name('logout');
+Route::get('/Logout', [LogoutController::class,'logout'])->name('logout')->middleware('auth');
 
 
 Route::get('/AskQuestion/{categoryId}', function($categoryId) {
@@ -58,25 +62,38 @@ Route::get('/AskQuestion/{categoryId}', function($categoryId) {
 
 
 
-Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])->name('ask-questions')-> middleware('auth');
+Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])
+->name('ask-questions')
+-> middleware('auth');
 
-Route::post('/submit-form',[QuestionController::class,'store'])->name('submit');
+Route::post('/submit-form',[QuestionController::class,'store'])
+->name('submit');
 
-Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->
-name('ask-answer')->middleware('auth');
+Route::get('/ask-answer', [AnswerController::class, 'Answerform'])
+->name('ask-answer')
+->middleware('auth');
 
-Route::post('/answer-submit', [AnswerController::class,'Answer_Submit'])->name('answer-submit');
+Route::post('/answer-submit', [AnswerController::class,'Answer_Submit'])
+->name('answer-submit');
 
-Route::get('/answer-list',[AnswerController::class,'show_answer'])-> middleware('auth');
+Route::get('/answer-list',[AnswerController::class,'show_answer'])
+-> middleware('auth');
 
-Route::get('/show-answers',[AnswerController::class,'showPage'])->
-name('show-answers')-> middleware('auth');
 
-Route::get('/search_questions', [QuestionController::class, 'Search_Question'])->name('search_questions')-> middleware('auth');
+Route::get('/show-answers',[AnswerController::class,'showPage'])
+->name('show-answers')
+-> middleware('auth');
 
-Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestion'])->name('DeleteQuestion');
 
-Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])->name('DeleteAnswer');
+Route::get('/search_questions', [QuestionController::class, 'Search_Question'])
+->name('search_questions')
+-> middleware('auth');
+
+Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestion'])
+->name('DeleteQuestion');
+
+Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])
+->name('DeleteAnswer');
 
 
 

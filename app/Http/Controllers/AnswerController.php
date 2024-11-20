@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Answer;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Encryption\DecryptException;
+
 
 class AnswerController extends Controller
 {
+
 
     /*
 public function Answerform(Request $request)
@@ -54,23 +59,36 @@ public function Answer_Submit(Request $request)
 
 
 
+
+
 public function showPage(Request $request)
 {
-    
-    $key = $request->key;
-    
-    //session(['key'=>$key]);
 
-    $question = Question::where('question_id',$key)->select('question_id','title','Description')->first();
-     
-    //$question = Question::where('question_id',$key)->first();     
-    
-    $query = Answer::where('question_id', $key)->select('user_id','answer_id','Description','username','created_at')->get();
+    try {
+        $key = urldecode($request->key);
+        $key_decrypted = Crypt::decrypt($key);
 
+        // Fetch question
+        $question = Question::where('question_id', $key_decrypted)
+            ->select('question_id', 'title', 'Description', 'user_id', 'created_at')
+            ->first();
+
+        // Fetch related answers
+        $query = Answer::where('question_id', $key_decrypted)
+            ->select('user_id', 'answer_id', 'Description', 'username', 'created_at')
+            ->get();
+
+        return view('questions.main-page', compact('question', 'query'));
+    } 
     
-    return view('questions.main-page',compact('question','query'));
     
-}
+    catch (DecryptException $e) {
+        return redirect()->route('error.page')->with('error', 'Invalid or tampered key!');
+    }
+
+    } 
+    
+
 
 
 public function DeleteAnswer($key,$question_key){

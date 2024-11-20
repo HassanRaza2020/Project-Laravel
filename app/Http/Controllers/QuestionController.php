@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+  
+    
+
+
     public function index()
     {
         // Return the questions view
@@ -70,9 +74,7 @@ class QuestionController extends Controller
 
      $questions = Question::select('username','title','question_id','user_id','created_at')->get();
  //    dd($questions);
-   
      
- 
     $questions = Question::all();
 
      return view('questions.questions', compact('questions'));
@@ -96,16 +98,17 @@ class QuestionController extends Controller
       }
 
       public function DeleteQuestion($key)
+     
       {
-          
-         
-         Question::where('question_id', $key)->delete();
+                    
+           Question::where('question_id', $key)->delete();
 
-
-           $questions = Question::all();
-    
+           $questions = Question::all();    
           // Return the view with the updated questions
           return view('questions.questions', compact('questions'));
       }
+       
+
+ 
       
 }

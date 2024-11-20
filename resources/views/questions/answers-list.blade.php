@@ -15,9 +15,6 @@
 
 
 
-
-
-
 @section('content')
 
 <p hidden> {{$USER_ID = auth()->id()}}</p>

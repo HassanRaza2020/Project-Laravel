@@ -43,20 +43,13 @@
 </div>
     @endsection
 
-
-
     
 <script>
    
    document.getElementById('category').addEventListener('change', function() {
     let categoryId = this.value;
-    console.log(categoryId);  // Log the selected category ID
-
-
-});
-
-
-
+    console.log(categoryId);  
+           });
 
 </script>
 
