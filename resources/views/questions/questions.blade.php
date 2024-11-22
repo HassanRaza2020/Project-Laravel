@@ -35,7 +35,7 @@
  
             
 
- @php
+@php
 $encrypt_key = Crypt::encrypt($question->question_id);
 @endphp
         

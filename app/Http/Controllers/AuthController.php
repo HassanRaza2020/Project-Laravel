@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MyEmail;
 
 
 class AuthController extends Controller
@@ -24,28 +26,35 @@ class AuthController extends Controller
 
     public function signUp(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string|unique:users,username',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
-            'address' => 'required|string|max:255',
-        ]);
 
-        User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'address' => $request->address,
-        ]);
+            // Validate input
+    $request->validate([
+        'username' => 'required|string|unique:users,username',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|confirmed|min:8',
+        'address' => 'required|string|max:255',
+    ]);
 
-     //   return redirect()->route('signup.form')->with('success', 'User registered successfully!');
-      
-     return redirect()->route('login')->with('success', 'User registered successfully!');    
+    // Create the user
+    User::create([
+        'username' => $request->username,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'address' => $request->address,
+    ]);
+
+    // Send welcome email
     
+     Mail::to($request->email)->send(new MyEmail($request->username));
+
+   return redirect()->route('login');
+
+
     }
 
     public function login(Request $request)
-{
+
+    {
     // Validate the login data
     $request->validate([
         'email' => 'required|email',

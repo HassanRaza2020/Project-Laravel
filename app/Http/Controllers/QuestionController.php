@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+
 
 class QuestionController extends Controller
 {
@@ -109,6 +111,12 @@ class QuestionController extends Controller
       }
        
 
- 
+
+
+
+
+
+
+
       
 }

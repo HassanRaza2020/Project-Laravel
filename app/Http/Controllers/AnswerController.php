@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Answer;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 
