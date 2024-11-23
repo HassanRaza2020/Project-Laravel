@@ -13,16 +13,12 @@ use App\Models\Question;
 use GuzzleHttp\Psr7\Query;
 use Illuminate\Support\Facades\Mail;
 
-Route::get('email',function(){
-  Mail::to("ali@gmail.com")
-  ->send(new \App\Mail\TestEmail("asdf"));
-  dd('sadf');
-
-});
-
   // Route to show the login form
 Route::get('/login', [AuthController::class, 'showLoginForm'])
 ->name('login');
+
+
+
 
  // Route to handle login form submission
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
@@ -108,6 +104,10 @@ Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestio
 
 Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])
 ->name('DeleteAnswer');
+
+
+Route::get('/email_verification',[AuthController::class, 'Opt_View'])
+->name('email_verification');
 
 
 

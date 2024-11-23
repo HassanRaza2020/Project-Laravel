@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Verifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyEmail;
@@ -22,6 +23,11 @@ class AuthController extends Controller
      {
          return view('auth.login');  // Ensure that this view exists in your resources/views/auth/login.blade.php
      }
+
+     public function Opt_View(){
+        return view('auth.verification');
+      }
+
 
 
     public function signUp(Request $request)
@@ -43,15 +49,27 @@ class AuthController extends Controller
         'address' => $request->address,
     ]);
 
+
+
+
+  $opt = rand(100000,999999);
+  //$time=time();
+
+
+  $verf= Verifications::created(['email'=>$request->email,'opt'=>$opt,]);
+        
+
     // Send welcome email
-    
-    Mail::to($request->email)->send(new MyEmail($request->username));
+//    Mail::to($request->email)->send(new MyEmail($request->username));
 
-                         
- return redirect()->route('signup')->with('Email has been sent');
+  return response()->json($verf);      
+
+   // return redirect()->route('email_verification')->with('Email has been sent');
+
+   }
 
 
-    }
+
 
     public function login(Request $request)
 
@@ -76,6 +94,9 @@ class AuthController extends Controller
         'email' => 'The provided credentials do not match our records.',
     ]);
 }
+
+
+
 
 
 }
