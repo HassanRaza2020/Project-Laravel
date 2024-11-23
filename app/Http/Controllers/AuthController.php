@@ -45,9 +45,10 @@ class AuthController extends Controller
 
     // Send welcome email
     
-     Mail::to($request->email)->send(new MyEmail($request->username));
+    Mail::to($request->email)->send(new MyEmail($request->username));
 
-   return redirect()->route('login');
+                         
+ return redirect()->route('signup')->with('Email has been sent');
 
 
     }
@@ -75,8 +76,6 @@ class AuthController extends Controller
         'email' => 'The provided credentials do not match our records.',
     ]);
 }
-
-
 
 
 }

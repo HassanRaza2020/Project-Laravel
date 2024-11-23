@@ -1,9 +1,7 @@
 
 <div>
- <h1>
+ <h4>
  Hi, {{$name}}
  Welcome to Ask Question
-
-
-</h1>
+</h4>
  </div>
