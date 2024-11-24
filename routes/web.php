@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\Verification;
 use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Answer;
@@ -109,5 +110,8 @@ Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'D
 Route::get('/email_verification',[AuthController::class, 'Opt_View'])
 ->name('email_verification');
 
+
+Route::post('opt_verification', [Verification::class, 'verification_otp'])
+->name('verification_otp');
 
 

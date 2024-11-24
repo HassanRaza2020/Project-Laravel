@@ -12,8 +12,6 @@ class QuestionController extends Controller
 {
   
     
-
-
     public function index()
     {
         // Return the questions view
@@ -58,12 +56,12 @@ class QuestionController extends Controller
 
 
     // Create a new question record
-    $questions =Question::create ([
+      Question::create ([
      'user_id' => auth()->id(), // Assuming the user is logged in
      'username' => auth()->user()->username,
      'title' => $request->title,
      'description' => $request->description,
-     'content' => $request->category, // This should match the category_id column in your Question model/table
+     'content' => $request->category, 
      ]);
      
 
@@ -114,13 +112,5 @@ class QuestionController extends Controller
           return view('questions.questions', compact('questions'));
       }
        
-
-
-
-
-
-
-
-
       
 }

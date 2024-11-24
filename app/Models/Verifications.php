@@ -10,7 +10,8 @@ class Verifications extends Model
     use HasFactory;
   
 
-    protected $fillable = ['email','opt' ];
+    protected $fillable = ['email', 'otp', 'expires_at'];
+
     public $timestamps = true;
 
 

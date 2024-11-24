@@ -31,12 +31,12 @@
     @endif
 
     <!-- Login Form -->
-    <form action="{{ route('email_verification')}}" method="POST">
+    <form action="{{ route('verification_otp')}}" method="POST">
         @csrf
 
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Enter the Opt Code</label>
-            <input type="text" class="form-control placeholder="Enter password" required>
+            <input type="text" name="otpverification" class="form-control placeholder="Enter password" required>
         </div>
 
         <button type="submit" class="btn-primary" name="login">Enter</button>

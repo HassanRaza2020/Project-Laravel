@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Verifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Carbon;
 use App\Mail\MyEmail;
 
 
@@ -54,16 +55,20 @@ class AuthController extends Controller
 
 
 
-  $opt = rand(100000,999999);
+   $opt = rand(100000,999999);
+   $opt = strval($opt);
+   //dd($opt);
+   //dd(Carbon::now()->addMinute(2));
 
-   Verifications::create(['email'=>$request->email,'opt'=>$opt,]);
+   Verifications::create(['email'=>$request->email,'otp'=>$opt,
+   'expires_at'=>Carbon::now()->addMinute(2)]);
         
 
     // Send welcome email
 //    Mail::to($request->email)->send(new MyEmail($request->username));
 
                       
-    return redirect()->route('login')->with('Email has been sent');
+    return to_route('email_verification')->with('email',$request->email);
    }
 
 
