@@ -33,9 +33,7 @@
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" required></textarea>
         </div>
-
         @include('questions.category')
-
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Ask</button>

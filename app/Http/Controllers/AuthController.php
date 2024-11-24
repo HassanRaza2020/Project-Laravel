@@ -41,6 +41,8 @@ class AuthController extends Controller
         'address' => 'required|string|max:255',
     ]);
 
+
+
     // Create the user
     User::create([
         'username' => $request->username,
@@ -53,19 +55,15 @@ class AuthController extends Controller
 
 
   $opt = rand(100000,999999);
-  //$time=time();
 
-
-  $verf= Verifications::created(['email'=>$request->email,'opt'=>$opt,]);
+   Verifications::create(['email'=>$request->email,'opt'=>$opt,]);
         
 
     // Send welcome email
 //    Mail::to($request->email)->send(new MyEmail($request->username));
 
-  return response()->json($verf);      
-
-   // return redirect()->route('email_verification')->with('Email has been sent');
-
+                      
+    return redirect()->route('login')->with('Email has been sent');
    }
 
 

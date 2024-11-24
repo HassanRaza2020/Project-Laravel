@@ -58,16 +58,20 @@ class QuestionController extends Controller
 
 
     // Create a new question record
-    Question::create ([
+    $questions =Question::create ([
      'user_id' => auth()->id(), // Assuming the user is logged in
      'username' => auth()->user()->username,
      'title' => $request->title,
      'description' => $request->description,
-     'content_id' => $request->category, // This should match the category_id column in your Question model/table
+     'content' => $request->category, // This should match the category_id column in your Question model/table
      ]);
+     
 
  // Redirect with success message
-      return redirect()->route('questions')->with('success', 'Question submitted successfully!');
+      
+ return redirect()->route('questions')->with('success', 'Question submitted successfully!');
+
+  //return response()->json($questions);
 
     }
 

@@ -31,7 +31,7 @@
     @endif
 
     <!-- Login Form -->
-    <form action="{{ route('login')}}" method="POST">
+    <form action="{{ route('email_verification')}}" method="POST">
         @csrf
 
         <div class="col-10 offset-sm margin-bottom-15">

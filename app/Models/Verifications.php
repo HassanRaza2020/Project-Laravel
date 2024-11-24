@@ -14,5 +14,4 @@ class Verifications extends Model
     public $timestamps = true;
 
 
-
 }

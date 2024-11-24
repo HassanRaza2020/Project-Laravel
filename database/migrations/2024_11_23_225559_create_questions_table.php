@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username'); // Username
             $table->string('title'); // Title of the question
             $table->text('description'); // Detailed description
-            $table->string('content'); // Content field
+            $table->unsignedBigInteger('content')->nullable(); // Content field
             $table->timestamps();
 
             // Add a foreign key constraint (optional)
