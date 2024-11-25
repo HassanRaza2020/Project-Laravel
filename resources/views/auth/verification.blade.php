@@ -31,12 +31,19 @@
     @endif
 
     <!-- Login Form -->
-    <form action="{{ route('verification_otp')}}" method="POST">
+
+    <form action="{{ route('verification_otp')}}" method="Post">
         @csrf
+    
+      @foreach ($user_info as $key => $value )
+
+      <input type="hidden" name="user_info[{{$key}}]" value="{{$value}}">
+          
+      @endforeach    
 
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Enter the Opt Code</label>
-            <input type="text" name="otpverification" class="form-control placeholder="Enter password" required>
+            <input type="text" name="otpverification" class="form-control"  placeholder ="Enter password" required>
         </div>
 
         <button type="submit" class="btn-primary" name="login">Enter</button>

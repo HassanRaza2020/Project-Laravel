@@ -65,11 +65,21 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+             'driver' => 'database',
+             'table' => 'users',
+         ],
     ],
+
+
+
+    'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------

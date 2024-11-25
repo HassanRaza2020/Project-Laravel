@@ -35,13 +35,12 @@ Route::post('/signup', [AuthController::class, 'signUp'])->name('signup.submit')
 
   // Route for questions page
 Route::get('/questions', [QuestionController::class, 'show'])
-->name('questions')
-->middleware('auth');
+->name('questions');
 
 // Route to handle logout
 Route::post('/logout', [AuthController::class, 'logout'])
-->name('logout')->
-middleware('auth');
+->name('logout')
+->middleware('auth');
 
 //Route::get('/AskQuestion', [QuestionController::class,'askquestion'])->name('askquestion');
 
@@ -106,12 +105,15 @@ Route::delete('/delete_question/{key}',[QuestionController::class,'DeleteQuestio
 Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])
 ->name('DeleteAnswer');
 
-
+/*
 Route::get('/email_verification',[AuthController::class, 'Opt_View'])
 ->name('email_verification');
+*/
 
+Route::get('/email_verification',[AuthController::class,'signUp'])
+->name('email_verification');
 
-Route::post('opt_verification', [Verification::class, 'verification_otp'])
+Route::post('/otp_verification', [Verification::class, 'verification_otp'])
 ->name('verification_otp');
 
 

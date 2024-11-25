@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Carbon;
 use App\Mail\MyEmail;
-
+use Psy\Command\WhereamiCommand;
 
 class AuthController extends Controller
 {
@@ -45,12 +45,23 @@ class AuthController extends Controller
 
 
     // Create the user
-    User::create([
+/*    User::create([
         'username' => $request->username,
         'email' => $request->email,
         'password' => Hash::make($request->password),
         'address' => $request->address,
     ]);
+  */ 
+    //$email = $request->email;
+
+
+    $user_info =[
+        'username' => $request->username,
+        'email' => $request->email,
+        'password' => $request->password,
+        'address' => $request->address,
+    ];
+
 
 
 
@@ -60,16 +71,23 @@ class AuthController extends Controller
    //dd($opt);
    //dd(Carbon::now()->addMinute(2));
 
-   Verifications::create(['email'=>$request->email,'otp'=>$opt,
+   $verifications = Verifications::create(['email'=>$request->email,'otp'=>$opt,
    'expires_at'=>Carbon::now()->addMinute(2)]);
-        
+//dd($verifications);
 
+    
     // Send welcome email
 //    Mail::to($request->email)->send(new MyEmail($request->username));
-
                       
-    return to_route('email_verification')->with('email',$request->email);
+                return view('auth.verification',compact('user_info'));
    }
+
+
+
+
+
+
+
 
 
 
@@ -83,23 +101,34 @@ class AuthController extends Controller
         'password' => 'required|min:6',
     ]);
 
-    // Attempt to log the user in
-    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        // Store the username in session after successful login
-        $request->session()->put('username', Auth::user()->username);
-        
-        // Redirect to dashboard or home page after successful login
-        return redirect()->intended('/questions');
-    }
 
-    // If login fails, redirect back with an error message
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
+
+
+   // dd($request->all());
+
+ // Attempt to authenticate the user
+ $credentials = $request->only('email', 'password');
+
+
+ if (Auth::attempt($credentials)) {
+
+
+    $request->session()->put('username', Auth::user()->username);
+
+    return to_route('questions');
+
+ }
+
+
+ else{
+
+
+ return back()->withErrors(['email' => 'The provided credentials do not match our records.' ]);
+ 
 }
 
 
-
+}
 
 
 }
