@@ -64,8 +64,11 @@ class AuthController extends Controller
 
 
 
+    $duration = 120;
+    $endTime = time() + $duration; 
+ 
 
-
+  
    $opt = rand(100000,999999);
    $opt = strval($opt);
    //dd($opt);
@@ -77,17 +80,11 @@ class AuthController extends Controller
 
     
     // Send welcome email
-//    Mail::to($request->email)->send(new MyEmail($request->username));
+    
+  Mail::to($request->email)->send(new MyEmail($request->username, $opt));
                       
-                return view('auth.verification',compact('user_info'));
+    return view('auth.verification', compact('user_info', 'endTime'));
    }
-
-
-
-
-
-
-
 
 
 
@@ -107,15 +104,14 @@ class AuthController extends Controller
    // dd($request->all());
 
  // Attempt to authenticate the user
- $credentials = $request->only('email', 'password');
-
+    $credentials = $request->only('email', 'password');
+  //dd($credentials);
 
  if (Auth::attempt($credentials)) {
 
-
-    $request->session()->put('username', Auth::user()->username);
-
-    return to_route('questions');
+   
+  //  $request->session()->put('username', Auth::user()->username);
+    return to_route('login');
 
  }
 

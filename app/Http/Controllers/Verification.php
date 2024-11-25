@@ -18,16 +18,12 @@ public function verification_otp(Request $request){
 
    $otp = $request->otpverification;
    $email = $request->user_info['email'];
- //  dd($request->all());
-
- // dd($otp,$email);
-
+ 
    
    $selected_otp  = Verifications::where('email',$email)
    ->where('otp',$otp)
    ->first();
-  // dd($selected_otp); 
-
+  
     
    if(!$selected_otp){
       return response()->json(['message'=>'Invalid Otp'], 400);
@@ -39,16 +35,15 @@ public function verification_otp(Request $request){
    
  else {
 
-   User::create([
+ User::create([
       'username' => $request->user_info['username'],
       'email' => $request->user_info['email'],
       'password' => Hash::make($request->user_info['password']),
       'address' => $request->user_info['address'],
   ]);
-    
-  $request->session()->put('username', Auth::user()->user_info['username']);
-
-
+   
+   
+  //$request->session()-> put('username', Auth::user()->user_info['username']);
 
      return to_route('questions');
 
@@ -62,6 +57,7 @@ public function verification_otp(Request $request){
   
 
  }
+
 
   
      }

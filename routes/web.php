@@ -111,9 +111,9 @@ Route::get('/email_verification',[AuthController::class, 'Opt_View'])
 */
 
 Route::get('/email_verification',[AuthController::class,'signUp'])
-->name('email_verification');
+->name('email_verification')->middleware('guest');
 
 Route::post('/otp_verification', [Verification::class, 'verification_otp'])
-->name('verification_otp');
+->name('verification_otp')->middleware('guest');
 
 

@@ -17,7 +17,7 @@
 @section('content')
 
 <div class="container">
-    <h1 class="text-center">Login</h1>
+    <h1 class="text-center">Verification</h1>
 
     <!-- Display Validation Errors -->
     @if ($errors->any())
@@ -50,6 +50,52 @@
     </form>
 
 </div>
+
+
+<div id="timer" style="font-size: 20px; color: rgb(245, 35, 35);" class="timer"></div>
+
+    <script>
+        // Get the end time from the controller
+        const endTime = @json($endTime);
+
+        function updateTimer() {
+            const now = Math.floor(Date.now() / 1000); // Current time in seconds
+            const remainingTime = endTime - now;
+
+            if (remainingTime > 0) {
+                const minutes = Math.floor(remainingTime / 60);
+                const seconds = remainingTime % 60;
+                document.getElementById('timer').innerText =
+                    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                document.getElementById('timer').innerText = "Try Again, Otp Expired";
+                clearInterval(timerInterval); // Stop the timer
+            }
+        }
+
+        // Update the timer every second
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Initialize the timer display
+        updateTimer();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @endsection
 
 

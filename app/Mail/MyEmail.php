@@ -17,7 +17,7 @@ class MyEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private $name)
+    public function __construct(private $name, private $otp)
     {
         //
     }
@@ -39,7 +39,7 @@ class MyEmail extends Mailable
     {
         return new Content(
             view: 'emails.send-email',
-            with:['name'=>$this->name]
+            with:['name'=>$this->name, 'otp'=>$this->otp]
 
         );
     }
