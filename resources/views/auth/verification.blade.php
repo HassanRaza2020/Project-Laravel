@@ -46,7 +46,7 @@
             <input type="text" name="otpverification" class="form-control"  placeholder ="Enter password" required>
         </div>
 
-        <button type="submit" class="btn-primary" name="login">Enter</button>
+        <button type="submit" class="btn btn-outline-danger" name="login">Submit</button>
     </form>
 
 </div>
