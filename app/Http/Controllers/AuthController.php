@@ -84,6 +84,7 @@ class AuthController extends Controller
   Mail::to($request->email)->send(new MyEmail($request->username, $opt));
                       
     return view('auth.verification', compact('user_info', 'endTime'));
+
    }
 
 
@@ -108,10 +109,11 @@ class AuthController extends Controller
   //dd($credentials);
 
  if (Auth::attempt($credentials)) {
-
    
-  //  $request->session()->put('username', Auth::user()->username);
-    return to_route('login');
+  
+   
+   $request->session()->put('username', Auth::user()->username);
+    return to_route('questions');
 
  }
 

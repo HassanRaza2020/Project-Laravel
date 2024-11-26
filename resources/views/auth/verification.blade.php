@@ -32,7 +32,7 @@
 
     <!-- Login Form -->
 
-    <form action="{{ route('verification_otp')}}" method="Post">
+    <form action="{{ route('verification_otp')}}" method="post">
         @csrf
     
       @foreach ($user_info as $key => $value )
