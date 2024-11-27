@@ -117,3 +117,6 @@ Route::post('/otp_verification', [Verification::class, 'verification_otp'])
 ->name('verification_otp');
 
 
+Route::post('/resent_otp', [Verification::class,'ResentOtp'])->name('ResentOtp');
+
+

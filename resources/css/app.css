@@ -159,6 +159,13 @@ img {
     width: 100%;
   }
 
+  .information{
+    position: relative;
+    width: 60%;
+    margin-left: 50px;
+    margin-top: 10px;
+  }
+
   
 
 

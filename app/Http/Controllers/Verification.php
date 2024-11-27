@@ -73,6 +73,36 @@ public function verification_otp(Request $request){
  }
 
 
+  public function ResentOtp(Request $request){
+   
+  
+   $duration = 5;
+   $endTime = time() + $duration; 
+
+
+ 
+  $opt = rand(100000,999999);
+  $opt = strval($opt);
+  //dd($opt);
+  //dd(Carbon::now()->addMinute(2));
+
+  Verifications::create(['email'=>$request->user_info['email'],'otp'=>$opt,
+  'expires_at'=>Carbon::now()->addMinute(2)]);
+//dd($verifications);
+
+return response()->noContent();
+    //return back();
+
+   // Send welcome email
+   
+//  Mail::to($request->user_info['email'])->send(new MyEmail($request->user_info['username'], $opt));
+                     
+   
+
+  }
+
+
+
   
      }
 

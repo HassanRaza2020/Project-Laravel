@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
@@ -39,7 +38,7 @@ class MyEmail extends Mailable
     {
         return new Content(
             view: 'emails.send-email',
-            with:['name'=>$this->name, 'otp'=>$this->otp]
+            with:['name'=>$this->name, 'otp'=>$this->otp ]
 
         );
     }
