@@ -90,7 +90,7 @@ public function verification_otp(Request $request){
   'expires_at'=>Carbon::now()->addMinute(2)]);
 //dd($verifications);
 
-return response()->noContent();
+return response()->noContent()->with('endtime');
     //return back();
 
    // Send welcome email

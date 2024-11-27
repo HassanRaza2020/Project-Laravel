@@ -107,10 +107,13 @@ class QuestionController extends Controller
                     
            Question::where('question_id', $key)->delete();
 
-           $questions = Question::all();    
+           Question::all();    
           // Return the view with the updated questions
-          return view('questions.questions', compact('questions'));
-      }
+          
+          //return view('questions.questions', compact('questions'));
+
+           return  response()->noContent();
+        }
        
       
 }

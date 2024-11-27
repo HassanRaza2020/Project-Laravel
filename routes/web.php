@@ -35,7 +35,7 @@ Route::post('/signup', [AuthController::class, 'signUp'])->name('signup.submit')
 
   // Route for questions page
 Route::get('/questions', [QuestionController::class, 'show'])
-->name('questions');
+->name('questions')->middleware('auth');
 
 // Route to handle logout
 Route::post('/logout', [AuthController::class, 'logout'])

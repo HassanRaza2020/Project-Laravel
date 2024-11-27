@@ -26,9 +26,6 @@
 
 
 
-
-
-
         @foreach($questions as $question)
         <i>{{ $question->username }}</i>
         <div class="question-list">
@@ -40,11 +37,11 @@ $encrypt_key = Crypt::encrypt($question->question_id);
 @endphp
         
 <a href="{{ route('show-answers', ['key' => urlencode($encrypt_key)]) }}">
-            {{ $question->title }}
+{{ $question->title }}
 </a>
 
-@if($id === $question->user_id)
 
+@if($id === $question->user_id)
 
  <form action="{{route('DeleteQuestion',  ['key' => $question->question_id])}}" method="post">
  @csrf
@@ -70,9 +67,32 @@ $encrypt_key = Crypt::encrypt($question->question_id);
         </div>
         @endforeach
     </div>
+
+
+
+
+<script>
+
+function delete question(){
+
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
     @endsection
 </body>
 
 
-</script>
+
 </html>
