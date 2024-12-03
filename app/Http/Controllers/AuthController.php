@@ -81,7 +81,7 @@ class AuthController extends Controller
     
     // Send welcome email
     
-//  Mail::to($request->email)->send(new MyEmail($request->username, $opt));
+ //Mail::to($request->email)->send(new MyEmail($request->username, $opt));
                       
     return view('auth.verification', compact('user_info', 'endTime'));
 

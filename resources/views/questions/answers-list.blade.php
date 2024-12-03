@@ -15,7 +15,13 @@
 
 
 
-@section('content')
+    @if(session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
+
+
 
 <p hidden> {{$USER_ID = auth()->id()}}</p>
 
@@ -46,6 +52,48 @@
 
 </form>
 
+
+
+
+<button type="submit" id="open-modal" class="delete-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-pen" viewBox="0 0 16 16">
+        <path
+            d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
+    </svg>
+</button>
+
+<form action="{{ route('edit_answer', ['key' => $answers->answer_id]) }}" method="post">
+    @csrf
+    @method('PUT')
+                            
+<div class="modal" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" id="close-btn">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+               
+        
+        <div class="mb-2">
+            <label for="description" class="form-label">Answer</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+        </div>
+                               
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" style="margin-left:180px;">Save </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="close-btn" id="close-btn2">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>                            
+</form>
+
+
 @endif
 
 <p class="timestamp">{{$answers->created_at->format('g:i a')}} <p>
@@ -58,6 +106,50 @@
 
 
 @endsection
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const openModalButton = document.getElementById('open-modal'); // Button to open the modal
+        const modal = document.getElementById('modal'); // The modal element
+        const closeModalButton = document.getElementById('close-btn');
+        const closeModalButton2 = document.getElementById('close-btn2');
+        // The close button inside the modal
+        if (openModalButton && modal && closeModalButton && closeModalButton2) {
+            // Event listener to open the modal
+            console.log("Hey Hassan");
+            openModalButton.addEventListener('click', function() {
+                modal.style.display = "block"; // Show the modal
+            });
+
+            // Event listener to close the modal
+            closeModalButton.addEventListener('click', function() {
+                modal.style.display = "none"; // Hide the modal
+            });
+
+            closeModalButton2.addEventListener('click', function() {
+                modal.style.display = "none"; // Hide the modal
+            });
+
+
+            // Close modal when clicked outside the modal content
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none"; // Hide the modal
+                }
+            });
+        } 
+        
+        else {
+            console.warn('Some modal elements are missing in the DOM.');
+        }
+    });
+</script>
+
+
+
 
 </body>
 </html>

@@ -191,6 +191,16 @@ font-size: 12px;
    }
   
 
+   .mb-2{
+    width: 80%;
+    margin-left: 15px;
+    border-radius: 10px;
+
+   }
+.modal{
+  border-radius: 10px;
+
+}
 
 
 

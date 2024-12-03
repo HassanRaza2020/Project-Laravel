@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Question;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 
 
 class QuestionController extends Controller
@@ -114,6 +113,32 @@ class QuestionController extends Controller
 
            return  response()->noContent();
         }
+
+
+        public function edit_question(Request $request, $key){
+            
+            $edit_question = Question::find($key);
+            $edit_question ->title = $request->input('title');
+            $edit_question ->description = $request->input('description');
+            
+            $edit_question->save();
+
+            
+            return redirect()->back()->with('status', 'Question updated successfully');
+
+        }
+
+
+        public function Contentlist(){
+            
+            $content = Content::select('content_id', 'content_name')->get();
+
+            return view('questions.questions',compact('content'));
+
+
+        }
+
+
        
       
 }

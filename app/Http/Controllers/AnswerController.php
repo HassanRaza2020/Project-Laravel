@@ -104,6 +104,14 @@ public function DeleteAnswer($key,$question_key){
 }
 
 
+ public function Edit_Answer($key, Request $request){
+
+   $edit_answer = Answer::find($key);
+   $edit_answer -> description = $request->input('description');
+   $edit_answer->save();
+   return redirect()->back()->with('status', 'Answer updated successfully');
+
+ }
 
 
 }

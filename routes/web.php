@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Answer;
 use App\Models\Content;
 use App\Models\Question;
+use Faker\Guesser\Name;
 use GuzzleHttp\Psr7\Query;
 use Illuminate\Support\Facades\Mail;
 
@@ -118,5 +119,13 @@ Route::post('/otp_verification', [Verification::class, 'verification_otp'])
 
 
 Route::post('/resent_otp', [Verification::class,'ResentOtp'])->name('ResentOtp');
+
+Route::put('/edit-question/{key}', [QuestionController::class, 'edit_question'])->name('edit_question');
+Route::put('/Edit-Answer/{key}', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
+
+Route::get('/AskQuestion', [QuestionController::class, 'showCategories'])
+->name('ask-questions')
+-> middleware('auth');
+
 
 
