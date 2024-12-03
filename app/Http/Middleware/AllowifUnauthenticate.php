@@ -2,15 +2,17 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 
-class RedirectIfAuthenticated
+
+
+class AllowifUnauthenticate
 {
-    /**
+ /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -18,7 +20,7 @@ class RedirectIfAuthenticated
      * @param  string  ...$guards
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(Request $request, Closure $next, string ...$guards): Response
+    public function handle(Request $request, Closure $next, string ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
 
@@ -27,9 +29,15 @@ class RedirectIfAuthenticated
                 // Redirect authenticated user to home
                 return redirect(RouteServiceProvider::HOME);
             }
+
+            if (!Auth::guard($guard)->check()) {
+                // Redirect authenticated user to home
+                //return redirect(RouteServiceProvider::HOME);
+            }
+
         }
 
-        // Allow the request to proceed if user is not authenticated
+        // Proceed with the request if not authenticated
         return $next($request);
     }
 }

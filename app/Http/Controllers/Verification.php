@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Models\Verifications;
-use Illuminate\Support\Facades\Auth;
+use App\Mail\MyEmail;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\User;
 
@@ -88,14 +89,18 @@ public function verification_otp(Request $request){
 
   Verifications::create(['email'=>$request->user_info['email'],'otp'=>$opt,
   'expires_at'=>Carbon::now()->addMinute(2)]);
-//dd($verifications);
+
+
+
+  Mail::to($request->user_info['email'])->send(new MyEmail($request->user_info['username'], $opt));
+
 
 return response()->noContent()->with('endtime');
     //return back();
 
    // Send welcome email
    
-//  Mail::to($request->user_info['email'])->send(new MyEmail($request->user_info['username'], $opt));
+ 
                      
    
 

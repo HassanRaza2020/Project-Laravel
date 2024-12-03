@@ -42,7 +42,7 @@
       @endforeach    
 
         <div class="col-10 offset-sm margin-bottom-15">
-            <label for="password">Enter the Opt Code</label>
+            <label for="password">Enter the OTP Code</label>
             <input type="text" name="otpverification" class="form-control"  placeholder ="Enter OTP Code" required>
         </div>
 
