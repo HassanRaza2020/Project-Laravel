@@ -1,0 +1,49 @@
+<?php
+
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Chat extends Model
+{
+    use HasFactory;
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    // Relationship to get receiver profile
+    public function receiver()
+    {
+        return $this->belongsTo(User::class, 'receiver_id');
+    }
+
+
+    public function receiver_name()
+    {
+        return $this->belongsTo(User::class, 'receiver_name');
+    }
+
+    
+    public function sender_name()
+    {
+        return $this->belongsTo(User::class, 'sender_name');
+    }
+
+
+    
+     
+    public function receiverSellerProfile()
+    {
+        return $this->belongsTo(User::class, 'receiver_id', 'id')->select(['id', 'name']);
+    }
+
+    public function senderSellerProfile()
+    {
+        return $this->belongsTo(User::class, 'sender_id', 'id')->select(['id', 'name']);
+    }
+
+}

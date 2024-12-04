@@ -6,7 +6,16 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Verification;
+use App\Http\Controllers\ChatController;
 
+
+
+
+/*
+Route::get('/welcome', function () {
+ return view('welcome');    
+}); 
+*/
 
 
 
@@ -36,6 +45,7 @@ Route::middleware('guest')->group(function(){
     Route::delete('/delete_question/{key}', [QuestionController::class, 'DeleteQuestion'])->name('DeleteQuestion');
     Route::put('/edit-question/{key}', [QuestionController::class, 'edit_question'])->name('edit_question');
     Route::put('/Edit-Answer/{key}', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
+    Route::get('/direct_message', [ChatController::class, 'ChatView'])->name('direct_message');
 
 });
 
