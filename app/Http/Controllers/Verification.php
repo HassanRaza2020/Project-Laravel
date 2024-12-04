@@ -101,8 +101,6 @@ return response()->noContent()->with('endtime');
    // Send welcome email
    
  
-                     
-   
 
   }
 

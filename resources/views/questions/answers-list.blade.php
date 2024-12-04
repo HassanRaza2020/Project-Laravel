@@ -85,8 +85,8 @@
                                
 
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" style="margin-left:180px;">Save </button>
-          <button type="button" class="btn btn-secondary" data-dismiss="close-btn" id="close-btn2">Close</button>
+          <button type="submit" class="save" style="margin-left:180px;">Save </button>
+          <button type="button" class="btn-secondary" data-dismiss="close-btn" id="close-btn2">Close</button>
         </div>
       </div>
     </div>

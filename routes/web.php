@@ -10,7 +10,7 @@ use App\Http\Controllers\Verification;
 
 
 
-Route::middleware('myguest')->group(function(){
+Route::middleware('guest')->group(function(){
 
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
     Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');

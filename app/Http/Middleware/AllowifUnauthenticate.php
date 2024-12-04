@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use App\Providers\RouteServiceProvider;
 
 
@@ -27,12 +28,13 @@ class AllowifUnauthenticate
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 // Redirect authenticated user to home
-                return redirect(RouteServiceProvider::HOME);
+
+                dd(Auth::guard($guard)->check());                     
+               URL::previous();
+
             }
 
-            if (!Auth::guard($guard)->check()) {
-                // Redirect authenticated user to home
-                //return redirect(RouteServiceProvider::HOME);
+            if (Auth::guard($guard)->check()===false) {
             }
 
         }

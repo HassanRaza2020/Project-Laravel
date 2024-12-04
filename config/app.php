@@ -144,6 +144,10 @@ return [
         // 'store' => 'redis',
     ],
 
+
+    'search_engine' => env('SEARCH_ENGINE', 'https://www.google.com'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -163,6 +167,7 @@ return [
         /*
          * Application Service Providers...
          */
+        
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

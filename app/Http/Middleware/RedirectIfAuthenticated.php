@@ -6,6 +6,7 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -24,8 +25,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // Redirect authenticated user to home
-                return redirect(RouteServiceProvider::HOME);
+                $searchEngine = config('app.search_engine', 'https://www.google.com'); // Default to Google if not set
+                return redirect($searchEngine);
             }
         }
 

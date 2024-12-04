@@ -17,6 +17,7 @@ class LogoutController extends Controller
         // Check if the user is logged in
         if (Auth::check()) {
             // Log the user out
+            Log::info('User is logging out.');
             Auth::logout();
         }
 

@@ -15,13 +15,18 @@ use Psy\Command\WhereamiCommand;
 class AuthController extends Controller
 {
     public function showSignUpForm()
-    {
+
+
+    {   
+
+       // dd((Auth::check()));
         return view('auth.signup');
     }
 
      // Show the login form
      public function showLoginForm()
      {
+
          return view('auth.login');  // Ensure that this view exists in your resources/views/auth/login.blade.php
      }
 

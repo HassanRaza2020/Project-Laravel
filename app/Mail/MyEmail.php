@@ -28,7 +28,7 @@ class MyEmail extends Mailable
     {
         return new Envelope(
             subject: 'Email Confirmation by Ask Question',
-            from: new Address('no-reply@mailtrap.club', 'Hassan'));
+            from: new Address('admin@questions.com', 'Admin'));
     }
 
     /**
