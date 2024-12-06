@@ -1,33 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Application</title>
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    <script>
-
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
     
-        var pusher = new Pusher('5310f472865ffc7765be', {
-          cluster: 'ap2'
-        });
-    
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
-          alert(JSON.stringify(data));
-        });
-      </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @extends('layouts.app')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
-        body, html {
+        body, html 
+        {
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
         }
+        
         .chat-container {
             display: flex;
             height: 100vh;
@@ -114,45 +103,83 @@
 <body>
 
 
-    @include('header.navbar')
+   
     <!-- Chat Interface -->
+   
+   
+
     <div class="chat-container">
         <!-- Sidebar -->
         <div class="sidebar">
             <h5>Users</h5>
             <ul class="list-group">
-                <li class="list-group-item">User 1</li>
-                <li class="list-group-item">User 2</li>
-                <li class="list-group-item">User 3</li>
-                <li class="list-group-item">User 4</li>
-            </ul>
+
+                <li class="list-group-item">{{request('username')}}</li>
         </div>
 
         <!-- Chat Area -->
         <div class="chat-area">
             <!-- Chat Header -->
-            <div class="chat-header">Chat Room</div>
+            <div class="chat-header">{{request('username')}}</div>
 
             <!-- Chat Messages -->
             <div class="chat-messages">
                 <div class="message other">
-                    <div class="content">Hello! How are you?</div>
-                    <small>10:45 AM</small>
+
+                    <div class="content">{{request('title')}}</div>
+                    <small>{{request('time')}}</small>
+                
+                
                 </div>
                 <div class="message user">
-                    <div class="content">I'm doing great, thank you!</div>
-                    <small>10:46 AM</small>
+
+                    @foreach ($chat as $chat )
+                    
+                    <div class="content">{{$chat->message}}</div>
+                    <small>{{$chat->created_at->format('g:i a')}}</small>
+                
+                    @endforeach
+                    
+                
                 </div>
+
+
             </div>
 
             <!-- Chat Footer -->
             <div class="chat-footer">
-                <input type="text" class="form-control" placeholder="Type your message...">
-                <button class="btn btn-danger">Send</button>
+
+            <form id="messageForm" action="{{route('send-message')}}" method="POST">
+
+                @csrf
+                 
+                <input type="text" id="messageInput" name="message" placeholder="Type your message...">
+                <input hidden name="receiver_name" value="{{request('username')}}">
+                <input hidden name="receiver_id" value="{{request('user_id')}}">
+
+                <button class="btn btn-danger" type="submit">Send</button>
+            </form>
+                
+  
+
             </div>
         </div>
     </div>
 
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', function (e) {
+            // Clear the input after submission
+            setTimeout(() => {
+                document.getElementById('messageInput').value = '';
+            }, 100); // Optional: Delay to ensure request is processed first
+        });
+    </script>
+
+
 </body>
 </html>

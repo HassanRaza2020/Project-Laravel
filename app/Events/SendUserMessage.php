@@ -9,17 +9,22 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Chat;
+use App\Models\User;
 
 class SendUserMessage
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $message;
+
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Chat $message)
     {
-        //
+        $this->message = $message;
+       //$this->user = $user;
     }
 
     /**
@@ -29,8 +34,6 @@ class SendUserMessage
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        return ['message'=>$this->message];
     }
 }

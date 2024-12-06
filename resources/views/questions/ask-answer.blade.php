@@ -22,6 +22,8 @@
 
 <p style="font-family: cursive">{{$question->Description}}</p>
 
+
+
 </div>
 
 
@@ -40,6 +42,12 @@
 <!-- Submit button -->
 <button class="answer-button" name="answer">Answer</button>
 </form>
+
+<a href="{{route('direct-message', ['question_id' => $question->question_id, 
+                                    'user_id'=>$question->user_id, 
+                                    'username'=>$question->username,
+                                    'title'=>$question->title,
+                                    'time'=>$question->created_at->format('g:i a')])}}"> Answer the question privately</a>
 
 
 </div>

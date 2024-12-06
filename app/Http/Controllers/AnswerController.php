@@ -69,8 +69,9 @@ public function showPage(Request $request)
 
         // Fetch question
         $question = Question::where('question_id', $key_decrypted)
-            ->select('question_id', 'title', 'Description', 'user_id', 'created_at')
+            ->select('question_id', 'title', 'Description', 'user_id', 'created_at','username')
             ->first();
+            
 
         // Fetch related answers
         $query = Answer::where('question_id', $key_decrypted)
