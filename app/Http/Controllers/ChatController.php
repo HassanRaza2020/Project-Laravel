@@ -55,6 +55,7 @@ class ChatController extends Controller
         $message = Message::find($messageID);
         if ($message && $message->receiver_id == Auth::id()){
             $chat = Chat::where('receiver_id',$message->receiver_id )->first();
+            
             $chat ->update(['seen'=>true]); 
         }
 

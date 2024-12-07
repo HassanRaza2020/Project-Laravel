@@ -49,15 +49,26 @@ Route::middleware('guest')->group(function(){
     Route::put('/edit-question/{key}', [QuestionController::class, 'edit_question'])->name('edit_question');
     Route::put('/Edit-Answer/{key}', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
     Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
-
+    Route::get('/chatview', [ChatController::class, 'ChatArea'])->name('chatarea');    
 
 
     Route::get('/direct_message', function()
     { 
           $id=Auth::user()->id;
+
           $chat = Chat::where('sender_id', $id)->select()->get();
-                    
-        return view('chat.chat_module',['chat'=>$chat]); })->name('direct-message');
-      
+          
+         
+
+          $receivers = Chat::where('sender_id', $id)
+          ->select('receiver_name')
+          ->distinct()
+          ->get();
+
+                     
+        return view('chat.full-chat',compact('chat','receivers')); })->name('direct-message');
+
 });
+
+
 

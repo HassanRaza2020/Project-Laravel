@@ -25,6 +25,7 @@
 
 
 </div>
+<p hidden>{{ $id = auth()->id() }} </p>
 
 
 <div class="container">
@@ -43,13 +44,18 @@
 <button class="answer-button" name="answer">Answer</button>
 </form>
 
+@if ($id != $question->user_id)
+    
+
+
 <a href="{{route('direct-message', ['question_id' => $question->question_id, 
                                     'user_id'=>$question->user_id, 
                                     'username'=>$question->username,
                                     'title'=>$question->title,
-                                    'time'=>$question->created_at->format('g:i a')])}}"> Answer the question privately</a>
+                                    'time'=>$question->created_at->format('g:i a')])}}" style="text-decoration: none;"> Answer the question privately</a>
 
 
+@endif
 </div>
 
 
