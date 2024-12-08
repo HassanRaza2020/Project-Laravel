@@ -52,9 +52,6 @@
 
 </form>
 
-
-
-
 <button type="submit" id="open-modal" class="delete-button">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-pen" viewBox="0 0 16 16">

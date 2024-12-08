@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Verification;
 use App\Http\Controllers\ChatController;
 use App\Models\Message;
 use App\Models\Chat;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 
@@ -49,26 +51,37 @@ Route::middleware('guest')->group(function(){
     Route::put('/edit-question/{key}', [QuestionController::class, 'edit_question'])->name('edit_question');
     Route::put('/Edit-Answer/{key}', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
     Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
-    Route::get('/chatview', [ChatController::class, 'ChatArea'])->name('chatarea');    
+
+    
 
 
-    Route::get('/direct_message', function()
-    { 
-          $id=Auth::user()->id;
 
-          $chat = Chat::where('sender_id', $id)->select()->get();
-          
+    Route::get('/direct_message/{receiver_id}/{username}', [ChatController::class, 'message'])
+    ->name('message');
+    
+
+    Route::get('/direct_message', function () {
+    $id = Auth::user()->id;
          
+    $chat = Chat::where('sender_id', $id)->select()->get();
+    $receivers = Chat::where('sender_id', $id)
+        ->select('receiver_name', 'receiver_id')
+        ->distinct()
+        ->get();
 
-          $receivers = Chat::where('sender_id', $id)
-          ->select('receiver_name')
-          ->distinct()
-          ->get();
+    return view('chat.full-chat', compact('chat', 'receivers'));
+    })->name('direct-message');
 
-                     
-        return view('chat.full-chat',compact('chat','receivers')); })->name('direct-message');
+    
+
+
+
+    
+    
 
 });
+
+
 
 
 

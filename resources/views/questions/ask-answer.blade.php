@@ -46,8 +46,6 @@
 
 @if ($id != $question->user_id)
     
-
-
 <a href="{{route('direct-message', ['question_id' => $question->question_id, 
                                     'user_id'=>$question->user_id, 
                                     'username'=>$question->username,

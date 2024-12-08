@@ -20,8 +20,7 @@ class ChatController extends Controller
 
     
 //dd(Auth::id());
-
-
+//dd($request->receiver_id);
         $message = Chat::create([
              'sender_id' => Auth::id(),
              'receiver_id' => $request->receiver_id,
@@ -32,22 +31,28 @@ class ChatController extends Controller
              'seen'=>false,
         ]);
 
-     
-
 
       // dd($request->message);   
              
         Message::create(['receiver_id' => $request->receiver_id,
         'messages'=>$request->message]);
 
-        
-        
+            
 
         broadcast(new SendUserMessage($message))->toOthers();
 
         return response()->noContent();
 
     }
+
+
+     public function message($receiver_id, $username) 
+     {
+      //dd($receiver_id,$username);
+        $chat = Chat::where('receiver_id', $receiver_id)->get();
+        return view('chat.chat-view', compact('chat','username'));
+    }
+      
 
 
     public function markAsSeen($messageID){
@@ -57,13 +62,9 @@ class ChatController extends Controller
             $chat = Chat::where('receiver_id',$message->receiver_id )->first();
             
             $chat ->update(['seen'=>true]); 
-        }
+        }        
 
     }
-
-
-
-
 
 
 
