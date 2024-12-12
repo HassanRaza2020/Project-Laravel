@@ -62,8 +62,8 @@ class QuestionController extends Controller
      'description' => $request->description,
      'content' => $request->category, 
      ]);
-     
 
+     
  // Redirect with success message
       
  return redirect()->route('questions')->with('success', 'Question submitted successfully!');
@@ -115,13 +115,16 @@ class QuestionController extends Controller
         }
 
 
-        public function edit_question(Request $request, $key){
-            
+        public function edit_question(Request $request){
+
+           // dd($request, $key);
+            $key = $request->input('question_id');
             $edit_question = Question::find($key);
             $edit_question ->title = $request->input('title');
             $edit_question ->description = $request->input('description');
             
             $edit_question->save();
+           // dd($edit_question);
 
             
             return redirect()->back()->with('status', 'Question updated successfully');
