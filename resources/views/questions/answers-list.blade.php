@@ -13,6 +13,10 @@
 </head>
 <body>
 
+@php
+    $count = 0
+@endphp
+
 
 
     @if(session('status'))
@@ -52,7 +56,10 @@
 
 </form>
 
-<button type="submit" id="open-modal" class="delete-button">
+
+
+
+<button type="submit" id="open-modal{{++$count}}" class="delete-button" data-value = {{$answers->answer_id}}>
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
         class="bi bi-pen" viewBox="0 0 16 16">
         <path
@@ -60,7 +67,7 @@
     </svg>
 </button>
 
-<form action="{{ route('edit_answer', ['key' => $answers->answer_id]) }}" method="post">
+<form action="{{ route('edit_answer')}}" method="post">
     @csrf
     @method('PUT')
                             
@@ -69,8 +76,11 @@
       <div class="modal-content">
         <div class="modal-header">
 
+            <input type="hidden" id="question-id-input" name="answer_id">
+
+
           <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" id="close-btn">
-            <span aria-hidden="true">&times;</span>
+         <span aria-hidden="true">&times;</span>
           </button>
         </div>
                
@@ -82,7 +92,7 @@
                                
 
         <div class="modal-footer">
-          <button type="submit" class="save" style="margin-left:180px;">Save </button>
+          <button type="submit" class="save" style="margin-left:180px;">Save</button>
           <button type="button" class="btn-secondary" data-dismiss="close-btn" id="close-btn2">Close</button>
         </div>
       </div>
@@ -108,41 +118,50 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const openModalButton = document.getElementById('open-modal'); // Button to open the modal
-        const modal = document.getElementById('modal'); // The modal element
-        const closeModalButton = document.getElementById('close-btn');
-        const closeModalButton2 = document.getElementById('close-btn2');
-        // The close button inside the modal
-        if (openModalButton && modal && closeModalButton && closeModalButton2) {
-            // Event listener to open the modal
-            console.log("Hey Hassan");
-            openModalButton.addEventListener('click', function() {
-                modal.style.display = "block"; // Show the modal
-            });
+ document.addEventListener('DOMContentLoaded', () => {
+        let questionIdInput = document.getElementById('question-id-input');
+        let modalButtonsArray = [];
+        let modal = document.getElementById('modal');
+        let closeModalButton = document.getElementById('close-btn');
+        let closeModalButton2 = document.getElementById('close-btn2');
 
-            // Event listener to close the modal
+        // Loop through the buttons that trigger the modal
+        for (let i = 1; i <= {{ $count }}; i++) {
+            const openModalButton = document.getElementById('open-modal' + i);
+            
+            if (openModalButton) {
+                modalButtonsArray.push(openModalButton); // Store the button in the array
+            }
+        }
+
+        // Log the modal buttons array for debugging
+        console.log(modalButtonsArray);
+
+        // Event listeners for opening the modal
+        modalButtonsArray.forEach(button => {
+            button.addEventListener('click', function() {
+                modal.style.display = "block"; // Show the modal
+                let questionId = button.getAttribute('data-value'); // Get the questionId
+                questionIdInput.value = questionId; // Set the value to the hidden input
+                console.log(document.getElementById('question-id-input').value);
+                console.log(questionId); // Log the questionId
+            });
+        });
+
+        // Event listener to close the modal
+        if (closeModalButton) {
             closeModalButton.addEventListener('click', function() {
                 modal.style.display = "none"; // Hide the modal
             });
+        }
 
+        if (closeModalButton2) {
             closeModalButton2.addEventListener('click', function() {
                 modal.style.display = "none"; // Hide the modal
             });
-
-
-            // Close modal when clicked outside the modal content
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = "none"; // Hide the modal
-                }
-            });
-        } 
-        
-        else {
-            console.warn('Some modal elements are missing in the DOM.');
         }
     });
+       
 </script>
 
 
