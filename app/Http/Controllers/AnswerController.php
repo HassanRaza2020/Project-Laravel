@@ -105,8 +105,8 @@ public function DeleteAnswer($key,$question_key){
 }
 
 
- public function Edit_Answer($key, Request $request){
-
+ public function Edit_Answer(Request $request){
+   $key = $request->input('answer_id');
    $edit_answer = Answer::find($key);
    $edit_answer -> description = $request->input('description');
    $edit_answer->save();
