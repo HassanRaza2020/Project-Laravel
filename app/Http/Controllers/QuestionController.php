@@ -22,9 +22,7 @@ class QuestionController extends Controller
     }
 
     
-    public function latestquestion(){
-        return view('questions.latestquestion');
-   }
+
 
    public function searchquestion(){
         return view('questions.searchquestion');
