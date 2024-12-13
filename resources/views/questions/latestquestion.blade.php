@@ -14,15 +14,27 @@
 <body>
     @include('header.navbar')
 
-    @section('content')
+  
 
 
     <div class="container">
 
         <h1>Latest Questions</h1>
+        @if($timestamp->DiffInDays()===1)
+        @foreach ($questions as $question)
+
+        <i>{{ $question->username }}</i>
+        <div class="question-list">
+        <a> {{ $question->title }}</a>
+        <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p> 
+
+        </div>
+        @endforeach
+        @endif
+ 
     </div>
 
-    @endsection
-
+  
 </body>
 </html>
+</body>
