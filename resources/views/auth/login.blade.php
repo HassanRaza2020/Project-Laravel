@@ -40,10 +40,10 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif 
 
     <!-- Login Form -->
-    <form action="{{ route('login')}}" method="POST">
+    <form action="{{ route('login_here')}}" method="POST">
         @csrf
 
         <div class="col-10 offset-sm margin-bottom-15">
@@ -54,6 +54,13 @@
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+        </div>
+
+        <div class="mb-5">
+            <label for="remember" class="block">
+                <input type="checkbox" name="remember" id="remember">
+                Remember Me
+            </label>
         </div>
 
         <button type="submit" class="btn-primary" name="login">Login</button>

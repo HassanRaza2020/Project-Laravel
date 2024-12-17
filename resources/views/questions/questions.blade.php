@@ -19,9 +19,6 @@
     @section('content')
 
 
-
-
-
     @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -89,7 +86,7 @@
             </button>
       
 
-        <form action="{{ route('edit_question')}}" method="post">
+            <form action="{{ route('edit_question')}}" method="post">
                 @csrf
                 @method('PUT')
 

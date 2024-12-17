@@ -6,10 +6,10 @@
                 <a href="javascript:void(0);"
                    class="load-chat-view"
 
-                   data-url="{{ route('message', ['receiver_id' => $receiver->receiver_id, 
-                     'username' => $receiver->receiver_name]) }}"   
+                   data-url="{{ route('message', ['receiver_id' =>  60, 
+                     'username' => 'awais']) }}"   
                    style="text-decoration: none;" style="font-family:cursive ">
-                    {{ $receiver->receiver_name }}
+                    {{ $receiver->receiver_name ?? 'awais' }}
                   </a>
             </li>
         @endforeach

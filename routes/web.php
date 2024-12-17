@@ -20,16 +20,19 @@ Route::get('/welcome', function () {
 }); 
 */
 
-
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login_here');
+        
 
  Route::middleware('guest')->group(function()
  
 {
-
+    //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    //Route::post('/login', [AuthController::class, 'login'])->name('login_here');
+     
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
     Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    //Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
     Route::post('/otp_verification', [Verification::class, 'verification_otp'])->name('verification_otp');
     Route::post('/resent_otp', [Verification::class, 'ResentOtp'])->name('ResentOtp');
     Route::get('/latestQuestion', function(){

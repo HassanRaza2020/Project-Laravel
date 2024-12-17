@@ -2,8 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\QuestionController;
 
 /*
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth:sanctum')->name('send-message');
+
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
@@ -14,6 +19,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('/send-message', [ChatController::class, 'sendMessage'])
+// ->middleware('auth:sanctum')
+// ->name('send-message');
+
+
+
+// In routes/api.php
+
+
+    
+   //Route::get('/questions', [QuestionController::class, 'show'])->name('questions');
+    
+    

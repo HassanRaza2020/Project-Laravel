@@ -10,9 +10,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Chat;
-use App\Models\User;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Support\Facades\Log;
 
-class SendUserMessage
+class SendUserMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,10 +22,11 @@ class SendUserMessage
     /**
      * Create a new event instance.
      */
-    public function __construct(Chat $message)
+    public function __construct($message)
     {
+    //    dd($message);
         $this->message = $message;
-       //$this->user = $user;
+    
     }
 
     /**
@@ -32,8 +34,34 @@ class SendUserMessage
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return ['message'=>$this->message];
+        Log::info("broadcastOn");
+        // Broadcast on a private channel for the receiver
+        return new Channel('my-channel');
     }
+
+    /**
+     * Data to broadcast with the event.
+     */
+    public function broadcastWith()
+    {
+        
+        Log::info("broadcastWith");
+        // return ['message' =>"1122"];
+
+        return [
+            'message' => $this->message->message ?? 'awais',  // Include the message content
+        ];
+    }
+
+
+//     public function broadcastAs()
+// {
+//     Log::info("broadcastAs");
+//     return ['newMessage'];
+// }
+
+
+    
 }

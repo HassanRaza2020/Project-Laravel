@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 use App\Models\Verifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Mail\MyEmail;
-use Psy\Command\WhereamiCommand;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -59,8 +58,8 @@ class AuthController extends Controller
   */ 
     //$email = $request->email;
 
-
-    $user_info =[
+    $user_info =
+    [
         'username' => $request->username,
         'email' => $request->email,
         'password' => $request->password,
@@ -72,8 +71,6 @@ class AuthController extends Controller
     $duration = 120;
     $endTime = time() + $duration; 
  
-
-  
    $opt = rand(100000,999999);
    $opt = strval($opt);
    //dd($opt);
@@ -102,10 +99,7 @@ class AuthController extends Controller
         'password' => 'required|min:6',
     ]);
 
-
-
-
-   // dd($request->all());
+   //dd($request->all());
 
  // Attempt to authenticate the user
     $credentials = $request->only('email', 'password');
@@ -113,20 +107,29 @@ class AuthController extends Controller
 
  if (Auth::attempt($credentials)) {
    
-  
-   
-   $request->session()->put('username', Auth::user()->username);
-    return to_route('questions');
+  $request->session()->put('username', Auth::user()->username);
+  $request->filled('remember');
+  //  return to_route('questions');
+          $user = User::where('email',request('email'))->first();
+        
+         // dd(Hash::check(request('password'), $user->getAuthPassword()));
+          if(Hash::check(request('password'), $user->getAuthPassword()))
+          {
+            $token = $user->createToken('web-session')->plainTextToken;
+               
+            // Redirect to questions route
+           return to_route('questions')->with('success', 'Logged in successfully.', ["token"=>$token]);
+            //return response()->json(["token"=>$token]);
+      
+          }
 
- }
 
+          }
 
- else{
-
-
- return back()->withErrors(['email' => 'The provided credentials do not match our records.' ]);
- 
-}
+         else
+        {
+           return back()->withErrors(['email' => 'The provided credentials do not match our records.' ]);
+        }
 
 
 }

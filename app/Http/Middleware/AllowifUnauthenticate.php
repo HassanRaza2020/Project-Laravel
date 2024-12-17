@@ -29,7 +29,7 @@ class AllowifUnauthenticate
             if (Auth::guard($guard)->check()) {
                 // Redirect authenticated user to home
 
-                dd(Auth::guard($guard)->check());                     
+               Auth::guard($guard)->check();                     
                URL::previous();
 
             }

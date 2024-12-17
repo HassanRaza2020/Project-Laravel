@@ -171,6 +171,7 @@
 </head>
 <body>
 
+    @include('header.navbar')
 
 
     <div class="chat-container">
@@ -202,4 +203,6 @@
     
 </body>
 </html>
+
+
 
