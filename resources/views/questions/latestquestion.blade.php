@@ -19,7 +19,7 @@
         @php
         $daysDifference = \Carbon\Carbon::parse($question->created_at)->diffInDays(now()); 
         @endphp
-        @if ($daysDifference <=1)
+        @if ($daysDifference <1)
                 
                 <i>{{ $question->username }}</i><br>
                 <div class="question-list">
