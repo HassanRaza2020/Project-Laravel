@@ -23,11 +23,11 @@ use Carbon\Carbon;
 
    */
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/loggedIn', [AuthController::class, 'login'])->name('login_here');
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/loggedIn', [AuthController::class, 'login'])->name('login_here');
         
 
- Route::middleware('guest')->group(function()
+    Route::middleware('guest')->group(function()
  
 {
     //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
