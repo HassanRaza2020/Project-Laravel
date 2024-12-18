@@ -17,20 +17,24 @@
   
 
 
-    <div class="container">
+    <div class = "container">
 
         <h1>Latest Questions</h1>
-        @if($timestamp->DiffInDays()===1)
+
         @foreach ($questions as $question)
+        @php
+        $daysDifference = \Carbon\Carbon::parse($question->created_at)->diffInDays(now());
+         @endphp
+        @if ($daysDifference <=1)
 
-        <i>{{ $question->username }}</i>
-        <div class="question-list">
-        <a> {{ $question->title }}</a>
-        <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p> 
-
-        </div>
-        @endforeach
+            <div class="question-list">
+                <i>{{ $question->username }}</i><br><br>
+                {{ $question->title }}
+                <p class="timestamp">{{$question->created_at->format('g:i a')}}</p>
+            </div>
         @endif
+    @endforeach
+        
  
     </div>
 

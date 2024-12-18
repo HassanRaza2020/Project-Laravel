@@ -7,21 +7,24 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Verification;
+use App\Http\Controllers\LatestQuestionsController;
 use App\Http\Controllers\ChatController;
 use App\Models\Chat;
+use App\Models\User;
 use App\Models\Question;
 use Carbon\Carbon;
 
 
 
 /*
-Route::get('/welcome', function () {
- return view('welcome');    
-}); 
-*/
+   Route::get('/welcome', function () {
+    return view('welcome');    
+   }); 
+
+   */
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login_here');
+Route::post('/loggedIn', [AuthController::class, 'login'])->name('login_here');
         
 
  Route::middleware('guest')->group(function()
@@ -35,12 +38,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login_here');
     //Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
     Route::post('/otp_verification', [Verification::class, 'verification_otp'])->name('verification_otp');
     Route::post('/resent_otp', [Verification::class, 'ResentOtp'])->name('ResentOtp');
-    Route::get('/latestQuestion', function(){
-        $questions = Question::all();
-        $timestamp  = Carbon::now()->subDay();
-        return view('questions.latestquestion', compact('questions','timestamp'));
-
-    })->name('latestquestion');  
+    Route::get('/latestQuestion', [LatestQuestionsController::class, 'filter_question'])->name('latestquestion');  
     
 });
 

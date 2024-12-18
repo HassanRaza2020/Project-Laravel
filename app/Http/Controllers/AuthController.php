@@ -12,6 +12,7 @@ use App\Mail\MyEmail;
 use App\Models\User;
 
 class AuthController extends Controller
+
 {
     public function showSignUpForm()
 
@@ -25,11 +26,11 @@ class AuthController extends Controller
      // Show the login form
      public function showLoginForm()
      {
-
          return view('auth.login');  // Ensure that this view exists in your resources/views/auth/login.blade.php
      }
 
-     public function Opt_View(){
+     public function Opt_View()
+     {
         return view('auth.verification');
       }
 
@@ -58,13 +59,7 @@ class AuthController extends Controller
   */ 
     //$email = $request->email;
 
-    $user_info =
-    [
-        'username' => $request->username,
-        'email' => $request->email,
-        'password' => $request->password,
-        'address' => $request->address,
-    ];
+    $user_info =['username' => $request->username,'email' => $request->email,'password' => $request->password,'address' => $request->address];
 
 
 
@@ -76,14 +71,13 @@ class AuthController extends Controller
    //dd($opt);
    //dd(Carbon::now()->addMinute(2));
 
-   $verifications = Verifications::create(['email'=>$request->email,'otp'=>$opt,
-   'expires_at'=>Carbon::now()->addMinute(2)]);
-//dd($verifications);
+   $verifications = Verifications::create(['email'=>$request->email,'otp'=>$opt,'expires_at'=>Carbon::now()->addMinute(2)]);
+   //dd($verifications);
 
     
     // Send welcome email
     
- Mail::to($request->email)->send(new MyEmail($request->username, $opt));
+   Mail::to($request->email)->send(new MyEmail($request->username, $opt));
                       
     return view('auth.verification', compact('user_info', 'endTime'));
 
@@ -94,10 +88,7 @@ class AuthController extends Controller
 
     {
     // Validate the login data
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|min:6',
-    ]);
+    $request->validate(['email' => 'required|email','password' => 'required|min:6']);
 
    //dd($request->all());
 
@@ -122,7 +113,6 @@ class AuthController extends Controller
             //return response()->json(["token"=>$token]);
       
           }
-
 
           }
 

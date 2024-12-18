@@ -73,10 +73,10 @@ class QuestionController extends Controller
 
     public function show(){
 
-     $questions = Question::select('username','title','question_id','user_id','created_at')->get();
+     //$questions = Question::select('username','title','question_id','user_id','created_at')->get();
  //    dd($questions);
      
-    $questions = Question::all();
+     $questions = Question::all();
 
      return view('questions.questions', compact('questions'));
      
