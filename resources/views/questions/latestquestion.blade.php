@@ -28,7 +28,7 @@
         @if ($daysDifference <=1)
 
             <div class="question-list">
-                <i>{{ $question->username }}</i><br><br>
+                <i>{{ $question->username }}</i><br>
                 {{ $question->title }}
                 <p class="timestamp">{{$question->created_at->format('g:i a')}}</p>
             </div>
