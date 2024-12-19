@@ -12,11 +12,11 @@
 </head>
 <body>
 
-@include('header.navbar')
+    @include('header.navbar')
 
-@section('content')
+    @section('content')
 
-<div class="container">
+    <div class="container">
     <h1 class="text-center">Verification</h1>
 
     <!-- Display Validation Errors -->
@@ -62,19 +62,11 @@
 
         <button type="submit" id="Resent" style="visibility:hidden;" onclick="OtpResent()" class="btn btn-outline-danger" name="Resent">Resent</button>
 
-
     </form>
 
-
-
-    
-</div>
-
-
-<div id="timer" style="font-size: 20px; color: rgb(245, 35, 35);" class="timer"></div>
-
+    </div>
+    <div id="timer" style="font-size: 20px; color: rgb(245, 35, 35);" class="timer"></div>
     <script>
-       
         // End time from Laravel (passed as a server-side variable)
     let endTime = @json($endTime);
     console.log(endTime, "endtime");

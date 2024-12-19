@@ -32,21 +32,21 @@
 <h3 class="answers">Answers</h3>
     
 
-@foreach($query as $answers)
+   @foreach($query as $answers)
 
-    <div class="answer-section">
+        <div class="answer-section">
         <i>{{$answers->username}}</i>
         <div class='answer-list'>
-            {{ $answers->Description }}
+     {{ $answers->Description }}
 
 
-@if ($USER_ID === $answers->user_id)
+   @if ($USER_ID === $answers->user_id)
 
-<form action="{{route('DeleteAnswer',  ['key' => $answers->answer_id, 'question_key' => $question->question_id ]) }}" method="post">
-@csrf
-@method('DELETE')
+   <form action="{{route('DeleteAnswer',  ['key' => $answers->answer_id, 'question_key' => $question->question_id ]) }}" method="post">
+   @csrf
+   @method('DELETE')
 
-<button type="submit" class="delete-button">
+   <button type="submit" class="delete-button">
 
         <svg width="16" height="16"  class="bi-trash" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0   6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -54,7 +54,7 @@
         </svg>
     </button>
 
-</form>
+   </form>
 
 
 
@@ -91,14 +91,14 @@
         </div>
                                
 
-        <div class="modal-footer">
+         <div class="modal-footer">
           <button type="submit" class="save" style="margin-left:180px;">Save</button>
           <button type="button" class="btn-secondary" data-dismiss="close-btn" id="close-btn2">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>                            
-</form>
+         </div>
+         </div>
+         </div>
+         </div>                            
+     </form>
 
 
 @endif
@@ -117,8 +117,8 @@
 
 
 
-<script>
- document.addEventListener('DOMContentLoaded', () => {
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
         let questionIdInput = document.getElementById('question-id-input');
         let modalButtonsArray = [];
         let modal = document.getElementById('modal');
@@ -162,7 +162,7 @@
         }
     });
        
-</script>
+   </script>
 
 
 

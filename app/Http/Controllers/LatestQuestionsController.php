@@ -13,8 +13,6 @@ class LatestQuestionsController extends Controller
 
     $questions = Question::all();
 
-    $timestamp = Question::select('title','created_at', 'updated_at')->get();
-    
 
     return view('questions.latestquestion', compact('questions'));
 

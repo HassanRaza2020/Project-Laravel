@@ -74,7 +74,12 @@ class QuestionController extends Controller
     public function show(){
 
      //$questions = Question::select('username','title','question_id','user_id','created_at')->get();
- //    dd($questions);
+    
+     //dd($questions);
+
+    //dd(app()->make('Hello'));
+
+
      
      $questions = Question::all();
 
@@ -88,14 +93,17 @@ class QuestionController extends Controller
       
           // Check if there is a query, and filter results accordingly
           if ($query) {
-              $search_questions = Question::where('title', 'LIKE', "%{$query}%")->get();
+              $questions = Question::where('title', 'LIKE', "%{$query}%")->get();
               //dd($search_questions);
           } else {
-              $search_questions = Question::all();
+              $questions = Question::all();
           }
       
           // Return to the question list view with the search results
-          return view('questions.searchquestion', compact('search_questions', 'query'));
+          //return view('questions.searchquestion', compact('search_questions', 'query'));
+
+          return view('questions.questions', compact('query','questions'));
+ 
       }
 
       public function DeleteQuestion($key)

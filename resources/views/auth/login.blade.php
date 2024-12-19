@@ -63,10 +63,16 @@
             </label>
         </div>
 
+        <div class="forget-password">
+            <a href="{{route('forget-password')}}" style="text-decoration: none; color:black">Forgot password? click here</a>
+        </div>
+
         <button type="submit" class="btn-primary" name="login">Login</button>
     </form>
 
 </div>
+
+
 @endsection
 
 

@@ -14,6 +14,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         Schema::defaultStringLength(191);
+
+        app()->bind('Hello', function(){
+            return 'Hi';
+        });
     }
 
     /**
