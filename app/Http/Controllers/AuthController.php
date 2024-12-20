@@ -96,10 +96,11 @@ class AuthController extends Controller
     $credentials = $request->only('email', 'password');
   //dd($credentials);
 
- if (Auth::attempt($credentials)) {
+    if (Auth::attempt($credentials)) 
+    {
    
-  $request->session()->put('username', Auth::user()->username);
-  $request->filled('remember');
+          $request->session()->put('username', Auth::user()->username);
+          $request->filled('remember');
   //  return to_route('questions');
           $user = User::where('email',request('email'))->first();
         

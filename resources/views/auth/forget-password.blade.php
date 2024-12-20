@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -9,8 +9,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
-</head>
-<body>
+    </head>
+    <body>
 
     @include('header.navbar')
 
@@ -32,12 +32,12 @@
 
     <!-- Login Form -->
 
-    <form action="" method="post">
-        @csrf
+    <form action="{{route('module.redirect')}}" method="GET">
+    
    
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Enter your Email</label>
-            <input type="text" name="otpverification" class="form-control"  placeholder ="Enter your email" required>
+            <input type="text" name="forget-password" class="form-control"  placeholder ="Enter your email" required>
         </div>
 
         <button type="submit" id="submit" class="btn btn-outline-danger" name="login">Submit</button>

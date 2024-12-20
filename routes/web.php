@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\Verification;
 use App\Http\Controllers\LatestQuestionsController;
 
@@ -54,6 +55,11 @@ use App\Http\Controllers\LatestQuestionsController;
     Route::delete('/delete_question/{key}', [QuestionController::class, 'DeleteQuestion'])->name('DeleteQuestion');
     Route::put('/edit-question', [QuestionController::class, 'edit_question'])->name('edit_question');
     Route::put('/edit-answer', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
+    
+
+    
+    // Ensures the link is signed
+
     // Route::get('/direct_message/{receiver_id}/{username}', [ChatController::class, 'message'])->name('message');
     // Route::get('/direct_message', function () {
     // $id = Auth::user()->id;     
@@ -71,5 +77,11 @@ use App\Http\Controllers\LatestQuestionsController;
 
 
 
-
-
+   // Route for handling the "forget password" logic
+   Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forget_password'])
+       ->name('module.redirect')
+       ->middleware('guest');
+   
+   // Route for displaying the password confirmation page
+   Route::get('/redirect-to-password', function () {return view('auth.confirm-password');})->name('module.redirected')->middleware('guest');
+   

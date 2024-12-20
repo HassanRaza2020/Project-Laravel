@@ -23,11 +23,6 @@ class QuestionController extends Controller
 
     
 
-
-   public function searchquestion(){
-        return view('questions.searchquestion');
-   }
-
     // Show categories for the ask-question form
     public function showCategories()
     {

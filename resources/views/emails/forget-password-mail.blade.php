@@ -22,10 +22,10 @@
 
     <div class="card p-6 p-lg-10 space-y-4">
     <h3 class="h3 fw-700" style="font-family: cursive">
-      Hi,{{$name}}   Welcome to Ask Question?
+    Hi,{{$name}}      
     </h3>
-    <p style="font-family: cursive">Your Opt is {{$otp}}. For more details visit our website.</p>          
-     </div>
+    <a href="{{ $link }}" style="text-decoration: none;">Please click here to create new password</a>
+    </div>
 
 
 

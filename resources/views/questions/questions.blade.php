@@ -47,11 +47,7 @@
             <a href="{{ route('show-answers', ['key' => urlencode($encrypt_key)]) }}">
                 {{ $question->title }}
             </a>
-
-
-
-
-            
+           
 
             @if ($id === $question->user_id)
             <form action="{{ route('DeleteQuestion', ['key' => $question->question_id]) }}" method="post">
@@ -70,8 +66,6 @@
                 </button>
 
             </form>
-
-
 
 
 
