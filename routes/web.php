@@ -79,9 +79,15 @@ use App\Http\Controllers\LatestQuestionsController;
 
    // Route for handling the "forget password" logic
    Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forget_password'])
-       ->name('module.redirect')
-       ->middleware('guest');
+         ->name('module.redirect')
+         ->middleware('guest');
    
    // Route for displaying the password confirmation page
-   Route::get('/redirect-to-password', function () {return view('auth.confirm-password');})->name('module.redirected')->middleware('guest');
+   Route::get('/redirect-to-password/{email}', function ($email) {
+    return view('auth.confirm-password', compact('email'))
+    ;})->name('module.redirected')->middleware('guest');
+
+    Route::post('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
+    ->name('confirm_password')
+    ->middleware('guest');
    

@@ -30,15 +30,24 @@
         </div>
     @endif 
 
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('failed') }}
+    </div>
+@endif
+
+
+
     <!-- Login Form -->
-    <form action="" method="POST">
+    <form action="{{route('confirm_password')}}" method="POST">
         @csrf
 
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password-1" placeholder="Enter password" required>
         </div>
-
+           
+        <input hidden name="email" value="{{$email}}">
 
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Confirm Password</label>

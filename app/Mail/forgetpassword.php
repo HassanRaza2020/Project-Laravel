@@ -17,9 +17,9 @@ class forgetpassword extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private $name, private $link)
+    public function __construct(private $name, private $link, private $email)
     {
-        //
+        
     }
 
     /**
@@ -40,7 +40,7 @@ class forgetpassword extends Mailable
     {
         return new Content(
             view: 'emails.forget-password-mail',
-            with:["link"=>$this->link,"name"=>$this->name]
+            with:["link"=>$this->link,"name"=>$this->name, "email"=>$this->email ] 
         );
     }
 

@@ -88,7 +88,7 @@ class AuthController extends Controller
 
     {
     // Validate the login data
-    $request->validate(['email' => 'required|email','password' => 'required|min:6']);
+    $request->validate(['email' => 'required|email','password' => 'required|min:8']);
 
    //dd($request->all());
 
