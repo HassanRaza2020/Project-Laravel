@@ -16,9 +16,15 @@ class VerifySignedRouteExpiration
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (!URL::hasValidSignature($request)) {
-        //     return response()->view('errors.link-expired', [], 403); // Custom "Link Expired" view
-        // }
+
+         // Apply validation only for specific signed routes
+         if (!$request->routeIs('module.redirected')) {
+            return $next($request); // Skip for other routes
+        }
+        
+        if (!URL::hasValidSignature($request)) {
+            return response()->view('errors.link-expired', [], 403); // Custom "Link Expired" view
+        }
 
         return $next($request);
     }

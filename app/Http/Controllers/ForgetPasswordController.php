@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\forgetpassword;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Carbon;
+
 use App\Models\User;
 
 class ForgetPasswordController extends Controller
@@ -17,13 +19,21 @@ class ForgetPasswordController extends Controller
         $name = User::where('email', $email)->select('username')->first()->username;
          //dd($email);
         // Pass the email as a parameter to the route
-        $link = URL::temporarySignedRoute('module.redirected', now()->addSeconds(5), $email);
-         //dd($link);
+        $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $email]);
+
+        
+        //dd($link);
         // Send the email with the link
         Mail::to($email)->send(new forgetpassword($name, $link, $email));
+
+
+        return redirect()->back()->with('success', 'Email has been sent successfully');
     }
     
     public function confirm_password(Request $request){
+
+
+
 
         $request->validate([
             'password-1' => 'required|min:8',

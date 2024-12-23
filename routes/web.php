@@ -8,8 +8,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\Verification;
 use App\Http\Controllers\LatestQuestionsController;
-
-
+use Illuminate\Http\Client\Request;
 
 /*
    Route::get('/welcome', function () {
@@ -84,8 +83,9 @@ use App\Http\Controllers\LatestQuestionsController;
    
    // Route for displaying the password confirmation page
    Route::get('/redirect-to-password/{email}', function ($email) {
+    
     return view('auth.confirm-password', compact('email'))
-    ;})->name('module.redirected')->middleware('guest');
+    ;})->name('module.redirected')->middleware(['guest','signed']);
 
     Route::post('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
     ->name('confirm_password')

@@ -30,6 +30,13 @@
         </div>
     @endif
 
+
+
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     <!-- Login Form -->
 
     <form action="{{route('module.redirect')}}" method="GET">

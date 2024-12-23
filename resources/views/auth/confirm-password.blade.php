@@ -30,7 +30,7 @@
         </div>
     @endif 
 
-    @if (session('success'))
+    @if (session('failed'))
     <div class="alert alert-success">
         {{ session('failed') }}
     </div>
@@ -56,7 +56,7 @@
 
        
        
-        <button type="submit" class="btn-primary" name="login">Login</button>
+        <button type="submit" class="btn-primary" name="login">Create</button>
     </form>
 
 </div>
