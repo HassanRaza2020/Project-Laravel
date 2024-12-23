@@ -9,30 +9,44 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Carbon;
 
 use App\Models\User;
+use App\Models\Forget_Password;
 
 class ForgetPasswordController extends Controller
 
 {
     public function forget_password(Request $request)
     {
+
+
+    
         $email = $request->input('forget-password');
-        $name = User::where('email', $email)->select('username')->first()->username;
-         //dd($email);
-        // Pass the email as a parameter to the route
+        $user = User::all();
+
+
+        foreach ($user as $user){
+    
+       if($email == $user->email)
+       {
+                                       
+        $name = User::where('email',$email)->select('username')->first()->username;
+
         $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $email]);
 
+        Forget_Password::create(["email"=>$email]);
         
-        //dd($link);
-        // Send the email with the link
         Mail::to($email)->send(new forgetpassword($name, $link, $email));
-
-
+          
         return redirect()->back()->with('success', 'Email has been sent successfully');
+
+       }
+
+    
+    }
+    return back()->withErrors(['email' => 'The provided email does match our records.' ]);      
+    
     }
     
     public function confirm_password(Request $request){
-
-
 
 
         $request->validate([
@@ -58,7 +72,7 @@ class ForgetPasswordController extends Controller
         }
         else
         {
-            return redirect()->back()->with('failed', 'Passwords does not matches');
+            return redirect()->back()->with('error', 'Passwords does not matches');
         }
         
     

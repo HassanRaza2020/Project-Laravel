@@ -87,7 +87,7 @@ use Illuminate\Http\Client\Request;
     return view('auth.confirm-password', compact('email'))
     ;})->name('module.redirected')->middleware(['guest','signed']);
 
-    Route::post('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
+    Route::put('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
     ->name('confirm_password')
     ->middleware('guest');
    

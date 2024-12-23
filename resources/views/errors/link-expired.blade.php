@@ -26,7 +26,7 @@
     </style>
 </head>
 <body>
-    <h1>Link Expired</h1>
-    <p>Sorry, this link is no longer valid. Please request a new one.</p>
+    <h1 style="font-family: cursive">Link Expired</h1>
+    <p style="font-family: cursive">Sorry, this link is no longer valid. Please request a new one.</p>
     </body>
 </html>
