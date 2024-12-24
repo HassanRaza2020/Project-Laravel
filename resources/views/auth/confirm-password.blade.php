@@ -21,17 +21,11 @@
 <div class="container">
     <h1 class="text-center">Create New Password</h1>
     
-    <!-- Display Validation Errors -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif 
-
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
   
 
 
@@ -42,14 +36,14 @@
         @method('PUT')  
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password-1" placeholder="Enter password" required>
+            <input type="password" class="form-control" id="password" name="OldPassword" placeholder="Enter password" required>
         </div>
            
         <input hidden name="email" value="{{$email}}">
 
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Confirm Password</label>
-            <input type="password" class="form-control" id="password" name="password-2" placeholder="Enter password" required>
+            <input type="password" class="form-control" id="password" name="NewPassword" placeholder="Enter password" required>
         </div>
 
        

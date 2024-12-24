@@ -26,7 +26,7 @@ public function Answerform(Request $request)
     */
 
 
-public function Answer_Submit(Request $request)
+public function AnswerSubmit(Request $request)
 {
     //dd($request->all());
     //dd($request);
@@ -69,7 +69,7 @@ public function showPage(Request $request)
 
         // Fetch question
         $question = Question::where('question_id', $key_decrypted)
-            ->select('question_id', 'title', 'Description', 'user_id', 'created_at','username')
+            //->select('question_id', 'title', 'Description', 'user_id', 'created_at','username')
             ->first();
             
 
@@ -105,7 +105,7 @@ public function DeleteAnswer($key,$question_key){
 }
 
 
- public function Edit_Answer(Request $request){
+ public function EditAnswer(Request $request){
    $key = $request->input('answer_id');
    $edit_answer = Answer::find($key);
    $edit_answer -> description = $request->input('description');

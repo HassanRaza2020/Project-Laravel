@@ -49,15 +49,6 @@ class AuthController extends Controller
 
 
 
-    // Create the user
-/*    User::create([
-        'username' => $request->username,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'address' => $request->address,
-    ]);
-  */ 
-    //$email = $request->email;
 
     $user_info =['username' => $request->username,'email' => $request->email,'password' => $request->password,'address' => $request->address];
 
@@ -68,15 +59,10 @@ class AuthController extends Controller
  
    $opt = rand(100000,999999);
    $opt = strval($opt);
-   //dd($opt);
-   //dd(Carbon::now()->addMinute(2));
+  
 
    $verifications = Verifications::create(['email'=>$request->email,'otp'=>$opt,'expires_at'=>Carbon::now()->addMinute(2)]);
-   //dd($verifications);
-
-    
-    // Send welcome email
-    
+   
    Mail::to($request->email)->send(new MyEmail($request->username, $opt));
                       
     return view('auth.verification', compact('user_info', 'endTime'));
@@ -87,31 +73,24 @@ class AuthController extends Controller
     public function login(Request $request)
 
     {
-    // Validate the login data
+    
     $request->validate(['email' => 'required|email','password' => 'required|min:8']);
 
-   //dd($request->all());
-
- // Attempt to authenticate the user
     $credentials = $request->only('email', 'password');
-  //dd($credentials);
-
+  
     if (Auth::attempt($credentials)) 
     {
    
           $request->session()->put('username', Auth::user()->username);
           $request->filled('remember');
-  //  return to_route('questions');
+  
           $user = User::where('email',request('email'))->first();
         
-         // dd(Hash::check(request('password'), $user->getAuthPassword()));
           if(Hash::check(request('password'), $user->getAuthPassword()))
           {
             $token = $user->createToken('web-session')->plainTextToken;
                
-            // Redirect to questions route
            return to_route('questions')->with('success', 'Logged in successfully.', ["token"=>$token]);
-            //return response()->json(["token"=>$token]);
       
           }
 

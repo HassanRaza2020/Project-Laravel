@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
   
-    
+    /**
+     * get listing
+     */
     public function index()
     {
         // Return the questions view
@@ -82,7 +84,7 @@ class QuestionController extends Controller
      
      }
     
-     public function Search_Question(Request $request){
+     public function SearchQuestion(Request $request){
       
           $query = $request->input('query');    
       

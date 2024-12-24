@@ -49,7 +49,7 @@
    
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Enter your Email</label>
-            <input type="text" name="forget-password" class="form-control"  placeholder ="Enter your email" required>
+            <input type="text" name="email" class="form-control"  placeholder ="Enter your email" required>
         </div>
 
         <button type="submit" id="submit" class="btn btn-outline-danger" name="login">Submit</button>

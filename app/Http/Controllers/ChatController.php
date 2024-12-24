@@ -18,7 +18,7 @@ class ChatController extends Controller
 
 
 
-        $message = Chat::create([
+            Chat::create([
              'sender_id' => Auth::id(),
              'receiver_id' => $request->receiver_id,
              'message' =>$request->message,

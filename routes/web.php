@@ -24,17 +24,18 @@ use Illuminate\Http\Client\Request;
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/loggedIn', [AuthController::class, 'login'])->name('login_here');
-    //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    //Route::post('/login', [AuthController::class, 'login'])->name('login_here');
      
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
     Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');
-    //Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+   
     Route::post('/otp_verification', [Verification::class, 'verification_otp'])->name('verification_otp');
     Route::post('/resent_otp', [Verification::class, 'ResentOtp'])->name('ResentOtp');
     Route::get('/latestQuestion', [LatestQuestionsController::class, 'filter_question'])->name('latestquestion');  
     Route::get('/forgetpassword', function(){return view('auth.forget-password');})->name('forget-password');
     Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forget_password'])->name('module.redirect');
+    Route::put('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
+    ->name('confirm_password');
+       
 
     
 });
@@ -45,21 +46,18 @@ use Illuminate\Http\Client\Request;
  
  {
     Route::get('/questions', [QuestionController::class, 'show'])->name('questions');
-    Route::get('/search_questions', [QuestionController::class, 'Search_Question'])->name('search_questions');
+    Route::get('/search-questions', [QuestionController::class, 'SearchQuestion'])->name('search-questions');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-    Route::get('/AskQuestion/{categoryId?}', [QuestionController::class, 'showCategories'])->name('ask-questions');
+    Route::get('/ask-question', [QuestionController::class, 'showCategories'])->name('ask-questions');
     Route::post('/submit-form', [QuestionController::class, 'store'])->name('submit');
     Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->name('ask-answer');
-    Route::post('/answer-submit', [AnswerController::class, 'Answer_Submit'])->name('answer-submit');
+    Route::post('/answer-submit', [AnswerController::class, 'AnswerSubmit'])->name('answer-submit');
     Route::get('/show-answers', [AnswerController::class, 'showPage'])->name('show-answers');
-    Route::delete('/delete_answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])->name('DeleteAnswer');
-    Route::delete('/delete_question/{key}', [QuestionController::class, 'DeleteQuestion'])->name('DeleteQuestion');
+    Route::delete('/delete-answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])->name('DeleteAnswer');
+    Route::delete('/delete-question/{key}', [QuestionController::class, 'DeleteQuestion'])->name('DeleteQuestion');
     Route::put('/edit-question', [QuestionController::class, 'edit_question'])->name('edit_question');
-    Route::put('/edit-answer', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
-    Route::put('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
-    ->name('confirm_password');
-       
-
+    Route::put('/edit-answer', [AnswerController::class, 'EditAnswer'])->name('edit_answer');
+   
     
     // Ensures the link is signed
 

@@ -17,64 +17,58 @@ class ForgetPasswordController extends Controller
     public function forget_password(Request $request)
     {
 
-
-    
-        $email = $request->input('forget-password');
-        $user = User::all();
-
-
-        foreach ($user as $user){
-    
-       if($email == $user->email)
-       {
-                                       
-        $name = User::where('email',$email)->select('username')->first()->username;
-
-        $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $email]);
-
-        Forget_Password::create(["email"=>$email]);
+        if($request->has('email')){
+            $user = User::where('email',$request->email)->first();
+        }
         
-        Mail::to($email)->send(new forgetpassword($name, $link, $email));
+        else{
+            return back()->withErrors(['email' => 'The provided email does match our records.' ]);   
+        }
+        
+                             
+        $name = $user->username;
+
+        $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $request->email]);
+
+        Forget_Password::create(["email"=>$request->email]);
+        
+        Mail::to($request->email)->send(new forgetpassword($name, $link, $request->email));
           
         return redirect()->back()->with('success', 'Email has been sent successfully');
 
        }
-
     
-    }
-    return back()->withErrors(['email' => 'The provided email does match our records.' ]);      
-    
-    }
     
     public function confirm_password(Request $request){
 
-
-        $request->validate([
-            'password-1' => 'required|min:8',
-            'password-2' => 'required|min:8',
-        ]);
-    
-
           
-        if ($request->input('password-1') === $request->input('password-2'))
+        if ( $request->OldPassword === $request->NewPassword)
         {
+
+            if(strlen( $request->OldPassword) < "8" && strlen($request->NewPassword)<"8")
+            {
+                
+                return redirect()->back()->with('error', 'Password should be atleast 8 characters ');
+            }
+            
+
             $email = $request->email;
             $user = User::where('email',$email)->first();
             
             if($user)
             {
-            $user->password = Hash::make($request->input('password-2'));
+            $user->password = Hash::make($request->NewPassword);
             $user->save();
             return to_route('login')->with('status', 'Password reset successfully');
             } 
               
 
         }
-        else
+        else if( $request->OldPassword!== $request->NewPassword)
         {
+            
             return redirect()->back()->with('error', 'Passwords does not matches');
-        }
-        
+        }     
     
     }
 

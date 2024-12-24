@@ -46,7 +46,7 @@
         </ul>
         </div>
 
-       <form class="d-flex" action="{{ route('search_questions') }}" method="GET">
+       <form class="d-flex" action="{{ route('search-questions') }}" method="GET">
        <input class="form-control-nav" name="query" type="text" value="{{ request('query') }}" placeholder="Search questions">
        <button class="btn-outline-success" type="submit">Search</button>
        </form>
