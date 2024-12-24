@@ -33,7 +33,9 @@ use Illuminate\Http\Client\Request;
     Route::post('/otp_verification', [Verification::class, 'verification_otp'])->name('verification_otp');
     Route::post('/resent_otp', [Verification::class, 'ResentOtp'])->name('ResentOtp');
     Route::get('/latestQuestion', [LatestQuestionsController::class, 'filter_question'])->name('latestquestion');  
-    Route::get('/forgetpassword', function(){return view('auth.forget-password');})->name('forget-password');  
+    Route::get('/forgetpassword', function(){return view('auth.forget-password');})->name('forget-password');
+    Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forget_password'])->name('module.redirect');
+
     
 });
 
@@ -54,7 +56,9 @@ use Illuminate\Http\Client\Request;
     Route::delete('/delete_question/{key}', [QuestionController::class, 'DeleteQuestion'])->name('DeleteQuestion');
     Route::put('/edit-question', [QuestionController::class, 'edit_question'])->name('edit_question');
     Route::put('/edit-answer', [AnswerController::class, 'Edit_Answer'])->name('edit_answer');
-    
+    Route::put('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
+    ->name('confirm_password');
+       
 
     
     // Ensures the link is signed
@@ -77,9 +81,6 @@ use Illuminate\Http\Client\Request;
 
 
    // Route for handling the "forget password" logic
-   Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forget_password'])
-         ->name('module.redirect')
-         ->middleware('guest');
    
    // Route for displaying the password confirmation page
    Route::get('/redirect-to-password/{email}', function ($email) {
@@ -87,7 +88,3 @@ use Illuminate\Http\Client\Request;
     return view('auth.confirm-password', compact('email'))
     ;})->name('module.redirected')->middleware(['guest','signed']);
 
-    Route::put('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
-    ->name('confirm_password')
-    ->middleware('guest');
-   
