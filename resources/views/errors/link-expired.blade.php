@@ -26,6 +26,7 @@
     </style>
 </head>
 <body>
+    <img src="https://cdn.pixabay.com/photo/2012/04/02/16/13/question-24851_640.png" alt="Brand Logo" style="width: 70px; height: 70px;">
     <h1 style="font-family: cursive">Link Expired</h1>
     <p style="font-family: cursive">Sorry, this link is no longer valid. Please request a new one.</p>
     </body>
