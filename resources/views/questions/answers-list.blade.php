@@ -42,7 +42,7 @@
 
    @if ($USER_ID === $answers->user_id)
 
-   <form action="{{route('DeleteAnswer',  ['key' => $answers->answer_id, 'question_key' => $question->question_id ]) }}" method="post">
+   <form action="{{route('delete-answer',  ['key' => $answers->answer_id, 'question_key' => $question->question_id ]) }}" method="post">
    @csrf
    @method('DELETE')
 
@@ -67,7 +67,7 @@
     </svg>
 </button>
 
-<form action="{{ route('edit_answer')}}" method="post">
+<form action="{{ route('edit-Sanswer')}}" method="post">
     @csrf
     @method('PUT')
                             

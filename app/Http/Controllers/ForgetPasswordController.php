@@ -14,7 +14,7 @@ use App\Models\Forget_Password;
 class ForgetPasswordController extends Controller
 
 {
-    public function forget_password(Request $request)
+    public function forgetPassword(Request $request)
     {
 
         if($request->has('email')){
@@ -39,7 +39,7 @@ class ForgetPasswordController extends Controller
        }
     
     
-    public function confirm_password(Request $request){
+    public function confirmPassword(Request $request){
 
           
         if ( $request->OldPassword === $request->NewPassword)

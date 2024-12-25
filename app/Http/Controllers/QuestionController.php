@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
   
-    /**
-     * get listing
-     */
     public function index()
     {
         // Return the questions view
@@ -63,20 +60,10 @@ class QuestionController extends Controller
       
  return redirect()->route('questions')->with('success', 'Question submitted successfully!');
 
-  //return response()->json($questions);
-
     }
 
 
     public function show(){
-
-     //$questions = Question::select('username','title','question_id','user_id','created_at')->get();
-    
-     //dd($questions);
-
-    //dd(app()->make('Hello'));
-
-
      
      $questions = Question::all();
 
@@ -84,52 +71,38 @@ class QuestionController extends Controller
      
      }
     
-     public function SearchQuestion(Request $request){
+     public function searchQuestion(Request $request){
       
           $query = $request->input('query');    
       
           // Check if there is a query, and filter results accordingly
           if ($query) {
               $questions = Question::where('title', 'LIKE', "%{$query}%")->get();
-              //dd($search_questions);
           } else {
               $questions = Question::all();
           }
       
-          // Return to the question list view with the search results
-          //return view('questions.searchquestion', compact('search_questions', 'query'));
-
+         
           return view('questions.questions', compact('query','questions'));
  
       }
 
-      public function DeleteQuestion($key)
+      public function deleteQuestion($key)
      
-      {
-                    
-           Question::where('question_id', $key)->delete();
-
+      {                 
+           Question::where('question_id', $key)->delete(); //delete request for questions
            Question::all();    
           // Return the view with the updated questions
-          
-          //return view('questions.questions', compact('questions'));
-
            return  response()->noContent();
         }
 
 
-        public function edit_question(Request $request){
+        public function editQuestion(Request $request){  //edithg the questions
 
-           // dd($request, $key);
-            $key = $request->input('question_id');
-            $edit_question = Question::find($key);
-            $edit_question ->title = $request->input('title');
+            $edit_question = Question::find($request->question_id);
+            $edit_question ->title = $request->title;
             $edit_question ->description = $request->input('description');
-            
-            $edit_question->save();
-           // dd($edit_question);
-
-            
+            $edit_question->save(); //saving the updated question
             return redirect()->back()->with('status', 'Question updated successfully');
 
         }

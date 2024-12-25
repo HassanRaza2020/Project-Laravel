@@ -52,7 +52,7 @@
            
 
             @if ($id === $question->user_id)
-            <form action="{{ route('DeleteQuestion', ['key' => $question->question_id]) }}" method="post">
+            <form action="{{ route('delete-question', ['key' => $question->question_id]) }}" method="post">
                 @csrf
                 @method('DELETE')
 
@@ -82,7 +82,7 @@
             </button>
       
 
-            <form action="{{ route('edit_question')}}" method="post">
+            <form action="{{ route('edit-question')}}" method="post">
                 @csrf
                 @method('PUT')
 

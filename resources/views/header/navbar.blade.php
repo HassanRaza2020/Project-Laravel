@@ -40,7 +40,7 @@
 
         @if(!session('username'))
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('latestquestion') }}">Latest Questions</a>
+          <a class="nav-link" href="{{ route('latest-question') }}">Latest Questions</a>
         </li>
         @endif
         </ul>

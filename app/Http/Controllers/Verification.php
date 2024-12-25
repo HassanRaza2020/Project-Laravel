@@ -16,7 +16,7 @@ use App\Models\User;
 class Verification extends Controller
 {
 
-public function verification_otp(Request $request){
+public function verificationOtp(Request $request){
 
    $otp = $request->otpverification;
    $email = $request->user_info['email'];
@@ -74,7 +74,7 @@ public function verification_otp(Request $request){
  }
 
 
-  public function ResentOtp(Request $request){
+  public function resentOtp(Request $request){
    
   
    $duration = 5;

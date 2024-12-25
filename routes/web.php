@@ -8,81 +8,51 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\Verification;
 use App\Http\Controllers\LatestQuestionsController;
-use Illuminate\Http\Client\Request;
-
-/*
-   Route::get('/welcome', function () {
-    return view('welcome');    
-   }); 
-
-   */
 
     
-    Route::middleware('guest')->group(function()
+    Route::middleware('guest')->group(function() //Using the guest middleware for unauthenticated users
  
 { 
 
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/loggedIn', [AuthController::class, 'login'])->name('login_here');
-     
-    Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
-    Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');
-   
-    Route::post('/otp_verification', [Verification::class, 'verification_otp'])->name('verification_otp');
-    Route::post('/resent_otp', [Verification::class, 'ResentOtp'])->name('ResentOtp');
-    Route::get('/latestQuestion', [LatestQuestionsController::class, 'filter_question'])->name('latestquestion');  
-    Route::get('/forgetpassword', function(){return view('auth.forget-password');})->name('forget-password');
-    Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forget_password'])->name('module.redirect');
-    Route::put('/password_reset', [ForgetPasswordController::class, 'confirm_password'])
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
+    Route::post('/loggedIn', [AuthController::class, 'login'])->name('login-here'); //posting the login request
+    Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup'); // displaying the signup page
+    Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');  // posting the signup request
+    Route::post('/otp-verification', [Verification::class, 'verificationOtp'])->name('verification-otp'); //sending the otp request for email verification
+    Route::post('/resent-otp', [Verification::class, 'resentOtp'])->name('resend-otp'); // posting the resent request when the opt gets expire after 2 mins
+    Route::get('/latestQuestion', [LatestQuestionsController::class, 'filterQuestion'])->name('latest-question');  //fitering the question which has been posted recently within one day
+    Route::get('/forget-password', function(){return view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
+    Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forgetPassword'])->name('module.redirect'); // sending the email for reseting the password
+    Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword']) // displayong the confirm password page
     ->name('confirm_password');
        
 
     
 });
 
-
-
- Route::middleware('auth')->group(function()
+ Route::middleware('auth')->group(function() //Using the auth middleware for authenticated users
+ 
  
  {
-    Route::get('/questions', [QuestionController::class, 'show'])->name('questions');
-    Route::get('/search-questions', [QuestionController::class, 'SearchQuestion'])->name('search-questions');
-    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-    Route::get('/ask-question', [QuestionController::class, 'showCategories'])->name('ask-questions');
-    Route::post('/submit-form', [QuestionController::class, 'store'])->name('submit');
-    Route::get('/ask-answer', [AnswerController::class, 'Answerform'])->name('ask-answer');
-    Route::post('/answer-submit', [AnswerController::class, 'AnswerSubmit'])->name('answer-submit');
-    Route::get('/show-answers', [AnswerController::class, 'showPage'])->name('show-answers');
-    Route::delete('/delete-answer/{key}/{question_key}', [AnswerController::class,'DeleteAnswer'])->name('DeleteAnswer');
-    Route::delete('/delete-question/{key}', [QuestionController::class, 'DeleteQuestion'])->name('DeleteQuestion');
-    Route::put('/edit-question', [QuestionController::class, 'edit_question'])->name('edit_question');
-    Route::put('/edit-answer', [AnswerController::class, 'EditAnswer'])->name('edit_answer');
+    Route::get('/questions', [QuestionController::class, 'show'])->name('questions'); //display the questions
+    Route::get('/search-questions', [QuestionController::class, 'searchQuestion'])->name('search-questions'); //search query for searching the results
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout'); //ending the session by logout button
+    Route::get('/ask-question', [QuestionController::class, 'showCategories'])->name('ask-questions'); //displaying the cateogories
+    Route::post('/submit-form', [QuestionController::class, 'store'])->name('submit'); // storing the questions
+    Route::post('/answer-submit', [AnswerController::class, 'answerSubmit'])->name('answer-submit');//storing the answers
+    Route::get('/show-answers', [AnswerController::class, 'showPage'])->name('show-answers'); //displaying the answers 
+    Route::delete('/delete-answer/{key}/{question_key}', [AnswerController::class,'deleteAnswer'])->name('delete-answer'); //deleting the answers
+    Route::delete('/delete-question/{key}', [QuestionController::class, 'deleteQuestion'])->name('delete-question'); // deleting the questions
+    Route::put('/edit-question', [QuestionController::class, 'editQuestion'])->name('edit-question'); //editing the questions  
+    Route::put('/edit-answer', [AnswerController::class, 'editAnswer'])->name('edit-answer'); //editing the answers
    
     
-    // Ensures the link is signed
-
-    // Route::get('/direct_message/{receiver_id}/{username}', [ChatController::class, 'message'])->name('message');
-    // Route::get('/direct_message', function () {
-    // $id = Auth::user()->id;     
-    // $chat = Chat::where('sender_id', $id)->select()->get();
-    // $receivers = Chat::where('sender_id', $id)
-    //     ->select('receiver_name', 'receiver_id')
-    //     ->distinct()
-    //     ->get();
-
-    // return view('chat.full-chat', compact('chat', 'receivers'));
-    // })->name('direct-message');
-
 
    });
 
 
 
-   // Route for handling the "forget password" logic
-   
-   // Route for displaying the password confirmation page
-   Route::get('/redirect-to-password/{email}', function ($email) {
-    
+     Route::get('/redirect-to-password/{email}', function ($email) {    
     return view('auth.confirm-password', compact('email'))
-    ;})->name('module.redirected')->middleware(['guest','signed']);
+    ;})->name('module.redirected')->middleware(['guest','signed']); //Using the middleware for signature route validation
 
