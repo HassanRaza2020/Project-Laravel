@@ -8,7 +8,6 @@ use Illuminate\Support\Carbon;
 use App\Models\Verifications;
 use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Mail;
-
 use App\Models\User;
 
 
@@ -23,8 +22,7 @@ public function verificationOtp(Request $request){
 
  
    
-   $selected_otp  = Verifications::where('email',$email)
-   ->where('otp',$otp)
+   $selected_otp  = Verifications::where('email',$email)->where('otp',$otp)
    ->first();
 
    
@@ -38,13 +36,10 @@ public function verificationOtp(Request $request){
    else if (Carbon::now()->greaterThan($selected_otp->expires_at)) {
       return response()->json(['message' => 'OTP has expired'], 400);
   }
-
    
  else {
-
-
-   
- $user= User::create([
+  
+      $user= User::create([
       'username' => $request->user_info['username'],
       'email' => $request->user_info['email'],
       'password' => Hash::make($request->user_info['password']),
@@ -61,8 +56,6 @@ public function verificationOtp(Request $request){
   session()->flash('user_info',$user->username);
 
 
-
-
   return to_route('login')->with('status', 'Your Credentials Successfully Created, Please login');
 
 
@@ -77,16 +70,12 @@ public function verificationOtp(Request $request){
   public function resentOtp(Request $request){
    
   
-   $duration = 5;
-   $endTime = time() + $duration; 
+   $duration = 5; 
+   $endTime = time() + $duration; //setting the duration time
 
-
- 
   $opt = rand(100000,999999);
   $opt = strval($opt);
-  //dd($opt);
-  //dd(Carbon::now()->addMinute(2));
-
+ 
   Verifications::create(['email'=>$request->user_info['email'],'otp'=>$opt,
   'expires_at'=>Carbon::now()->addMinute(2)]);
 
@@ -96,9 +85,6 @@ public function verificationOtp(Request $request){
 
 
 return response()->noContent()->with('endtime');
-    //return back();
-
-   // Send welcome email
    
  
 

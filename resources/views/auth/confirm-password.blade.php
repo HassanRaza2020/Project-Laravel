@@ -31,7 +31,7 @@
 
 
     <!-- Login Form -->
-    <form action="{{route('confirm_password')}}" method="POST">
+    <form action="{{route('confirm-password')}}" method="POST">
         @csrf
         @method('PUT')  
         <div class="col-10 offset-sm margin-bottom-15">

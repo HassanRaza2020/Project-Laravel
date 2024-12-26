@@ -24,7 +24,7 @@ use App\Http\Controllers\LatestQuestionsController;
     Route::get('/forget-password', function(){return view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
     Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forgetPassword'])->name('module.redirect'); // sending the email for reseting the password
     Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword']) // displayong the confirm password page
-    ->name('confirm_password');
+    ->name('confirm-password');
        
 
     

@@ -73,14 +73,14 @@ class QuestionController extends Controller
     
      public function searchQuestion(Request $request){
       
-          $query = $request->input('query');    
-      
-          // Check if there is a query, and filter results accordingly
-          if ($query) {
-              $questions = Question::where('title', 'LIKE', "%{$query}%")->get();
-          } else {
+          $query = $request->query;    
+          if ($query) {// Check if there is a query, and filter results accordingly
+             $questions = Question::where('title', 'LIKE', "%{$query}%")->get();
+                     }
+        else 
+        {
               $questions = Question::all();
-          }
+        }
       
          
           return view('questions.questions', compact('query','questions'));
