@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
 
-class forgetpassword extends Mailable
+class ForgetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 

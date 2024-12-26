@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Mail\forgetpassword;
 use Illuminate\Support\Facades\Mail;
 
-class SendMail implements ShouldQueue
+class ForgetMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
