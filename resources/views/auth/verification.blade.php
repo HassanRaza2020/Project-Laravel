@@ -37,9 +37,9 @@
     <form action="{{ route('verification-otp')}}" method="post">
         @csrf
     
-      @foreach ($user_info as $key => $value )
+      @foreach ($userinfo as $key => $value )
 
-      <input type="hidden" name="user_info[{{$key}}]" value="{{$value}}">
+      <input type="hidden" name="userinfo[{{$key}}]" value="{{$value}}">
           
       @endforeach    
 
@@ -56,9 +56,9 @@
 
      @csrf
 
-        @foreach ($user_info as $key => $value )
+        @foreach ($userinfo as $key => $value )
 
-        <input type="hidden" name="user_info[{{$key}}]" value="{{$value}}">
+        <input type="hidden" name="userinfo[{{$key}}]" value="{{$value}}">
             
         @endforeach    
 

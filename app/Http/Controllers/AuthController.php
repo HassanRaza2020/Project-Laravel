@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Mail\MyEmail;
 use App\Models\User;
+use App\Jobs\MailVerification;
+
 
 class AuthController extends Controller
 
@@ -50,24 +52,25 @@ class AuthController extends Controller
 
 
 
-    $user_info =['username' => $request->username,'email' => $request->email,'password' => $request->password,'address' => $request->address];
+    $userinfo =['username' => $request->username,'email' => $request->email,'password' => $request->password,'address' => $request->address];
 
 
 
     $duration = 120;
     $endTime = time() + $duration; 
  
-   $opt = rand(100000,999999);
-   $opt = strval($opt);
+    $otp = rand(100000,999999);
+    $otp = strval($otp);
   
 
-   $verifications = Verifications::create(['email'=>$request->email,'otp'=>$opt,'expires_at'=>Carbon::now()->addMinute(2)]);
+    $verifications = Verifications::create(['email'=>$request->email,'otp'=>$otp,'expires_at'=>Carbon::now()->addMinute(2)]);
    
-   Mail::to($request->email)->send(new MyEmail($request->username, $opt));
-                      
-    return view('auth.verification', compact('user_info', 'endTime'));
+   
+    MailVerification::dispatch($request->username, $request->email, $otp);
+     
+    return view('auth.verification', compact('userinfo', 'endTime'));
 
-   }
+    }
 
 
     public function login(Request $request)
