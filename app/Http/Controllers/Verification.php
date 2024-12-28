@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use App\Models\Verifications;
-use App\Mail\MyEmail;
-use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Jobs\MailVerification;
 
@@ -43,9 +41,8 @@ public function verificationOtp(Request $request){
   ]);
 
   session()->flash('userinfo', $request->userinfo['username']);
+//session for username
 
-
-  //$request->session()-> put('username', Auth::user()->user_info['username']);
 
   auth()->login($user);
   //Session::forget(['otp','user_id']);
