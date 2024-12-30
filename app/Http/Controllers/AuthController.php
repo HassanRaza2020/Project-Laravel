@@ -73,7 +73,7 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function logIn(Request $request)
 
     {
     

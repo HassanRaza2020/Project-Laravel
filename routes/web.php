@@ -15,12 +15,12 @@ use App\Http\Controllers\LatestQuestionsController;
 { 
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
-    Route::post('/loggedIn', [AuthController::class, 'login'])->name('login-here'); //posting the login request
+    Route::post('/loggedIn', [AuthController::class, 'logIn'])->name('login-here'); //posting the login request
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup'); // displaying the signup page
-    Route::post('/', [AuthController::class, 'signup'])->name('auth.signup.post');  // posting the signup request
+    Route::post('/', [AuthController::class, 'signUp'])->name('auth.signup.post');  // posting the signup request
     Route::post('/otp-verification', [Verification::class, 'verificationOtp'])->name('verification-otp'); //sending the otp request for email verification
     Route::post('/resent-otp', [Verification::class, 'resentOtp'])->name('resend-otp'); // posting the resent request when the opt gets expire after 2 mins
-    Route::get('/latestQuestion', [LatestQuestionsController::class, 'filterQuestion'])->name('latest-question');  //fitering the question which has been posted recently within one day
+    Route::get('/latest-question', [LatestQuestionsController::class, 'filterQuestion'])->name('latest-question');  //fitering the question which has been posted recently within one day
     Route::get('/forget-password', function(){return view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
     Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forgetPassword'])->name('module.redirect'); // sending the email for reseting the password
     Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword']) // displayong the confirm password page
