@@ -62,17 +62,13 @@ class QuestionController extends Controller
     
      public function searchQuestion(Request $request){
       
-          $query = $request->query;    
-          if ($query) {                   // Check if there is a query, and filter results accordingly
-             $questions = Question::where('title', 'LIKE', "%{$query}%")->get();
-                     }
-        else 
-        {
-              $questions = Question::all();
-        }
-      
+           
+          if ($request->has('query')) 
+          {                 // Check if there is a query, and filter results accordingly
+             $questions = Question::where('title', 'LIKE', "%{$request->input('query')}%")->get();
+          }
          
-          return view('questions.questions', compact('query','questions'));
+          return view('questions.questions', compact('questions'));
  
       }
 
@@ -90,7 +86,7 @@ class QuestionController extends Controller
 
             $edit_question = Question::find($request->question_id);
             $edit_question ->title = $request->title;
-            $edit_question ->description = $request->input('description');
+            $edit_question ->description = $request->description;
             $edit_question->save(); //saving the updated question
             return redirect()->back()->with('status', 'Question updated successfully');
 

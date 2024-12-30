@@ -67,7 +67,7 @@
     </svg>
 </button>
 
-<form action="{{ route('edit-Sanswer')}}" method="post">
+<form action="{{ route('edit-answer')}}" method="post">
     @csrf
     @method('PUT')
                             

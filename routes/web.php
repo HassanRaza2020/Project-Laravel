@@ -32,11 +32,10 @@ use App\Http\Controllers\LatestQuestionsController;
 
  Route::middleware('auth')->group(function() //Using the auth middleware for authenticated users
  
- 
  {
     Route::get('/questions', [QuestionController::class, 'show'])->name('questions'); //display the questions
     Route::get('/search-questions', [QuestionController::class, 'searchQuestion'])->name('search-questions'); //search query for searching the results
-    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout'); //ending the session by logout button
+    Route::get('/logout', [LogoutController::class, 'logOut'])->name('logout'); //ending the session by logout button
     Route::get('/ask-question', [QuestionController::class, 'askQuestion'])->name('ask-questions'); //displaying the cateogories
     Route::post('/submit-form', [QuestionController::class, 'store'])->name('submit'); // storing the questions
     Route::post('/answer-submit', [AnswerController::class, 'answerSubmit'])->name('answer-submit');//storing the answers
@@ -46,13 +45,11 @@ use App\Http\Controllers\LatestQuestionsController;
     Route::put('/edit-question', [QuestionController::class, 'editQuestion'])->name('edit-question'); //editing the questions  
     Route::put('/edit-answer', [AnswerController::class, 'editAnswer'])->name('edit-answer'); //editing the answers
    
-    
-
    });
 
 
 
-     Route::get('/redirect-to-password/{email}', function ($email) {    
-    return view('auth.confirm-password', compact('email'))
-    ;})->name('module.redirected')->middleware(['guest','signed']); //Using the middleware for signature route validation
+ Route::get('/redirect-to-password/{email}', function ($email) {    
+ return view('auth.confirm-password', compact('email'));})->name('module.redirected')
+ ->middleware(['guest','signed']); //Using the middleware for signature route validation
 

@@ -22,7 +22,7 @@
 <div class="information">
 <h4 style="font-family: cursive"  >{{$question->title}}</h4>
 
-<p style="font-family: cursive">{{$question->Description}}</p>
+<p style="font-family: cursive">{{$question->description}}</p>
 
 
 

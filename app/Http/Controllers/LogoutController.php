@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
-    public function logout(Request $request)
+    public function logOut(Request $request)
     {
         // Log the entire session to see its contents
         Log::info('Current session data:', $request->session()->all());
