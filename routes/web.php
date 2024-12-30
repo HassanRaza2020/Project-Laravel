@@ -14,8 +14,8 @@ use App\Http\Controllers\LatestQuestionsController;
  
 { 
 
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
-    Route::post('/loggedIn', [AuthController::class, 'logIn'])->name('login-here'); //posting the login request
+    Route::get('/login-here', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
+    Route::post('/login-here', [AuthController::class, 'logIn'])->name('login-here'); //posting the login request
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup'); // displaying the signup page
     Route::post('/', [AuthController::class, 'signUp'])->name('auth.signup.post');  // posting the signup request
     Route::post('/otp-verification', [Verification::class, 'verificationOtp'])->name('verification-otp'); //sending the otp request for email verification
@@ -50,6 +50,7 @@ use App\Http\Controllers\LatestQuestionsController;
 
 
  Route::get('/redirect-to-password/{email}', function ($email) {    
- return view('auth.confirm-password', compact('email'));})->name('module.redirected')
+ return view('auth.confirm-password', compact('email'));})
+ ->name('module.redirected')
  ->middleware(['guest','signed']); //Using the middleware for signature route validation
 
