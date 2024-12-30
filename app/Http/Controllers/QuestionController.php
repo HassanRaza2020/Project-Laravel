@@ -10,20 +10,9 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
   
-    public function index()
-    {
-        // Return the questions view
-        return view('questions.questions'); // Laravel will look for resources/views/questions/questions.php
-    }
-
-    public function askquestion(){
-         return view('questions.askquestion');
-    }
-
-    
 
     // Show categories for the ask-question form
-    public function showCategories()
+    public function askQuestion()
     {
       // Fetching all categories with 'content_id' and 'content_name'
     $categories = Content::select('content_id', 'content_name')->get();
@@ -56,9 +45,9 @@ class QuestionController extends Controller
      ]);
 
      
- // Redirect with success message
+   // Redirect with success message
       
- return redirect()->route('questions')->with('success', 'Question submitted successfully!');
+    return redirect()->route('questions')->with('success', 'Question submitted successfully!');
 
     }
 
@@ -69,12 +58,12 @@ class QuestionController extends Controller
 
      return view('questions.questions', compact('questions'));
      
-     }
+    }
     
      public function searchQuestion(Request $request){
       
           $query = $request->query;    
-          if ($query) {// Check if there is a query, and filter results accordingly
+          if ($query) {                   // Check if there is a query, and filter results accordingly
              $questions = Question::where('title', 'LIKE', "%{$query}%")->get();
                      }
         else 
@@ -106,17 +95,6 @@ class QuestionController extends Controller
             return redirect()->back()->with('status', 'Question updated successfully');
 
         }
-
-
-        public function Contentlist(){
-            
-            $content = Content::select('content_id', 'content_name')->get();
-
-            return view('questions.questions',compact('content'));
-
-
-        }
-
 
        
       

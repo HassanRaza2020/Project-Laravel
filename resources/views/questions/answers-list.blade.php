@@ -34,10 +34,10 @@
 
    @foreach($query as $answers)
 
-        <div class="answer-section">
-        <i>{{$answers->username}}</i>
-        <div class='answer-list'>
-     {{ $answers->Description }}
+         <div class="answer-section">
+         <i>{{$answers->username}}</i>
+         <div class='answer-list'>
+         {{ $answers->Description }}
 
 
    @if ($USER_ID === $answers->user_id)

@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Carbon;
-use App\Jobs\SendMail;
+use App\Jobs\ForgetMail;
 use App\Models\User;
 use App\Models\Forget_Password;
 
@@ -28,7 +28,7 @@ class ForgetPasswordController extends Controller
         $name = $user->username;  //fetcthing the username form the reques
         $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $request->email]); //creating the signature link that will expire in 2 minutes
         Forget_Password::create(["email"=>$request->email]);  //storing the forget email data in the database
-        SendMail::dispatch($name, $link, $request->email);   //send the email using the job dispatch 
+        ForgetMail::dispatch($name, $link, $request->email);   //send the email using the job dispatch 
         return redirect()->back()->with('success', 'Email has been sent successfully');
        }
     

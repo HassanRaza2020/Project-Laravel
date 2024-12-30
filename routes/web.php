@@ -37,7 +37,7 @@ use App\Http\Controllers\LatestQuestionsController;
     Route::get('/questions', [QuestionController::class, 'show'])->name('questions'); //display the questions
     Route::get('/search-questions', [QuestionController::class, 'searchQuestion'])->name('search-questions'); //search query for searching the results
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout'); //ending the session by logout button
-    Route::get('/ask-question', [QuestionController::class, 'showCategories'])->name('ask-questions'); //displaying the cateogories
+    Route::get('/ask-question', [QuestionController::class, 'askQuestion'])->name('ask-questions'); //displaying the cateogories
     Route::post('/submit-form', [QuestionController::class, 'store'])->name('submit'); // storing the questions
     Route::post('/answer-submit', [AnswerController::class, 'answerSubmit'])->name('answer-submit');//storing the answers
     Route::get('/show-answers', [AnswerController::class, 'showPage'])->name('show-answers'); //displaying the answers 
