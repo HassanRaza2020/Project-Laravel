@@ -17,12 +17,8 @@ class AuthController extends Controller
 
 {
     public function showSignUpForm()
-
-
     {   
-
-       // dd((Auth::check()));
-        return view('auth.signup');
+         return view('auth.signup');
     }
 
      // Show the login form
@@ -34,7 +30,7 @@ class AuthController extends Controller
      public function Opt_View()
      {
         return view('auth.verification');
-      }
+     }
 
 
 
@@ -43,7 +39,7 @@ class AuthController extends Controller
 
             // Validate input
     $request->validate([
-        'username' => 'required|string|unique:users,username',
+        'username' => 'required|string|min:6',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|confirmed|min:8',
         'address' => 'required|string|max:255',

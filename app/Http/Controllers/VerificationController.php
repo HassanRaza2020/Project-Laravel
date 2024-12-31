@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Jobs\MailVerification;
 
 
-class Verification extends Controller
+class VerificationController extends Controller
 {
 
 public function verificationOtp(Request $request){

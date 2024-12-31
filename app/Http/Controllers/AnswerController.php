@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 
-class AnswerController extends Controller
-{
+ class AnswerController extends Controller
+ {
 
 
 
-public function answerSubmit(Request $request)
-{
-    $request->validate([
+  public function answerSubmit(Request $request)
+  {
+    $request->validate
+    ([
         'Description' => 'required|string|max:2000' 
     ]);
 
@@ -24,9 +25,8 @@ public function answerSubmit(Request $request)
     Answer::create([
         'user_id' => auth()->id(), 
         'Username' => auth()->user()->username,
-        'Description' => $request->input('Description'),
-        'question_id' => $request->input('question_id'),
-         ]);
+        'Description' => $request->Description,
+        'question_id' => $request->question_id]);
 
         
     // Redirect back to the same page with a success message
@@ -37,8 +37,8 @@ public function answerSubmit(Request $request)
 
 
 
-public function showPage(Request $request)
-{
+    public function showPage(Request $request)
+    {
 
     try {
         $key = urldecode($request->key);
@@ -66,25 +66,25 @@ public function showPage(Request $request)
 
 
 
-public function deleteAnswer($answer_id,$question_key){  //deleting the answers using question_id and answer_id
+   public function deleteAnswer($answer_id,$question_key){  //deleting the answers using question_id and answer_id
 
 
-    Answer::where('answer_id', $answer_id)->delete();
+     Answer::where('answer_id', $answer_id)->delete();
 
-    Question::where('question_id',$question_key)->select('question_id','title','Description')->first();
+     Question::where('question_id',$question_key)->select('question_id','title','Description')->first();
 
      Answer::where('question_id', $answer_id)->select('answer_id','Description','username')->get();
 
-    return redirect()->back(); //redirecting the page back the with no content
+     return redirect()->back(); //redirecting the page back the with no content
 
 }
 
 
  public function editAnswer(Request $request){  //editing the answers
-   $edit_answer = Answer::find($request->answer_id); //fetching the answer_id
-   $edit_answer -> description = $request->description; //editing the answer
-   $edit_answer->save(); //saving the updated answer
-   return redirect()->back()->with('status', 'Answer updated successfully');
+      $edit_answer = Answer::find($request->answer_id); //fetching the answer_id
+      $edit_answer -> description = $request->description; //editing the answer
+      $edit_answer->save(); //saving the updated answer
+      return redirect()->back()->with('status', 'Answer updated successfully');
 
  }
 
