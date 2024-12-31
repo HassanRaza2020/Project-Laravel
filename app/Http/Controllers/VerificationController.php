@@ -8,7 +8,9 @@ use Illuminate\Support\Carbon;
 use App\Models\Verifications;
 use App\Models\User;
 use App\Jobs\MailVerification;
-
+use App\Notifications\SignUp;
+use App\Mail\SignUpConfirmed;
+use Illuminate\Support\Facades\Mail;
 
 class VerificationController extends Controller
 {
@@ -38,9 +40,12 @@ public function verificationOtp(Request $request){
       'email' => $request->userinfo['email'],
       'password' => Hash::make($request->userinfo['password']),
       'address' => $request->userinfo['address'],
+
+
   ]);
 
   session()->flash('userinfo', $request->userinfo['username']);
+  
 //session for username
 
 
@@ -48,6 +53,8 @@ public function verificationOtp(Request $request){
   //Session::forget(['otp','user_id']);
   session()->flash('userinfo',$user->username);
 
+  new SignUp($request->userinfo['username'], "shiekhhassan1234draq@gmail.com");
+  Mail::to($request->userinfo['email'])->send(new SignUpConfirmed($request->userinfo['username']));
 
   return to_route('login')->with('status', 'Your Credentials Successfully Created, Please login'); //redirecting to login when credentials are being set
 

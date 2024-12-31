@@ -44,11 +44,8 @@
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Confirm Password</label>
             <input type="password" class="form-control" id="password" name="NewPassword" placeholder="Enter password" required>
-        </div>
-
-       
-       
-        <button type="submit" class="btn-primary" name="login">Create</button>
+        </div> 
+         <button type="submit" class="btn-primary" name="login">Create</button>
     </form>
 
 </div>

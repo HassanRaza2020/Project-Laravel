@@ -26,12 +26,7 @@ class AuthController extends Controller
      {
          return view('auth.login');  // Ensure that this view exists in your resources/views/auth/login.blade.php
      }
-
-     public function Opt_View()
-     {
-        return view('auth.verification');
-     }
-
+  
 
 
     public function signUp(Request $request)

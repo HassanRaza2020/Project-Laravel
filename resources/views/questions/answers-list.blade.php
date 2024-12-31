@@ -42,7 +42,7 @@
 
    @if ($USER_ID === $answers->user_id)
 
-   <form action="{{route('delete-answer',  ['key' => $answers->answer_id, 'question_key' => $question->question_id ]) }}" method="post">
+   <form action="{{route('delete-answer',  ['key' => $answers->answer_id, 'questionKey' => $question->question_id ]) }}" method="post">
    @csrf
    @method('DELETE')
 
@@ -79,7 +79,7 @@
             <input type="hidden" id="question-id-input" name="answer_id">
 
 
-          <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" id="close-btn">
+         <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" id="close-btn">
          <span aria-hidden="true">&times;</span>
           </button>
         </div>
