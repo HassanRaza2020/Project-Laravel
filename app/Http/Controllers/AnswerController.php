@@ -66,14 +66,14 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 
 
-   public function deleteAnswer($answer_id,$question_key){  //deleting the answers using question_id and answer_id
+   public function deleteAnswer($answerId,$questionKey){  //deleting the answers using question_id and answer_id
 
 
-     Answer::where('answer_id', $answer_id)->delete();
+     Answer::where('answer_id', $answerId)->delete();
 
-     Question::where('question_id',$question_key)->select('question_id','title','Description')->first();
+     Question::where('question_id',$questionKey)->select('question_id','title','Description')->first();
 
-     Answer::where('question_id', $answer_id)->select('answer_id','Description','username')->get();
+     Answer::where('question_id', $answerId)->select('answer_id','Description','username')->get();
 
      return redirect()->back(); //redirecting the page back the with no content
 
@@ -81,9 +81,9 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 
  public function editAnswer(Request $request){  //editing the answers
-      $edit_answer = Answer::find($request->answer_id); //fetching the answer_id
-      $edit_answer -> description = $request->description; //editing the answer
-      $edit_answer->save(); //saving the updated answer
+      $editAnswer = Answer::find($request->answer_id); //fetching the answer_id
+      $editAnswer -> description = $request->description; //editing the answer
+      $editAnswer->save(); //saving the updated answer
       return redirect()->back()->with('status', 'Answer updated successfully');
 
  }
