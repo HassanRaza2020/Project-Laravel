@@ -35,10 +35,11 @@ class SignUp extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('New User Registeration')  
-                    ->line('The introduction to the notification.')
-                    ->line('Thank you for using our application!')
-                    ->line("{$this->name}({$this->email}) has registered for the Questions.");
+        ->line("Hello Admin,")
+        ->line("A new user has registered on your platform.")
+        ->line("Name: {$this->name}")
+        ->line("Email: {$this->email}");
+        
     }
 
     /**
@@ -49,7 +50,7 @@ class SignUp extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
-        ];
+            'name' => $this->name,
+            'email' => $this->email,        ];
     }
 }
