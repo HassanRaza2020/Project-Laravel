@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Verifications;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
-use App\Mail\MyEmail;
 use App\Models\User;
 use App\Jobs\MailVerification;
 
@@ -32,7 +30,7 @@ class AuthController extends Controller
     public function signUp(Request $request)
     {
 
-            // Validate input
+            // Validate input data
     $request->validate([
         'username' => 'required|string|min:6',
         'email' => 'required|email|unique:users,email',
