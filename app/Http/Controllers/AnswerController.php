@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerRequest;
 use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -12,25 +13,8 @@ use Illuminate\Support\Facades\Validator;
 class AnswerController extends Controller
 {
 
-    public function answerSubmit(Request $request)
+    public function answerSubmit(AnswerRequest $request)
     {
-        // $request->validate
-        //     ([
-        //     'Description' => 'required|string|max:2000',
-        // ]);
-
-      
-        $validator = Validator::make($request->all(), [ //creating the form validation for SignUp
-            'answerfield' => 'required|string|max:2000',
-        ]);
-
-
-
-        if ($validator->fails()) { //if validations fails, errors are handled from the this condition
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
 
         // Create the answer using the key as question_id
         Answer::create([
@@ -78,7 +62,7 @@ class AnswerController extends Controller
 
     }
 
-    public function editAnswer(Request $request)
+    public function editAnswer(AnswerRequest $request)
     {
 
         $validator = Validator::make($request->all(),   //validation form added here

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionRequest;
 use App\Models\Content;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -21,29 +22,8 @@ class QuestionController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
-
-        // $request->validate([
-
-        //     'title' => 'required|string|max:255',
-        //     'description' => 'required|string|max:2000',
-        //     'category' => 'required|exists:content,content_id',
-
-        // ]);
-
-        $validator = Validator::make($request->all(),
-            [
-                'title' => 'required|string|max:255',
-                'description' => 'required|string|max:2000',
-                'category' => 'required|exists:content,content_id',
-            ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
 
         // Create a new question record
         Question::create([
@@ -88,19 +68,8 @@ class QuestionController extends Controller
         return response()->noContent();
     }
 
-    public function editQuestion(Request $request)
-    { //edithg the questions
-        $validator = Validator::make($request->all(),  //form validation has been added
-            [
-                'title' => 'required|string|max:255',
-                'description' => 'required|string|max:2000',
-            ]);
-
-        if ($validator->fails()) {     //if validation fails
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+    public function editQuestion(QuestionRequest $request)     //edithg the questions
+    {                                                               
         $editQuestion = Question::find($request->question_id);
         $editQuestion->title = $request->title;
         $editQuestion->description = $request->description;

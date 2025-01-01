@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignupRequest;
 use App\Jobs\MailVerification;
 use App\Models\User;
 use App\Models\Verifications;
@@ -24,27 +26,13 @@ class AuthController extends Controller
         return view('auth.login'); // Ensure that this view exists in your resources/views/auth/login.blade.php
     }
 
-    public function signUp(Request $request)
+    public function signUp(SignupRequest $request)
     {
 
-        // // Validate input data
-        // $request->validate([
-        //     'username' => 'required|string|min:6',
-        //     'email' => 'required|email|unique:users,email',
-        //     'password' => 'required|confirmed|min:8',
-        //     'address' => 'required|string|max:255',
-        // ]);
-
-        $validator = Validator::make($request->all(), [   //creating the form validation for SignUp
-            'username' => 'required|string|min:6', 
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
-            'address' => 'required|string|max:255',
-        ]);
-
-        if ($validator->fails()) { //if form validation fails here
+      
+        if ($request->fails()) { //if form validation fails here
             return redirect()->back()
-                ->withErrors($validator)
+                ->withErrors($request)
                 ->withInput();
         }
 
@@ -71,18 +59,14 @@ class AuthController extends Controller
 
     }
 
-    public function logIn(Request $request)
+    public function logIn(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email', // Ensure email exists in the users table
-            'password' => 'required', // Validate that password is provided
-        ]);
         
-        if ($validator->fails()) {  //if form validation fails here 
-            return redirect()->
-            back()->withErrors($validator)
-            ->withInput();
-        }
+        // if ($request->fails()) {  //if form validation fails here 
+        //     return redirect()->
+        //     back()->withErrors($request)
+        //     ->withInput();
+        // }
 
         $credentials = $request->only('email', 'password');
 
