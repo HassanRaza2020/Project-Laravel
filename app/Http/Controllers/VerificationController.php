@@ -53,8 +53,13 @@ public function verificationOtp(Request $request){
   //Session::forget(['otp','user_id']);
   session()->flash('userinfo',$user->username);
 
-  new SignUp($request->userinfo['username'], "shiekhhassan1234draq@gmail.com");
-  Mail::to($request->userinfo['email'])->send(new SignUpConfirmed($request->userinfo['username']));
+  
+// Create a new sign-up instance with dynamic data
+$newSignUp = new SignUp($request->userinfo['username'],$request->userinfo['email']);
+
+// Send the confirmation email
+Mail::to($email)->send(new SignUpConfirmed($request->userinfo['username']));
+
 
   return to_route('login')->with('status', 'Your Credentials Successfully Created, Please login'); //redirecting to login when credentials are being set
 

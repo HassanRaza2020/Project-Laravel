@@ -51,6 +51,6 @@ class SignUp extends Notification
     {
         return [
             'name' => $this->name,  //returning the name
-            'email' => $this->email,  //returning the email      ];
+            'email' => $this->email];  //returning the email
     }
 }
