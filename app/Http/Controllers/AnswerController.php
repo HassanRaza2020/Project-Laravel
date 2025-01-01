@@ -42,7 +42,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
     try {
         $key = urldecode($request->key);
-        $key_decrypted = Crypt::decrypt($key);
+        $key_decrypted = Crypt::decrypt($key);   //decrypting the key after the request has been posted 
 
         // Fetch question
         $question = Question::where('question_id', $key_decrypted)->first(); //encrypting the question id request
@@ -69,9 +69,9 @@ use Illuminate\Contracts\Encryption\DecryptException;
    public function deleteAnswer($answerId,$questionKey){  //deleting the answers using question_id and answer_id
 
 
-     Answer::where('answer_id', $answerId)->delete();
+     Answer::where('answer_id', $answerId)->delete(); //delete query using the where clause
 
-     Question::where('question_id',$questionKey)->select('question_id','title','Description')->first();
+     Question::where('question_id',$questionKey)->select('question_id','title','Description')->first(); //selecting the columns
 
      Answer::where('question_id', $answerId)->select('answer_id','Description','username')->get();
 
@@ -84,7 +84,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
       $editAnswer = Answer::find($request->answer_id); //fetching the answer_id
       $editAnswer -> description = $request->description; //editing the answer
       $editAnswer->save(); //saving the updated answer
-      return redirect()->back()->with('status', 'Answer updated successfully');
+      return redirect()->back()->with('status', 'Answer updated successfully'); 
 
  }
 

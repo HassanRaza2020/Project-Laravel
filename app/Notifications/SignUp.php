@@ -49,8 +49,7 @@ class SignUp extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'name' => $this->name,  //returning the name
-            'email' => $this->email];  //returning the email
+        return ['name' => $this->name,  //returning the name
+        'email' => $this->email];  //returning the email
     }
 }
