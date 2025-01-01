@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
@@ -23,13 +24,26 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        // $request->validate([
 
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:2000',
-            'category' => 'required|exists:content,content_id',
+        //     'title' => 'required|string|max:255',
+        //     'description' => 'required|string|max:2000',
+        //     'category' => 'required|exists:content,content_id',
 
-        ]);
+        // ]);
+
+        $validator = Validator::make($request->all(),
+            [
+                'title' => 'required|string|max:255',
+                'description' => 'required|string|max:2000',
+                'category' => 'required|exists:content,content_id',
+            ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         // Create a new question record
         Question::create([

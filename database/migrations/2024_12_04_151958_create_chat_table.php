@@ -22,8 +22,6 @@ return new class extends Migration
             $table->boolean('seen')->default(false);
             $table->timestamps();
 
-
-
         });
    
     }

@@ -15,6 +15,21 @@
     @include('header.navbar')
 
     @section('content')
+
+
+ <!-- Display Validation Errors -->
+ @if ($errors->any())
+ <div class="alert alert-danger">
+     <ul>
+         @foreach ($errors->all() as $error)
+             <li>{{ $error }}</li>
+         @endforeach
+     </ul>
+ </div>
+@endif
+
+
+
     <div class="container">
     <h1>Ask a Question</h1>
 
