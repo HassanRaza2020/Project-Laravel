@@ -42,7 +42,7 @@ class AuthController extends Controller
             'address' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails()) { //if form validation fails here
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
@@ -73,17 +73,15 @@ class AuthController extends Controller
 
     public function logIn(Request $request)
     {
-
-        $validator = Validator::make($request->all(), [  //creating the form validation for login
-            'email' => 'required|email|exists:users|unique:users,email',
-            'password'=>'required|exists:users'
-            
-            ]);
-
-        if ($validator->fails()) {   //In case form validation fails, error would be handled using the condition
-            return redirect()->back()  
-                ->withErrors($validator)
-                ->withInput();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email', // Ensure email exists in the users table
+            'password' => 'required', // Validate that password is provided
+        ]);
+        
+        if ($validator->fails()) {  //if form validation fails here 
+            return redirect()->
+            back()->withErrors($validator)
+            ->withInput();
         }
 
         $credentials = $request->only('email', 'password');
@@ -96,14 +94,14 @@ class AuthController extends Controller
             $user = User::where('email', request('email'))->first();
 
             if (Hash::check(request('password'), $user->getAuthPassword())) {
-                $token = $user->createToken('web-session')->plainTextToken;
+                $token = $user->createToken('web-session')->plainTextToken; //getting the form validation
 
                 return to_route('questions')->with('success', 'Logged in successfully.', ["token" => $token]);
 
             }
 
         } else {
-            return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+            return back()->withErrors(['password' => 'Invalid Password has been Entered']);
         }
 
     }

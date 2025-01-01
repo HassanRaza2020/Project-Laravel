@@ -25,7 +25,7 @@
     <h3 class="h3 fw-700" style="font-family: cursive">
     Hi,{{$name}}      
     </h3>
-    Your registeration has been confirmed. 
+    <a href="{{$link}}" style="text-decoration: none;">Click here to create the new password</a>
     </div>
 
     

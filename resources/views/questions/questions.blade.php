@@ -21,11 +21,25 @@
     @section('content')
 
 
+
     @if(session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
     </div>
     @endif
+
+    <!-- Display Validation Errors -->
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+
 
     @php
     $count=0
@@ -49,7 +63,7 @@
             <a href="{{ route('show-answers', ['key' => urlencode($encrypt_key)]) }}">
                 {{ $question->title }}
             </a>
-           
+
 
             @if ($id === $question->user_id)
             <form action="{{ route('delete-question', ['key' => $question->question_id]) }}" method="post">
@@ -71,7 +85,8 @@
 
 
 
-            <button type="submit" id="open-modal{{++$count}}" class="delete-button" data-value={{$question->question_id}}>
+            <button type="submit" id="open-modal{{++$count}}" class="delete-button"
+                data-value={{$question->question_id}}>
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                     viewBox="0 0 16 16">
@@ -80,7 +95,7 @@
                 </svg>
 
             </button>
-      
+
 
             <form action="{{ route('edit-question')}}" method="post">
                 @csrf
@@ -112,8 +127,7 @@
 
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"
-                                    style="margin-left:180px;">Save</button>
+                                <button type="submit" class="btn btn-primary" style="margin-left:180px;">Save</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="close-btn"
                                     id="close-btn2">Close</button>
                             </div>
@@ -121,13 +135,13 @@
                     </div>
                 </div>
             </form>
-      
-          
+
+
             @endif
 
 
-        <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p> 
-       </div>
+            <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p>
+        </div>
 
 
         @endforeach
@@ -136,7 +150,7 @@
         @endsection
 
         <script>
-        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', () => {
         let questionIdInput = document.getElementById('question-id-input');
         let modalButtonsArray = [];
         let modal = document.getElementById('modal');

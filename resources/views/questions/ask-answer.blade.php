@@ -57,7 +57,7 @@
             <input type="hidden" name="question_id" value="{{ $question->question_id }}">
 
             <!-- Textarea for the user's answer -->
-            <textarea placeholder="Your answer..." class="Description" name="Description"></textarea>
+            <textarea placeholder="Your answer..." class="Description" name="answerfield" required ></textarea >
 
             <!-- Submit button -->
             <button class="answer-button" name="answer">Answer</button>

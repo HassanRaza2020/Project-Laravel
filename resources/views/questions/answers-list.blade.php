@@ -87,7 +87,7 @@
         
         <div class="mb-2">
             <label for="description" class="form-label">Answer</label>
-            <textarea class="form-control" id="description" name="description" required></textarea>
+            <textarea class="form-control" id="description" name="answerfield" required></textarea>
         </div>
                                
 

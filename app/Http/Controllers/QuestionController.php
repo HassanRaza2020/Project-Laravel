@@ -90,7 +90,17 @@ class QuestionController extends Controller
 
     public function editQuestion(Request $request)
     { //edithg the questions
+        $validator = Validator::make($request->all(),  //form validation has been added
+            [
+                'title' => 'required|string|max:255',
+                'description' => 'required|string|max:2000',
+            ]);
 
+        if ($validator->fails()) {     //if validation fails
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
         $editQuestion = Question::find($request->question_id);
         $editQuestion->title = $request->title;
         $editQuestion->description = $request->description;

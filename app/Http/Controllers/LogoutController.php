@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
-use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
@@ -15,16 +14,14 @@ class LogoutController extends Controller
         Log::info('Current session data:', $request->session()->all());
 
         // Check if the user is logged in
-        if (Auth::check()) 
-        {
+        if (Auth::check()) {
             // Log the user out
             Log::info('User is logging out.');
             Auth::logout();
         }
 
         // Invalidate the session if it exists
-        if ($request->session()->has('token')) 
-        {
+        if ($request->session()->has('token')) {
             // Optionally, clear any token or session data
             $request->session()->forget('token');
         }
