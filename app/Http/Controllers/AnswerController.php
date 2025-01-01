@@ -23,7 +23,7 @@ class AnswerController extends Controller
             'Description' => 'required|string|max:2000',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails()) {  //if validations fails, errors are handled from the this condition
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
@@ -69,18 +69,18 @@ class AnswerController extends Controller
 
         Question::where('question_id', $questionKey)->select('question_id', 'title', 'Description')->first(); //selecting the columns
 
-        Answer::where('question_id', $answerId)->select('answer_id', 'Description', 'username')->get();
+        Answer::where('question_id', $answerId)->select('answer_id', 'Description', 'username')->get();  //after deleting the answer, this query will show all answers
 
         return redirect()->back(); //redirecting the page back the with no content
 
     }
 
     public function editAnswer(Request $request)
-    { //editing the answers
+    {                                                     //editing the answers
         $editAnswer = Answer::find($request->answer_id); //fetching the answer_id
         $editAnswer->description = $request->description; //editing the answer
         $editAnswer->save(); //saving the updated answer
-        return redirect()->back()->with('status', 'Answer updated successfully');
+        return redirect()->back()->with('status', 'Answer updated successfully');  //returns to page with this message
 
     }
 
