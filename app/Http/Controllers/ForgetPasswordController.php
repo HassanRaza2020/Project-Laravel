@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ForgetPasswordRequest;
 use App\Jobs\ForgetMail;
 use App\Models\Forget_Password;
 use App\Models\User;
@@ -12,16 +13,10 @@ use Illuminate\Support\Facades\URL;
 
 class ForgetPasswordController extends Controller
 {
-    public function forgetPassword(Request $request)
+    public function forgetPassword(ForgetPasswordRequest $request)
     {
 
-        if ($request->has('email')) //verifying that the email exists in the database
-        {
-            $user = User::where('email', $request->email)->first();
-        } else {
-            return back()->withErrors(['email' => 'The provided email does match our records.']);
-        }
-
+        $user = User::where('email', $request->email)->first();
         $name = $user->username; //fetcthing the username form the reques
         $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $request->email]); //creating the signature link that will expire in 2 minutes
         Forget_Password::create(["email" => $request->email]); //storing the forget email data in the database

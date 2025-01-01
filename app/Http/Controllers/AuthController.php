@@ -7,11 +7,9 @@ use App\Http\Requests\SignupRequest;
 use App\Jobs\MailVerification;
 use App\Models\User;
 use App\Models\Verifications;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -28,13 +26,7 @@ class AuthController extends Controller
 
     public function signUp(SignupRequest $request)
     {
-
       
-        if ($request->fails()) { //if form validation fails here
-            return redirect()->back()
-                ->withErrors($request)
-                ->withInput();
-        }
 
         $userinfo = ['username' => $request->username, 'email' => $request->email, 'password' => $request->password, 'address' => $request->address];
 

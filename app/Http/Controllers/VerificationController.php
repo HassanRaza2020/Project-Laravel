@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OtpRequest;
 use App\Jobs\MailVerification;
 use App\Mail\SignUpConfirmed;
 use App\Models\User;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Mail;
 class VerificationController extends Controller
 {
 
-    public function verificationOtp(Request $request)
+    public function verificationOtp(OtpRequest $request)
     {
 
         $otp = $request->otpverification;
