@@ -22,7 +22,7 @@ class AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'answerfield' => 'required|string|max:2000',
+            'answerfield' => 'required|string|max:2000',   //return these validations
         ];
     }
 }

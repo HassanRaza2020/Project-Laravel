@@ -23,6 +23,6 @@ class QuestionRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:2000'];
+            'description' => 'required|string|max:2000'];       //return these validations
     }
 }
