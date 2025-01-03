@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function() //Using the guest middleware for un
     Route::post('/otp-verification', [VerificationController::class, 'verificationOtp'])->name('verification-otp'); //sending the otp request for email verification
     Route::post('/resent-otp', [VerificationController::class, 'resentOtp'])->name('resend-otp'); // posting the resent request when the opt gets expire after 2 mins
     Route::get('/latest-question', [LatestQuestionsController::class, 'filterQuestion'])->name('latest-question');  //fitering the question which has been posted recently within one day
-    Route::get('/forget-password', function(){return fn()=> view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
+    Route::get('/forget-password', function(){return  view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
     Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forgetPassword'])->name('module.redirect'); // sending the email for reseting the password
     Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword']) // displayong the confirm password page
     ->name('confirm-password');
@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function() //Using the auth middleware for auth
 
 
  Route::get('/redirect-to-password/{email}', function ($email) {    
- return fn()=>view('auth.confirm-password', compact('email'));})
+ return view('auth.confirm-password', compact('email'));})
  ->name('module.redirected')
  ->middleware(['guest','signed']); //Using the middleware for signature route validation
 

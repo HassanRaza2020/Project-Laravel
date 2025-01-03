@@ -6,10 +6,19 @@ use App\Http\Requests\QuestionRequest;
 use App\Models\Content;
 use App\Models\Question;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Services\QuestionService;
 
 class QuestionController extends Controller
 {
+
+    protected $questionService;
+
+
+    public function __construct(QuestionService $questionService)  //injecting the service class in the controller
+    {
+        $this->questionService = $questionService;
+        
+    }
 
     // Show categories for the ask-question form
     public function askQuestion()
@@ -43,37 +52,33 @@ class QuestionController extends Controller
     public function show()
     {
 
-        $questions = Question::all();
+        $questions = $this->questionService->getAllQuestion();    //using the show method from  service class
 
-        return fn()=>view('questions.questions', compact('questions'));
+        return view('questions.questions', compact('questions')); //returning the view with question query
 
     }
 
     public function searchQuestion(Request $request)
     {
 
-        if ($request->has('query')) { // Check if there is a query, and filter results accordingly
-            $questions = Question::where('title', 'LIKE', "%{$request->input('query')}%")->get();
-        }
+        $questions = $this->questionService->searchQuestion($request->query('query')); //using the search method from service class
 
         return view('questions.questions', compact('questions'));
 
     }
 
-    public function deleteQuestion($key)
+    public function deleteQuestion($id)
     {
-        Question::where('question_id', $key)->delete(); //delete request for questions
-        Question::all();
-        // Return the view with the updated questions
+
+      $this->questionService->deleteQuestion($id);
+                                   // Return the view with the updated questions
         return response()->noContent();
     }
 
     public function editQuestion(QuestionRequest $request)     //edithg the questions
-    {                                                               
-        $editQuestion = Question::find($request->question_id);
-        $editQuestion->title = $request->title;
-        $editQuestion->description = $request->description;
-        $editQuestion->save(); //saving the updated question
+    {
+        $data = $request->only(['title', 'description']);
+        $this->questionService->updateQuesion($request->question_id, $data);                                                               
         return redirect()->back()->with('status', 'Question updated successfully');
 
     }

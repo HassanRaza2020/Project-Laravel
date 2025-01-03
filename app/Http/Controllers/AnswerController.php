@@ -9,9 +9,21 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
+use App\Services\AnswerService;
+
 
 class AnswerController extends Controller
 {
+
+
+    protected $answerService;
+
+
+    public function __construct(AnswerService $answerService)  //injecting the service class in the controller
+    {
+        $this->answerService = $answerService;
+        
+    }
 
     public function answerSubmit(AnswerRequest $request)
     {
@@ -32,15 +44,13 @@ class AnswerController extends Controller
 
         try {
             $key = urldecode($request->key);
-            $key_decrypted = Crypt::decrypt($key); //decrypting the key after the request has been posted
+            $keyDecrypted = Crypt::decrypt($key); //decrypting the key after the request has been posted
 
             // Fetch question
-            $question = Question::where('question_id', $key_decrypted)->first(); //encrypting the question id request
+            $question = Question::where('question_id', $keyDecrypted)->first(); //encrypting the question id request
 
             // Fetch related answers
-            $query = Answer::where('question_id', $key_decrypted)
-                ->select('user_id', 'answer_id', 'Description', 'username', 'created_at')
-                ->get();
+            $query = $this->answerService->findAnswer($keyDecrypted);
 
             return view('questions.main-page', compact('question', 'query'));
         } catch (DecryptException $e) {
@@ -52,11 +62,11 @@ class AnswerController extends Controller
     public function deleteAnswer($answerId, $questionKey)
     { //deleting the answers using question_id and answer_id
 
-        Answer::where('answer_id', $answerId)->delete(); //delete query using the where clause
+        $this->answerService->deleteAnswer($answerId); //delete query using the where clause
 
         Question::where('question_id', $questionKey)->select('question_id', 'title', 'Description')->first(); //selecting the columns
 
-        Answer::where('question_id', $answerId)->select('answer_id', 'Description', 'username')->get(); //after deleting the answer, this query will show all answers
+        $this->answerService->findAnswer($answerId); //after deleting the answer, this query will show all answers
 
         return redirect()->back(); //redirecting the page back the with no content
 
