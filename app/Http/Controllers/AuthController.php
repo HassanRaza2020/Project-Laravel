@@ -39,8 +39,7 @@ class AuthController extends Controller
         $data = [
             'email' => $request->email,
             'otp' => $otp,
-            'expires_at' => Carbon::now()->addMinute(2),
-        ];
+            'expires_at' => Carbon::now()->addMinute(2),];
 
         $verifications = Verifications::create($data); //inserting the data in the verifications table.
         //  Also opt expires at the given time in the database
@@ -53,13 +52,7 @@ class AuthController extends Controller
 
     public function logIn(LoginRequest $request)
     {
-        
-        // if ($request->fails()) {  //if form validation fails here 
-        //     return redirect()->
-        //     back()->withErrors($request)
-        //     ->withInput();
-        // }
-
+    
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) //if login credentials matches, the user logs in

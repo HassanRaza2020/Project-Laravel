@@ -45,7 +45,7 @@ class QuestionController extends Controller
 
         $questions = Question::all();
 
-        return view('questions.questions', compact('questions'));
+        return fn()=>view('questions.questions', compact('questions'));
 
     }
 
