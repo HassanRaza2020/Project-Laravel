@@ -16,7 +16,7 @@ class AnswerController extends Controller
 {
 
 
-    protected $answerService;
+    protected $answerService;  
 
 
     public function __construct(AnswerService $answerService)  //injecting the service class in the controller
@@ -50,9 +50,9 @@ class AnswerController extends Controller
             $question = Question::where('question_id', $keyDecrypted)->first(); //encrypting the question id request
 
             // Fetch related answers
-            $query = $this->answerService->findAnswer($keyDecrypted);
+            $query = $this->answerService->findAnswer($keyDecrypted);  //calling the find answer method
 
-            return view('questions.main-page', compact('question', 'query'));
+            return view('questions.main-page', compact('question', 'query'));  //returning the view with variables
         } catch (DecryptException $e) {
             return redirect()->route('error.page')->with('error', 'Invalid or tampered key!');
         }
