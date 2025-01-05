@@ -10,7 +10,7 @@ class LatestQuestionsController extends Controller
     public function filterQuestion()
     {
         $questions = Question::all();
-        return fn()=>view('questions.latestquestion', compact('questions'));
+        return view('questions.latestquestion', compact('questions'));
     }
 
 }
