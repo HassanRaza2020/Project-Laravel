@@ -16,7 +16,7 @@ class QuestionController extends Controller
 
     public function __construct(QuestionService $questionService)  //injecting the service class in the controller
     {
-        $this->questionService = $questionService;
+        $this->questionService = $questionService;  //copy constructor
         
     }
 
