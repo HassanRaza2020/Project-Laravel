@@ -22,15 +22,17 @@
     <h1 class="text-center">Verification</h1>
 
     <!-- Display Validation Errors -->
-    @if ($errors->any())
+    @if (($errors->any()))         
         <div class="alert alert-danger">
             <ul>
-                @foreach ($errors->all() as $error)
+                @foreach ($errors->all() as $error)   
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
+
     @endif
+ 
 
     <!-- Login Form -->
 

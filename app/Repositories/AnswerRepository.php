@@ -3,7 +3,7 @@
 namespace App\Repositories;
 use App\Models\Answer;
 
-class AnswerRepository{
+class AnswerRepository {
 
     protected $answerRepo;
     public function __construct(Answer $answerRepo)  //injecting the service class in the controller

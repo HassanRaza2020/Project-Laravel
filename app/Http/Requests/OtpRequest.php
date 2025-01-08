@@ -22,7 +22,7 @@ class OtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'otpverification' => 'required||exists:verifications,otp',    //retrun these conditioins
+          'otpverification' => 'required||exists:verifications,otp',    //retrun these conditioins
         ];
     }
 }

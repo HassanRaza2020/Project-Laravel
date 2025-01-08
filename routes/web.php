@@ -48,9 +48,7 @@ Route::middleware('auth')->group(function() //Using the auth middleware for auth
    });
 
 
-
- Route::get('/redirect-to-password/{email}', function ($email) {    
- return view('auth.confirm-password', compact('email'));})
+ Route::get('/redirect-to-password/{email}', function ($email) {    return view('auth.confirm-password', compact('email'));})
  ->name('module.redirected')
  ->middleware(['guest','signed']); //Using the middleware for signature route validation
 

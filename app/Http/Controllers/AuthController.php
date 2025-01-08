@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Jobs\MailVerification;
@@ -10,9 +9,17 @@ use App\Models\Verifications;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\VerificationService;
 
 class AuthController extends Controller
 {
+    protected $verificationService;
+    
+    public function __construct(VerificationService $verificationService){
+       $this->verificationService = $verificationService;         
+    }
+
+
     public function showSignUpForm()
     {
         return view('auth.signup');
@@ -26,26 +33,13 @@ class AuthController extends Controller
 
     public function signUp(SignupRequest $request)
     {
-      
-
-        $userinfo = ['username' => $request->username, 'email' => $request->email, 'password' => $request->password, 'address' => $request->address];
-
+        $otp = rand(100000,999999);
+        $userinfo = $this->verificationService->create($request,$otp); 
         $duration = 120;
         $endTime = time() + $duration;
 
-        $otp = rand(100000, 999999);
-        $otp = strval($otp);
-
-        $data = [
-            'email' => $request->email,
-            'otp' => $otp,
-            'expires_at' => Carbon::now()->addMinute(2),];
-
-        $verifications = Verifications::create($data); //inserting the data in the verifications table.
-        //  Also opt expires at the given time in the database
-
-        MailVerification::dispatch($request->username, $request->email, $otp); //Using Job Quene for sending the mail
-
+        MailVerification::dispatch($userinfo['username'], $userinfo['email'], $otp);
+    
         return view('auth.verification', compact('userinfo', 'endTime'));
 
     }
@@ -64,12 +58,11 @@ class AuthController extends Controller
 
             if (Hash::check(request('password'), $user->getAuthPassword())) {
                 $token = $user->createToken('web-session')->plainTextToken; //getting the form validation
-
                 return to_route('questions')->with('success', 'Logged in successfully.', ["token" => $token]);
-
             }
-
-        } else {
+        } 
+        else 
+        {
             return back()->withErrors(['password' => 'Invalid Password has been Entered']);
         }
 

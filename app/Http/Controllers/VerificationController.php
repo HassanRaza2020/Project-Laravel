@@ -1,43 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Requests\OtpRequest;
-use App\Jobs\MailVerification;
 use App\Mail\SignUpConfirmed;
 use App\Models\User;
 use App\Models\Verifications;
+use App\Services\VerificationService;
 use App\Notifications\SignUp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\MailVerification;
+use Illuminate\Support\Facades\Redirect;
 
 class VerificationController extends Controller
 {
+ 
+   protected $verificationService;
+   
+   public function __construct(VerificationService $verificationService)
+   {
+       $this->verificationService = $verificationService;
+   }
+
 
     public function verificationOtp(OtpRequest $request)
     {
 
+    
         $otp = $request->otpverification;
         $email = $request->userinfo['email'];
         $selectedOtp = Verifications::where('email', $email)->where('otp', $otp)->first();
-
-        //dd($selected_otp,$otp);
-
-        if (!$selectedOtp) {
-            return response()->json(['message' => 'Invalid Otp'], 400);
-        } else if (Carbon::now()->greaterThan($selectedOtp->expires_at)) {
-            return response()->json(['message' => 'OTP has expired'], 400);
-        } else {
+        
+        if (!$selectedOtp) 
+        {
+            return redirect()->back()->with('errors', 'OTP is Invalid, Please enter correct OTP');
+        } 
+        else if (Carbon::now()->greaterThan($selectedOtp->expires_at)) 
+        {
+            return redirect()->back()->with('errors', 'OTP has been expired, Please get a new OTP');
+                     
+        } 
+        else 
+        {
 
             $user = User::create([
                 'username' => $request->userinfo['username'],
                 'email' => $request->userinfo['email'],
                 'password' => Hash::make($request->userinfo['password']),
-                'address' => $request->userinfo['address'],
-
-            ]);
+                'address' => $request->userinfo['address']]);
 
             session()->flash('userinfo', $request->userinfo['username']);
 
@@ -53,28 +65,36 @@ class VerificationController extends Controller
            // Send the confirmation email
             Mail::to($email)->send(new SignUpConfirmed($request->userinfo['username']));
 
-            return to_route('login')->with('status', 'Your Credentials Successfully Created, Please login'); //redirecting to login when credentials are being set
+            
+
+            return to_route('login')->with('status', 'Your Credentials Successfully Created, Please Login'); //redirecting to login when credentials are being set
 
         }
 
     }
-
     public function resentOtp(Request $request)
     {
+        $otp = rand(100000, 999999); 
+        $duration = 120;
+        $endTime = time() + $duration; // Calculate OTP expiration time
 
-        $duration = 5;
-        $endTime = time() + $duration; //resetting the duration time when the otp expires
+        $userinfo = [
+            'username' => $request->userinfo['username'],
+            'email' =>    $request->userinfo['email'],
+            'password' => $request->userinfo['password'],
+            'address' =>  $request->userinfo['address']
+        ];
 
-        $otp = rand(100000, 999999);
-        $otp = strval($otp);
+    
+        // Create the OTP using the service
+        $this->verificationService->create($request, $otp);
+        MailVerification::dispatch($request->userinfo['username'],$request->userinfo['email'],$otp);
 
-        Verifications::create(['email' => $request->userinfo['email'], 'otp' => $otp,
-            'expires_at' => Carbon::now()->addMinute(2)]); //inserting the data to database
+       
 
-        MailVerification::dispatch($request->userinfo['username'], $request->userinfo['email'], $otp); //sending the email using job dispatch
-
-        return response()->noContent()->with('endtime'); //return to page by sending the endtime to view
-
+    
+        // Redirect back to the same page with flash data
+        return view('auth.verification',compact('userinfo','endTime'));
     }
-
+    
 }

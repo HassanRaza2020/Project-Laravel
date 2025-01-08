@@ -14,12 +14,12 @@ class MailVerification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $name,$email,$otp;
+    public $username,$email,$otp;
 
-      public function __construct($name,$email,$otp)
+      public function __construct($username ='' , $email='', $otp='')
     {
+        $this->username = $username;
         $this->email = $email;
-        $this->name = $name;
         $this->otp = $otp;
     }
 
@@ -28,6 +28,6 @@ class MailVerification implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->email)->send(new MyEmail($this->name, $this->otp));
+        Mail::to($this->email)->send(new MyEmail($this->username, $this->otp));
     }
 }
