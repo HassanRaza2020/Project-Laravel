@@ -7,16 +7,17 @@ use App\Jobs\MailVerification;
 use App\Models\User;
 use App\Models\Verifications;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Services\VerificationService;
+use App\Services\AuthenticationService;
 
 class AuthController extends Controller
 {
-    protected $verificationService;
+    protected $authenticationSerivce; //declaring the variable
     
-    public function __construct(VerificationService $verificationService){
-       $this->verificationService = $verificationService;         
+    public function __construct(AuthenticationService $authenticationSerivce){
+       $this->authenticationSerivce = $authenticationSerivce;         
     }
 
 
@@ -32,16 +33,12 @@ class AuthController extends Controller
     }
 
     public function signUp(SignupRequest $request)
+
     {
         $otp = rand(100000,999999);
-        $userinfo = $this->verificationService->create($request,$otp); 
-        $duration = 120;
-        $endTime = time() + $duration;
-
+        $userinfo = $this->authenticationSerivce->create($request);
         MailVerification::dispatch($userinfo['username'], $userinfo['email'], $otp);
-    
-        return view('auth.verification', compact('userinfo', 'endTime'));
-
+        return redirect()->route('view-verification-otp')->with('userinfo',$userinfo);       
     }
 
     public function logIn(LoginRequest $request)
@@ -53,7 +50,6 @@ class AuthController extends Controller
         {
             $request->session()->put('username', Auth::user()->username);
             $request->filled('remember'); //token remember me request
-
             $user = User::where('email', request('email'))->first();
 
             if (Hash::check(request('password'), $user->getAuthPassword())) {
