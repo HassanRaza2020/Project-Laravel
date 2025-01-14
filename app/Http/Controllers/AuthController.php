@@ -5,9 +5,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Jobs\MailVerification;
 use App\Models\User;
-use App\Models\Verifications;
-use Illuminate\Support\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\AuthenticationService;
@@ -37,6 +34,7 @@ class AuthController extends Controller
     {
         $otp = rand(100000,999999);
         $userinfo = $this->authenticationSerivce->create($request);
+        session()->put('userinfo',$userinfo);
         MailVerification::dispatch($userinfo['username'], $userinfo['email'], $otp);
         return redirect()->route('view-verification-otp')->with('userinfo',$userinfo);       
     }
