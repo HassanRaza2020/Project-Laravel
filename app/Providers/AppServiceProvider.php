@@ -3,27 +3,32 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
+use App\Services\VerificationService;
+use App\Repositories\VerificationRepository;
+use App\Services\UserService;
+use App\Repositories\UserRepository;
 
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
+    public function register()
     {
-        Schema::defaultStringLength(191);
-
-        app()->bind('Hello', function(){
-            return 'Hi';
+        
+        // Bind the VerificationService
+        $this->app->bind(VerificationService::class, function ($app) {
+            return new VerificationService($app->make(VerificationRepository::class));
         });
+
+
+        $this->app->bind(UserService::class, function($app){
+            return new UserService($app->make(UserRepository::class));
+        });//user service added here
+        
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
+    
+
+    public function boot()
     {
         //
     }
