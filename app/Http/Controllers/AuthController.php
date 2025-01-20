@@ -20,35 +20,23 @@ class AuthController extends Controller
 
     public function showSignUpForm()
     {
-        return view('auth.signup');
+        return view('auth.signup'); // resources/views/auth/signup.blade.php
     }
 
     // Show the login form
     public function showLoginForm()
     {
-        return view('auth.login'); // Ensure that this view exists in your resources/views/auth/login.blade.php
+        return view('auth.login'); // resources/views/auth/login.blade.php
     }
 
     public function signUp(SignupRequest $request)
     {   
          
-        //dd($request->_token); 
-        //dd($request->all());
-        $otp = rand(100000,999999);
-        $userinfo = $this->authenticationSerivce->create($request,$otp);
-    
-
-         // $userinfo = session('userinfo'); // Retrieve from session or use default array  
-        // dd($userinfo);
-       //    if (empty($userinfo)) 
-      //    {
-     //     return redirect()->back()->with('error', 'No user information found.');
-    //    }
-   // dd($userinfo); 
-        session()->put(["userinfo"=>$userinfo, "otp"=>$otp]);
-        MailVerification::dispatch($userinfo['username'] ,$userinfo['email'], $otp);
-        return redirect()->route('view-verification-otp')->with('userinfo',$userinfo);
-        // return response()->json([$userinfo]);       
+        $otp = rand(100000,999999); //gernerating otp using rand
+        $userinfo = $this->authenticationSerivce->create($request,$otp); //sending the create verification request
+        session()->put(["userinfo"=>$userinfo, "otp"=>$otp]);  //sending the variables userinfo array and otp code
+        MailVerification::dispatch($userinfo['username'] ,$userinfo['email'], $otp); //sending the mail function request
+        return redirect()->route('view-verification-otp')->with('userinfo',$userinfo); //redirect the page to specified route with userinfo array
     }
 
     public function logIn(LoginRequest $request)
@@ -70,7 +58,7 @@ class AuthController extends Controller
         } 
         else 
         {
-            return back()->withErrors(['password' => 'Invalid Password has been Entered']);
+            return back()->withErrors(['password' => 'Invalid Password has been Entered']);  //if password doesnot matches
         }
 
     }
