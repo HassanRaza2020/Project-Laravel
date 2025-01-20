@@ -30,13 +30,25 @@ class AuthController extends Controller
     }
 
     public function signUp(SignupRequest $request)
-
-    {
+    {   
+         
+        //dd($request->_token); 
+        //dd($request->all());
         $otp = rand(100000,999999);
-        $userinfo = $this->authenticationSerivce->create($request);
-        session()->put('userinfo',$userinfo);
-        MailVerification::dispatch($userinfo['username'], $userinfo['email'], $otp);
-        return redirect()->route('view-verification-otp')->with('userinfo',$userinfo);       
+        $userinfo = $this->authenticationSerivce->create($request,$otp);
+    
+
+         // $userinfo = session('userinfo'); // Retrieve from session or use default array  
+        // dd($userinfo);
+       //    if (empty($userinfo)) 
+      //    {
+     //     return redirect()->back()->with('error', 'No user information found.');
+    //    }
+   // dd($userinfo); 
+        session()->put(["userinfo"=>$userinfo, "otp"=>$otp]);
+        MailVerification::dispatch($userinfo['username'] ,$userinfo['email'], $otp);
+        return redirect()->route('view-verification-otp')->with('userinfo',$userinfo);
+        // return response()->json([$userinfo]);       
     }
 
     public function logIn(LoginRequest $request)
@@ -50,7 +62,8 @@ class AuthController extends Controller
             $request->filled('remember'); //token remember me request
             $user = User::where('email', request('email'))->first();
 
-            if (Hash::check(request('password'), $user->getAuthPassword())) {
+            if (Hash::check(request('password'), $user->getAuthPassword())) 
+            {
                 $token = $user->createToken('web-session')->plainTextToken; //getting the form validation
                 return to_route('questions')->with('success', 'Logged in successfully.', ["token" => $token]);
             }

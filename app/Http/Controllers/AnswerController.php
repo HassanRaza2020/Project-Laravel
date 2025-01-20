@@ -52,6 +52,7 @@ class AnswerController extends Controller
             // Fetch related answers
             $query = $this->answerService->findAnswer($keyDecrypted);  //calling the find answer method
 
+
             return view('questions.main-page', compact('question', 'query'));  //returning the view with variables
         } catch (DecryptException $e) {
             return redirect()->route('error.page')->with('error', 'Invalid or tampered key!');

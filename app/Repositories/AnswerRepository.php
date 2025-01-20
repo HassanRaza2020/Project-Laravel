@@ -24,7 +24,7 @@ class AnswerRepository {
 
 
     public function findAnswerById($id){
-        return $this->answerRepo::where('question_id', $id)->select('answer_id', 'Description', 'username', 'created_at')->get();  //creating findQuestionById function
+        return $this->answerRepo::where('question_id', $id)->get();  //creating findQuestionById function
     }
 
 

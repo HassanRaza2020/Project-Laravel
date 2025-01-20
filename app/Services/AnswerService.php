@@ -17,7 +17,7 @@ public function getAllAnswer(){
     return $this->answerRepository->getAllAnswer();  //calling the getAllQuestion method
 }
 
-public function createAnsert($data){
+public function createAnswer($data){
     return $this->answerRepository->createAnswer($data);  //calling the createQuestion method
 }
 

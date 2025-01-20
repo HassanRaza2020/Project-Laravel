@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -24,9 +22,11 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
+            if (Auth::guard($guard)->check())  //check that if the user is authenticated or noi
+
+            {
                 $searchEngine = config('app.search_engine', 'https://www.google.com'); // Default to Google if not set
-                return redirect($searchEngine);
+                return redirect($searchEngine); //return to search engine
             }
         }
 

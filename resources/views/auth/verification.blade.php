@@ -22,28 +22,27 @@
     <h1 class="text-center">Verification</h1>
 
     <!-- Display Validation Errors -->
-    @if (($errors->any()))         
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)   
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+  <!-- Display Validation Errors -->
 
+
+  @if (session()->has('errors'))
+  <div class="alert alert-danger">
+      <ul>
+          {{session('errors')}}
+      </ul>
+  </div>
+@endif
+
+    <form action="{{ route('verification-otp')}}" method="POST">
+
+    @csrf
+       
+    @if (!empty($userinfo) && is_array($userinfo))
+    @foreach ($userinfo as $key => $value)
+        <input type="hidden" name="userinfo[{{ $key }}]" value="{{ $value }}">
+    @endforeach
+   
     @endif
- 
-
-    <!-- Login Form -->
-
-    <form action="{{ route('verification-otp')}}" method="post">
-        @csrf
-    
-      @foreach ($userinfo as $key => $value )
-
-      <input type="hidden" name="userinfo[{{$key}}]" value="{{$value}}">
-          
-      @endforeach    
 
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Enter the OTP Code</label>
@@ -54,16 +53,14 @@
     </form>
 
 
-    <form action="{{route('resend-otp')}}" method="post">
-
+    <form action="{{ route('resend-otp', ['userArray' => base64_encode(json_encode($userinfo))]) }}" method="POST">
      @csrf
-
-        @foreach ($userinfo as $key => $value )
-
-        <input type="hidden" name="userinfo[{{$key}}]" value="{{$value}}">
-            
-        @endforeach    
-
+             
+    @foreach ($userinfo as $key => $value)
+        <input type="hidden" name="userinfo[{{ $key }}]" value="{{ $value }}">
+    @endforeach
+   
+    
         <button type="submit" id="Resent" style="visibility:hidden;" onclick="OtpResent()" class="btn btn-outline-danger" name="Resent">Resent</button>
 
     </form>
@@ -124,27 +121,6 @@
         clearInterval(timerInterval);
         timerInterval = setInterval(updateTimer, 1000); // Restart the timer
     }
-
-    // Resend OTP handler
-    $(document).ready(function () {
-        $("#Resent").on("click", function () {
-            $.ajax({
-                url: 'ResentOtp', // Laravel route for handling OTP resend
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}' // Include CSRF token for security
-                },
-                success: function (response) {
-                    // Update the timer logic after resending OTP
-                    OtpResent();
-                    console.log(response.message); // Optional: Display server response
-                },
-                error: function (error) {
-                    console.error("Error resending OTP:", error);
-                }
-            });
-        });
-    });
 
 
     </script>

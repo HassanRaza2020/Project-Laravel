@@ -34,15 +34,16 @@
 
 
     <!-- Display Validation Errors -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif 
+  
+@if ($errors && $errors->any()) <!-- Ensure $errors is not null -->
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
     <!-- Login Form -->
     <form action="{{ route('login-here')}}" method="POST">

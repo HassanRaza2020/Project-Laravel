@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,7 +23,20 @@ class OtpRequest extends FormRequest
     public function rules(): array
     {
         return [
-          'otpverification' => 'required||exists:verifications,otp',    //retrun these conditioins
+           //'otpverification' => 'required|exists:verifications,otp', // Validation rules
+        ];
+    }
+
+    /**
+     * Custom error messages for validation.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'otpverification.required' => 'The OTP field is required.',
+            'otpverification.exists' => 'The OTP you entered is invalid or does not exist.',
         ];
     }
 }
