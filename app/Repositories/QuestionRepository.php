@@ -17,8 +17,16 @@ class QuestionRepository{
     }
 
     public function createQuestion($data){
+        // Create a new question record
+        Question::create([
+            'user_id'     => auth()->id(), // Assuming the user is logged in
+            'username'    => auth()->user()->username,
+            'title'       => $data->title,
+            'description' => $data->description,
+            'content'     => $data->category,
+        ]);
 
-        return $this->questionRepo::create($data);   //creating createQuestion function
+       
     }
 
 

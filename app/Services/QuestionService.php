@@ -17,24 +17,24 @@ public function getAllQuestion(){
     return $this->questionRepository->getAllQuestion();  //calling the getAllQuestion method
 }
 
-public function createQuestion($data){
+public function create($data){
     return $this->questionRepository->createQuestion($data);  //calling the createQuestion method
 }
 
-public function deleteQuestion($id){
+public function delete($id){
     return $this->questionRepository->deleteQuestion($id);  //calling the deleteQuestion method
 }
 
-public function findQuestion($id){
+public function find($id){
     return $this->questionRepository->findQuestionById($id);  //calling the findQuestion method
 }
 
-public function searchQuestion($query){
+public function search($query){
     return $this->questionRepository->searchQuestion($query);  //calling the searchQuestion
    
 }
 
-public function updateQuesion($id, $data){
+public function update($id, $data){
  
     return $this->questionRepository->updateQuestion($id, $data);  //calling the updateQuestion
 

@@ -17,6 +17,7 @@ class AnswerRepository {
         
     }
 
+
     public function createAnswer($data){
 
         return $this->answerRepo::create($data);   //creating createQuestion function
@@ -35,11 +36,9 @@ class AnswerRepository {
     }
 
 
-    public function updateAnswer($id,$data){ 
-        $question  = $this->findAnswerById($id);  //creating updateQuestion function
-        $question->update($data);
-        return $question;
-
+    public function edit($data){ 
+        return $this->answerRepo::find($data->answer_id);  //creating edit answer function
+           
     }
 
 

@@ -55,7 +55,7 @@ class VerificationRepository{
      'email' => $email, //inserting the email
      'otp' => $otp, //inserting the otp
      'expires_at' => Carbon::now()->addMinute(2)]);//adding the time which expires after 2 minutes
-     return $verification;
+     return $verification; //returning the query
 
    }
 

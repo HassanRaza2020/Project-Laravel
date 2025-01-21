@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ForgetPasswordRequest;
@@ -17,10 +16,10 @@ class ForgetPasswordController extends Controller
     {
 
         $user = User::where('email', $request->email)->first();
-        $name = $user->username; //fetcthing the username form the reques
+        $name = $user->username;                                                                                            //fetcthing the username form the reques
         $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $request->email]); //creating the signature link that will expire in 2 minutes
-        Forget_Password::create(["email" => $request->email]); //storing the forget email data in the database
-        ForgetMail::dispatch($name, $link, $request->email); //send the email using the job dispatch
+        Forget_Password::create(["email" => $request->email]);                                                              //storing the forget email data in the database
+        ForgetMail::dispatch($name, $link, $request->email);                                                                //send the email using the job dispatch
         return redirect()->back()->with('success', 'Email has been sent successfully');
     }
 
@@ -37,11 +36,11 @@ class ForgetPasswordController extends Controller
             }
 
             $email = $request->email;
-            $user = User::where('email', $email)->first();
+            $user  = User::where('email', $email)->first();
 
             if ($user) {
                 $user->password = Hash::make($request->NewPassword); //password exist in the database, it will update the encrypted password
-                $user->save(); //saving the password
+                $user->save();                                       //saving the password
                 return to_route('login')->with('status', 'Password reset successfully');
             }
 

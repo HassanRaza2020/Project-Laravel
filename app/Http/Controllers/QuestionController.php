@@ -1,23 +1,21 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QuestionRequest;
 use App\Models\Content;
 use App\Models\Question;
-use Illuminate\Http\Request;
 use App\Services\QuestionService;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
 
     protected $questionService;
 
-
-    public function __construct(QuestionService $questionService)  //injecting the service class in the controller
+    public function __construct(QuestionService $questionService) //injecting the service class in the controller
     {
-        $this->questionService = $questionService;  //copy constructor
-        
+        $this->questionService = $questionService; //copy constructor
+
     }
 
     // Show categories for the ask-question form
@@ -31,17 +29,10 @@ class QuestionController extends Controller
 
     }
 
-    public function store(QuestionRequest $request)
+    public function storeQuestion(QuestionRequest $request)
     {
 
-        // Create a new question record
-        Question::create([
-            'user_id' => auth()->id(), // Assuming the user is logged in
-            'username' => auth()->user()->username,
-            'title' => $request->title,
-            'description' => $request->description,
-            'content' => $request->category,
-        ]);
+        $this->questionService->create($request);
 
         // Redirect with success message
 
@@ -52,7 +43,7 @@ class QuestionController extends Controller
     public function show()
     {
 
-        $questions = $this->questionService->getAllQuestion();    //using the show method from  service class
+        $questions = $this->questionService->getAllQuestion(); //using the show method from  service class
 
         return view('questions.questions', compact('questions')); //returning the view with question query
 
@@ -61,7 +52,7 @@ class QuestionController extends Controller
     public function searchQuestion(Request $request)
     {
 
-        $questions = $this->questionService->searchQuestion($request->query('query')); //using the search method from service class
+        $questions = $this->questionService->search($request->query('query')); //using the search method from service class
 
         return view('questions.questions', compact('questions'));
 
@@ -70,15 +61,15 @@ class QuestionController extends Controller
     public function deleteQuestion($id)
     {
 
-      $this->questionService->deleteQuestion($id);
-                                   // Return the view with the updated questions
+        $this->questionService->delete($id);
+        // Return the view with the updated questions
         return response()->noContent();
     }
 
-    public function editQuestion(QuestionRequest $request)     //edithg the questions
+    public function editQuestion(QuestionRequest $request) //edithg the questions
     {
         $data = $request->only(['title', 'description']);
-        $this->questionService->updateQuesion($request->question_id, $data);                                                               
+        $this->questionService->update($request->question_id, $data);
         return redirect()->back()->with('status', 'Question updated successfully');
 
     }

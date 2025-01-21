@@ -1,40 +1,63 @@
 <?php
-
 namespace App\Services;
 
 use App\Repositories\AnswerRepository;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
-class AnswerService{
-
-protected $answerRepository;
-
-public function __construct(AnswerRepository $answerRepository)  //injecting the constructor of Repo class
+class AnswerService
 {
-     $this->answerRepository = $answerRepository;      
-}
+    protected $answerRepository;
 
-public function getAllAnswer(){
-    return $this->answerRepository->getAllAnswer();  //calling the getAllQuestion method
-}
+    // Constructor to inject the AnswerRepository
+    public function __construct(AnswerRepository $answerRepository)
+    {
+        $this->answerRepository = $answerRepository;
+    }
 
-public function createAnswer($data){
-    return $this->answerRepository->createAnswer($data);  //calling the createQuestion method
-}
+    // Get all answers
+    public function getAllAnswer()
+    {
+        return $this->answerRepository->getAllAnswer();
+    }
 
-public function deleteAnswer($id){
-    return $this->answerRepository->deleteAnswer($id);  //calling the deleteQuestion method
-}
+    // Create a new answer
+    public function create($data)
+    {
+        return $this->answerRepository->createAnswer($data);
+    }
 
-public function findAnswer($id){
-    return $this->answerRepository->findAnswerById($id);  //calling the findQuestion method
-}
+    // Delete an answer by ID
+    public function delete($id)
+    {
+        return $this->answerRepository->deleteAnswer($id);
+    }
 
+    // Find an answer by ID and handle decryption
+    public function find($request)
+    {
+        try {
+            $key          = urldecode($request->key);
+            $keyDecrypted = Crypt::decrypt($key); // Decrypt the key
 
-public function updateAnswer($id, $data){
- 
-    return $this->answerRepository->updateAnswer($id, $data);  //calling the updateQuestion
+            // Fetch the answer by ID
+            $query = $this->answerRepository->findAnswerById($keyDecrypted);
 
-}
+            // Return the view with the answer data
+            return view('questions.main-page', compact('query'));
 
+        } catch (DecryptException $e) {
+            // Redirect to the error page if decryption fails
+            return redirect()->route('error.page')->with('error', 'Invalid or tampered key!');
+        }
+    }
 
+    // edit an answer by ID
+    public function edit($data)
+    {
+        $editAnswer=$this->answerRepository->edit($data->answer_id);           //fetching the answer_id
+        $editAnswer->description = $data->answerfield;                         //editing the answer
+        $editAnswer->save();                                                   //saving the updated answer
+
+    }
 }
