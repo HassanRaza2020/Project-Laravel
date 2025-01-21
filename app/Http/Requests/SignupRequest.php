@@ -22,10 +22,10 @@ class SignupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'username' => 'required|string|min:6',             //returning the validations of username field
-            // 'email' => 'required|email|unique:users,email',    //returning the validations of email field
-            // 'password' => 'required|confirmed|min:8',          //returning the validations of password field
-            // 'address' => 'required|string|max:255',            //returning the validations of address field
+            'username' => 'required|string|min:6',             //returning the validations of username field
+            'email' => 'required|email|unique:users,email',    //returning the validations of email field
+            'password' => 'required|confirmed|min:8',          //returning the validations of password field
+            'address' => 'required|string|max:255',            //returning the validations of address field
         ];
     }
 }
