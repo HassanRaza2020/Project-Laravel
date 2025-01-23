@@ -2,12 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnswerRequest;
-use App\Models\Answer;
 use App\Models\Question;
 use App\Services\AnswerService;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class AnswerController extends Controller
@@ -15,16 +12,16 @@ class AnswerController extends Controller
 
     protected $answerService;
 
-    public function __construct(AnswerService $answerService) //injecting the service class in the controller
+    public function __construct(AnswerService $answerService) 
     {
-        $this->answerService = $answerService;
+        $this->answerService = $answerService; //injecting the service class in the controller
 
     }
 
     public function answerSubmit(AnswerRequest $request)
     {
         // Create the answer using the key as question_id          
-         $this->answerService->create($request->all()); 
+         $this->answerService->create($request); 
         // Redirect back to the same page with a success message
         return redirect()->back()->with('success', 'Your Answer has been Submitted!');
     }
@@ -63,9 +60,7 @@ class AnswerController extends Controller
                 ->withInput();
         }
 
-        $editAnswer = Answer::find($request->answer_id);                           //fetching the answer_id
-        $editAnswer->description = $request->answerfield;                         //editing the answer
-        $editAnswer->save();                                                      //saving the updated answer
+       $this->answerService->edit($request->all());
         return redirect()->back()->with('status', 'Answer updated successfully'); //returns to page with this message
 
     }

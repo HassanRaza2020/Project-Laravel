@@ -8,14 +8,15 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\LatestQuestionsController;
+use App\Repositories\ForgetPasswordRepository;
 
 
-Route::middleware('guest')->group(function() //Using the guest middleware for unauthenticated users
+Route::group(['middleware' => 'guest'], function() //Using the guest middleware for unauthenticated users
  
 { 
 
-    Route::get('/login-here', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
-    Route::post('/login-here', [AuthController::class, 'loginForm'])->name('login-here'); //posting the login request
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
+    Route::post('/login', [AuthController::class, 'loginForm'])->name('login-here'); //posting the login request
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('view-signup'); // displaying the signup page
     Route::post('/post-signup',[AuthController::class, 'signupForm'])->name('signup');
     Route::get('/view-otp-verification',[VerificationController::class, 'viewOtpVerification'])->name('view-verification-otp');
@@ -25,12 +26,14 @@ Route::middleware('guest')->group(function() //Using the guest middleware for un
     Route::get('/forget-password', function(){return  view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
     Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forgetPassword'])->name('module.redirect'); // sending the email for reseting the password
     Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword'])->name('confirm-password');// displayong the confirm password page
+    Route::get('/test', function () {
+        return class_exists(ForgetPasswordRepository::class) ? 'Class exists' : 'Class does not exist';
+        
+    });
            
 });
 
-Route::middleware('auth')->group(function() //Using the auth middleware for authenticated users
- 
- {
+Route::group(['middleware' => 'auth'], function() { 
     Route::get('/questions', [QuestionController::class, 'show'])->name('questions'); //display the questions
     Route::get('/search-questions', [QuestionController::class, 'searchQuestion'])->name('search-questions'); //search query for searching the results
     Route::get('/logout', [LogoutController::class, 'logOut'])->name('logout'); //ending the session by logout button
@@ -45,8 +48,6 @@ Route::middleware('auth')->group(function() //Using the auth middleware for auth
    
    });
 
-
- Route::get('/redirect-to-password/{email}', function ($email) {    return view('auth.confirm-password', compact('email'));})
- ->name('module.redirected')
- ->middleware(['guest','signed']); //Using the middleware for signature route validation
-
+   Route::get('/redirect-to-password/{email}', [ForgetPasswordController::class, 'redirectToPassword'])
+   ->name('module.redirected')
+   ->middleware(['guest', 'signed']);

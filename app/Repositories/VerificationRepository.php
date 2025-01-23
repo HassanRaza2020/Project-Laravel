@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Repositories;
+namespace App\Repositories;
 use App\Models\Verifications;
 use App\Models\User;
 use Carbon\Carbon;
@@ -31,31 +31,16 @@ class VerificationRepository{
 
    public function searchOtp($data)
    {
-       $searchOtp = $this->verificationRepo::where("otp",$data->otpverification)->first(); //search the otp in the database if otp matches
-
-       if ($searchOtp)   //if query satisfies, it wll return the results 
-       {
-            return $searchOtp;
-       }  
-       else if ($searchOtp===null)  //if query is null, it wll return the results  
-       {
-            return "invalid";   
-       }       
-        else if (Carbon::now()->greaterThan($searchOtp->expires_at)) //if otp gets expired
-      {
-            return "expired";
-
-      }
-
-      }
+       return $this->verificationRepo::where("otp",$data->otpverification)->first(); //search the otp in the database if otp matches
+    }
 
    public function resent($email, $otp){
     
-     $verification= $this->verificationRepo::create([
+     $verification = $this->verificationRepo::create([
      'email' => $email, //inserting the email
      'otp' => $otp, //inserting the otp
      'expires_at' => Carbon::now()->addMinute(2)]);//adding the time which expires after 2 minutes
-     return $verification; //returning the query
+      return $verification; //returning the query
 
    }
 

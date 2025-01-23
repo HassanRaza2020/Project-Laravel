@@ -9,19 +9,24 @@ use Illuminate\Support\Facades\URL;
 
 class VerifySignedRouteExpiration
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
-    {
+public function handle(Request $request, Closure $next): Response
 
-         // Apply validation only for specific signed routes
-         if (!$request->routeIs('module.redirected')) {
-            return $next($request); // Skip for other routes
-        }
+    {
         
+        // Check if the request has a valid route
+        $route = $request->route();
+           
+        // If there is no route or the route is unnamed, skip the validation
+        if (!$route || !$route->getName()) {
+            return $next($request);
+        }
+
+        // Check only the 'module.redirected' route
+        if ($route->getName() !== 'module.redirected') {
+            return $next($request);
+        }
+
+        // Validate the signature of the URL
         if (!URL::hasValidSignature($request)) {
             return response()->view('errors.link-expired', [], 403); // Custom "Link Expired" view
         }

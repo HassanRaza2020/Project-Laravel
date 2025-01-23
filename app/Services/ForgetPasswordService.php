@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Services;
 
+use App\Jobs\ForgetMail;
 use App\Repositories\ForgetPasswordRepository;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Carbon;
-use App\Jobs\ForgetMail;
 
 class ForgetPasswordService
 {
@@ -20,9 +19,10 @@ class ForgetPasswordService
     // Handle forget password process
     public function processForgetPassword($email)
     {
+        
         $user = $this->forgetPasswordRepository->findUserByEmail($email);
 
-        if (!$user) {
+        if ( $user) {
             return ['success' => false, 'message' => 'User not found'];
         }
 

@@ -52,5 +52,5 @@
             <input type="text" name="email" class="form-control"  placeholder ="Enter your email" required>
         </div>
 
-        <button type="submit" id="submit" class="btn btn-outline-danger" name="login">Submit</button>
+        <button type="submit" id="submit" class="btn btn-outline-danger">Submit</button>
     </form>

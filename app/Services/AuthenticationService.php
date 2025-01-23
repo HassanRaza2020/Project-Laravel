@@ -1,14 +1,15 @@
 <?php
-
 namespace App\Services;
 
-use App\Repositories\AuthenticationRepository;
 use App\Jobs\MailVerification;
-use Carbon\Carbon;
+use App\Models\User;
+use App\Repositories\AuthenticationRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-class AuthenticationService {
+use Illuminate\Support\Facades\Log;
+
+class AuthenticationService
+{
 
     protected $authenticationRepo;
 
@@ -17,57 +18,78 @@ class AuthenticationService {
         $this->authenticationRepo = $authenticationRepo;
     }
 
-    public function create($data){
-   
-        $otp = rand(000000,999999); //generating the otp using rand function   
+    public function create($data)
+    {
+        
+        $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT); // Ensure 6-digit OTP
+      
         try {
-            $userInfo = [                   //creating the userinfo array
+
+            $userInfo = [
                 'username' => $data->username,
-                'email' =>    $data->email,
-                'password' => $data->password,
-                'address' =>  $data->address 
+                'email'    => $data->email,
+                'password' => Hash::make($data->password), // Securely hash the password
+                'address'  => $data->address,
             ];
+
+            
+            // Save the user and OTP
+            $this->authenticationRepo->create($userInfo,$otp);
+
+            session()->flush();
            
-            $this->authenticationRepo->create($otp,$data); 
-            session()->put(["userinfo" => $userInfo, "otp" => $otp]);                       //sending the variables userinfo array and otp code
-            MailVerification::dispatch($userInfo['username'], $userInfo['email'], $otp);    //sending the mail function request
+            session()->put($userInfo);
+            
+             // Debug session data
+            
+           // Store necessary data in the session
 
 
+            // Dispatch the email verification job
+            MailVerification::dispatch($userInfo['username'], $userInfo['email'], $otp);
 
         } catch (\Exception $e) {
-            // Log the exception message for debugging purposes
+            // Log the error for debugging
+            Log::error('Error in OTP generation or email dispatch: ' . $e->getMessage());
 
             // Redirect back with an error message
-            return redirect()->back()->with('error', 'Please enter the data from the form again.');
+            return redirect()->back()->with('error', 'An error occurred. Please try again.');
         }
-        return $userInfo;
+
+        return ['username' => $userInfo['username'], 'email' => $userInfo['email']]; // Return non-sensitive data
     }
 
     public function createLogin($data)
-
-{
+    {
+        // Get credentials from the request
         $credentials = $data->only('email', 'password');
 
-        if (Auth::attempt($credentials)) //if login credentials matches, the user logs in
-        {
-            $data->session()->put('username', Auth::user()->username); //storing the username in the session
-            $data->filled('remember'); //token remember me request
-            $user = $data->email; //fetch the email from the  request
+        // Attempt to log in with the provided credentials
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user(); // Get the authenticated user
+            $id   = Auth::id();
 
-            if (Hash::check(request('password'), $user->getAuthPassword())) {
-                $token = $user->createToken('web-session')->plainTextToken; //getting the form validation
-                return to_route('questions')->with('success', 'Logged in successfully.', ["token" => $token]);
+            // Store the username in the session
+            $data->session()->put('username', $user->username);
+
+            // Handle 'remember me' functionality
+            if ($data->filled('remember')) {
+                Auth::login($user, true); // Remember the user
+            } else {
+                Auth::login($user); // Log in without remembering
             }
+
+            // Generate a token for the authenticated user
+            $user  = User::find($id);
+            $token = $user->createToken('web-session')->plainTextToken;
+
+            // Redirect to the questions route with a success message and token
+
+            return redirect()->route('questions')->with(['success' => 'Logged in successfully.', 'token' => $token]);
         } else {
-            return back()->withErrors(['password' => 'Invalid Password has been Entered']); //if password doesnot matches
-        } 
-
-
-
-
-
-    
-}
-
+            // Return back with an error if login fails
+            return back()->withErrors(['email' => 'Invalid credentials']);
+        }
+    }
 
 }
