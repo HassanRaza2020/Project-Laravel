@@ -35,7 +35,6 @@
 
 
 
-
     <div class="information">
         <h4 style="font-family: cursive">{{$question->title}}</h4>
 

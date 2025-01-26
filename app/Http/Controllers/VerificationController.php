@@ -64,7 +64,7 @@ class VerificationController extends Controller
     }
     public function resentOtp(ResentOtpRequest $request)
     {
-            return $this->verificationService->resent($request->all());                         // Create the OTP using the service
+            return $this->verificationService->resent($request->all());       // Create the OTP using the service
         
     }
 

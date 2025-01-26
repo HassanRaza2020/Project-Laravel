@@ -2,18 +2,27 @@
 
 namespace App\Repositories;
 use App\Models\Question;
+use App\Models\Content;
 
 class QuestionRepository{
-    protected $questionRepo;
-    public function __construct(Question $questionRepo)  //injecting the service class in the controller
+    protected $questionRepo, $categoriesList;
+    public function __construct(Question $questionRepo, Content $categoriesList )  //injecting the service class in the controller
     {
         $this->questionRepo = $questionRepo;
+        $this->categoriesList = $categoriesList; 
         
     }
   
     public function getAllQuestion(){
         return $this->questionRepo::all();   //creating getAllQuestion function
         
+    }
+   
+
+
+    public function categoriesList(){
+      return  $this->categoriesList = Content::select('content_id', 'content_name')->get();
+    
     }
 
     public function createQuestion($data){

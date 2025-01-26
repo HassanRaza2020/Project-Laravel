@@ -6,15 +6,17 @@ use App\Models\Question;
 use App\Services\AnswerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\DisplayQuestionDetailsService;
 
 class AnswerController extends Controller
 {
 
-    protected $answerService;
+    protected $answerService, $displayQuestionDetailsService;
 
-    public function __construct(AnswerService $answerService) 
+    public function __construct(AnswerService $answerService , DisplayQuestionDetailsService $displayQuestionDetailsService) 
     {
         $this->answerService = $answerService; //injecting the service class in the controller
+        $this->displayQuestionDetailsService = $displayQuestionDetailsService;
 
     }
 
@@ -28,8 +30,9 @@ class AnswerController extends Controller
 
     public function showPage(Request $request)
     {
-
-       $this->answerService->create($request);
+       $question = $this->displayQuestionDetailsService->displayQuestionDetails($request);
+       $query = $this->displayQuestionDetailsService->displayAnswerList($request);
+        return view("questions.main-page", compact('question','query'));
 
     }
 

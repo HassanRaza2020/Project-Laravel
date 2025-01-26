@@ -36,9 +36,9 @@ class AuthenticationService
             // Save the user and OTP
             $this->authenticationRepo->create($userInfo,$otp);
 
-            session()->flush();
+            session()->flush(); //clear the previous data in the session
            
-            session()->put($userInfo);
+            session()->put($userInfo); //entering the data in the session
             
              // Debug session data
             

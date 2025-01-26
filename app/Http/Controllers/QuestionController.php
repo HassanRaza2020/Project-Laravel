@@ -19,11 +19,10 @@ class QuestionController extends Controller
     }
 
     // Show categories for the ask-question form
-    public function askQuestion()
+    public function categoriesList()
     {
         // Fetching all categories with 'content_id' and 'content_name'
-        $categories = Content::select('content_id', 'content_name')->get();
-
+        $categories = $this->questionService->categoriesList();
         // Pass categories to the view
         return view('questions.askquestion', compact('categories'));
 

@@ -40,6 +40,13 @@ public function update($id, $data){
 
 }
 
+public function categoriesList()
+{
+   return $this->questionRepository->categoriesList();    
+}
+
+
+
 
 
 
