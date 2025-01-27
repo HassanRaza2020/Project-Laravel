@@ -39,11 +39,14 @@
         <h4 style="font-family: cursive">{{$question->title}}</h4>
 
         <p style="font-family: cursive">{{$question->description}}</p>
+       
 
 
 
     </div>
     <p hidden>{{ $id = auth()->id() }} </p>
+
+  
 
 
     <div class="container">

@@ -12,19 +12,26 @@ class ForgetPasswordController extends Controller
 
     public function __construct(ForgetPasswordService $forgetPasswordService)
     {
-        $this->forgetPasswordService = $forgetPasswordService; //creating a constructor
+        $this->forgetPasswordService = $forgetPasswordService; 
     }
+
+
 
     // Handle forget password request
     public function forgetPassword(ForgetPasswordRequest $request)
-    {
-        $response = $this->forgetPasswordService->processForgetPassword($request->email); 
+    { 
+  
+        $response = $this->forgetPasswordService->processForgetPassword($request->email); //calling the forgetPassword function for verifying email 
 
         if ($response['success']) {
-            return redirect()->back()->with('success', $response['message']);
+            $this->forgetPasswordService->create($request->email); // Execute the service logic
+            return redirect()->back()->with('success', $response['message']); // Redirect after the service call                
         }
-
-        return redirect()->back()->with('error', $response['message']);
+        else
+        {
+            return redirect()->back()->with('error', 'email not being sent'); 
+        }
+     
     }
 
     // Handle password confirmation

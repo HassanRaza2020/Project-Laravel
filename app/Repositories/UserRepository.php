@@ -17,8 +17,8 @@ class UserRepository {
    public  function create($request)
    {
 
-    $createUser = $this->userRepository::create([
-        'username' => $request->userinfo['username'],
+    $createUser = $this->userRepository::create([        //user creation query 
+        'username' => $request->userinfo['username'],  
         'email' =>    $request->userinfo['email'],
         'password' => Hash::make($request->userinfo['password']),
         'address' =>  $request->userinfo['address']]);

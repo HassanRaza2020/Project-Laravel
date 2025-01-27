@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(VerificationService::class, function ($app) {
-            return new VerificationService($app->make(VerificationRepository::class));
+            return new VerificationService($app->make(VerificationRepository::class), $app->make(UserRepository::class) );
         });
 
         $this->app->bind(UserService::class, function ($app) {

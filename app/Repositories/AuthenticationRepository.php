@@ -26,8 +26,6 @@ class AuthenticationRepository
             'expires_at' => Carbon::now()->addMinute(2)->toDateTimeString(), // formatted expiration time
         ]);
 
-
-
         return $create; //creating the verification otp
 
     }

@@ -20,7 +20,7 @@ class LatestQuestionsController extends Controller
 
     public function filterQuestion()
     {
-        $questions = $this->questionService->getAllQuestion();
+        $questions = $this->questionService->getAllQuestion();   //latest question filter by conditioniing 
         return view('questions.latestquestion', compact('questions'));
     }
 

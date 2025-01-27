@@ -30,9 +30,9 @@ class AnswerController extends Controller
 
     public function showPage(Request $request)
     {
-       $question = $this->displayQuestionDetailsService->displayQuestionDetails($request);
-       $query = $this->displayQuestionDetailsService->displayAnswerList($request);
-        return view("questions.main-page", compact('question','query'));
+       $question = $this->displayQuestionDetailsService->displayQuestionDetails($request); //displaying question details
+       $query = $this->displayQuestionDetailsService->displayAnswerList($request);  //displaying answers list
+        return view("questions.main-page", compact('question','query')); //returning the view with variables
 
     }
 
@@ -63,7 +63,7 @@ class AnswerController extends Controller
                 ->withInput();
         }
 
-       $this->answerService->edit($request->all());
+       $this->answerService->edit($request);
         return redirect()->back()->with('status', 'Answer updated successfully'); //returns to page with this message
 
     }

@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Models\Verifications;
 use App\Models\User;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Hash;
 class VerificationRepository{
 
     protected $verificationRepo, $user; 
@@ -17,24 +17,12 @@ class VerificationRepository{
 
     // Insert verification details into the database
 
-   public  function create($request)
-   {
-     $createUser = $this->user::create([   //create user function using the all requests
-     
-     "username"=>$request->username,
-     "email"=>$request->email,   
-     "password"=>$request->password,
-     "address"=>$request->address ]);   
-     
-     return $createUser;  //return back the query 
-   }
-
    public function searchOtp($data)
    {
        return $this->verificationRepo::where("otp",$data->otpverification)->first(); //search the otp in the database if otp matches
     }
 
-   public function resent($email, $otp){
+   public function resentOtp($email, $otp){
     
      $verification = $this->verificationRepo::create([
      'email' => $email, //inserting the email

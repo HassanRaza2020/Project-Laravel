@@ -24,15 +24,15 @@ class ForgetPasswordRepository
     }
 
     // Create a forget password record
-    public function createForgetPassword($email)
+    public function create($email)
     {
-        return $this->forgetPasswordRepo::create(['email' => $email]);
+        return $this->forgetPasswordRepo::create(['email' => $email]);  //create forget possword email record
     }
 
     // Update user password
     public function updatePassword($email, $newPassword)
     {
-        $user = $this->findUserByEmail($email);  //email 
+        $user = $this->findUserByEmail($email);  //find the user by email 
 
         if ($user) {
             $user->password = $newPassword;

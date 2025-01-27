@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Log;
 class AuthenticationService
 {
 
-    protected $authenticationRepo;
+    protected $authenticationRepo, $user;
 
-    public function __construct(AuthenticationRepository $authenticationRepo)
+    public function __construct(AuthenticationRepository $authenticationRepo ,User $user)
     {
         $this->authenticationRepo = $authenticationRepo;
+        $this->user = $user;
     }
 
     public function create($data)
@@ -59,11 +60,13 @@ class AuthenticationService
         return ['username' => $userInfo['username'], 'email' => $userInfo['email']]; // Return non-sensitive data
     }
 
-    public function createLogin($data)
+    public function LoginRequest($data)
     {
+
         // Get credentials from the request
         $credentials = $data->only('email', 'password');
-
+        // dd($credentials['password']);
+//  dd(Auth::attempt($credentials));
         // Attempt to log in with the provided credentials
         if (Auth::attempt($credentials)) {
             $user = Auth::user(); // Get the authenticated user

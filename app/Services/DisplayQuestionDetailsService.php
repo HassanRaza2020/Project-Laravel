@@ -16,15 +16,16 @@ public function __construct(DisplayQuestionDetailsRepository $displayQuestionDet
 
 public function displayQuestionDetails($questionId){
     
-    $key = decrypt($questionId->key);
-    return $this->displayQuestionDetailsService->displayQuestionDetails($key);
+    $key = decrypt($questionId->key);       //decrypting the question_id
+    return $this->displayQuestionDetailsService->displayQuestionDetails($key); //displaying the question details
  
   }
 
   public function displayAnswerList($questionId){
-    $key = decrypt($questionId->key);
-    return $this->displayQuestionDetailsService->displayAnswerList($key);
+    $key = decrypt($questionId->key);                                      //decrypting the question_id
+   return  $this->displayQuestionDetailsService->displayAnswerList($key);  //method for answers display
     
+  
   }
 
 

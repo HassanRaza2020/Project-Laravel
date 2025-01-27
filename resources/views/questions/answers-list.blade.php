@@ -30,12 +30,19 @@
 <p hidden> {{$USER_ID = auth()->id()}}</p>
 
 <h3 class="answers">Answers</h3>
-    
+ @if ($query->isEmpty())
+
+
+<p>Answers not found </p>
+
+
+@else
+
 
    @foreach($query as $answers)
-
+          
          <div class="answer-section">
-         <i>{{$answers->username}}</i>
+         <i>{{$answers->Username}}</i>
          <div class='answer-list'>
          {{ $answers->Description }}
 
@@ -104,13 +111,16 @@
 
 @endif
 
-<p class="timestamp">{{$answers->created_at->format('g:i a')}} <p>
+<p class="timestamp">{{$answers->updated_at->format('g:i a')}} <p>
 
         </div>
     </div>
 
    
 @endforeach
+
+@endif
+
 
 
 @endsection

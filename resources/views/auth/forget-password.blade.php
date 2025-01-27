@@ -45,7 +45,7 @@
     <!-- Login Form -->
 
     <form action="{{route('module.redirect')}}" method="GET">
-    
+    @method("GET")
    
         <div class="col-10 offset-sm margin-bottom-15">
             <label for="password">Enter your Email</label>

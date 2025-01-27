@@ -3,11 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
-use App\Jobs\MailVerification;
-use App\Models\User;
 use App\Services\AuthenticationService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -37,7 +33,8 @@ class AuthController extends Controller
 
     public function loginForm(LoginRequest $request)
     {
-       return $this->authenticationSerivce->createLogin($request);
+         
+       return $this->authenticationSerivce->LoginRequest($request);  
        
     }
 

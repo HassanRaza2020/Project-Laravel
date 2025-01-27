@@ -6,7 +6,7 @@ use App\Http\Requests\ResentOtpRequest;
 use App\Services\AuthenticationService;
 use App\Services\UserService;
 use App\Services\VerificationService;
-use Illuminate\Support\Facades\Auth;
+
 class VerificationController extends Controller
 {
 
@@ -21,39 +21,26 @@ class VerificationController extends Controller
 
     public function viewOtpVerification($userInfoResent = null)
     {
-        $otp = rand(100000, 999999);
-        $duration = 20;                 // Duration in seconds
-        $endTime  = time() + $duration; // Calculate OTP expiration time
+        $arrayOtp = $this->verificationService->OtpVerification($userInfoResent); //calling the otp function
+                                                                                 
+        [$userinfo, $endTime] = [$arrayOtp["userinfo"], $arrayOtp["endTime"]];    //accessing and storing the variables
 
-        // Use $userInfoResent if it's not null, otherwise retrieve from session
-        if ($userInfoResent !== null) 
-        {
-            $userinfo = $userInfoResent;
-        } 
-        else 
-        {   
-            $userinfo = session()->only(['username', 'email','password','address']); //retreiving the values       
-            session()->forget(['username', 'email','password','address']);
- 
-        }
-        
-        // Pass data to the view
-        return view('auth.verification', compact('userinfo', 'endTime'));
+        return view('auth.verification', compact('userinfo', 'endTime'));     // Pass data to the view
     }
 
     public function verificationOtp(OtpRequest $request)
     {
-        $otp = $request->otpverification;
+        $otp         = $request->otpverification;
         $selectedOtp = $this->verificationService->searchOtp($request);
 
         if ($selectedOtp->otp === $otp) {
             $this->userService->create($request);
-            session()->flash($request->userinfo['username']);
+            session()->flash($request->userinfo['username']); //entering the username in the session
 
-            // Create a new sign-up instance with dynamic data
-                                                                                                             
+            // Create a new sign-up instance with dynamic data $2y$12$POLIqRaNnlNz76mREF95ce2ArdhdcZuSlM2Z9iOiJIThEN0VpiJ3e
+
             return to_route('login')->with('status', 'Your Credentials Successfully Created, Please Login'); //redirecting to login when credentials are being set
-        }   else if ($selectedOtp === "invalid") {
+        } else if ($selectedOtp === "invalid") {
             return redirect()->back()->with(['errors' => 'otp is invalid here', 'userinfo' => $request->userinfo]);
 
         } else if ($selectedOtp === "expired") {
@@ -64,8 +51,8 @@ class VerificationController extends Controller
     }
     public function resentOtp(ResentOtpRequest $request)
     {
-            return $this->verificationService->resent($request->all());       // Create the OTP using the service
-        
+        return $this->verificationService->resentOtp($request); // resent the the OTP using the service
+
     }
 
 }
