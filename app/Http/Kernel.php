@@ -69,6 +69,8 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\VerifySignedRouteExpiration::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'prevent-back-button' => \App\Http\Middleware\PreventBackButtonMiddleware::class,
+
        
 
         

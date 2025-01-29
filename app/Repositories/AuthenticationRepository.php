@@ -18,10 +18,9 @@ class AuthenticationRepository
 
     public function create($data, $otp) //to create verification
     {
-        
-        
+
         $create = $this->verificationRepo::create([
-            'email'      => $data['email'],                        // inserting the email
+            'email'      => $data['email'],                                  // inserting the email
             'otp'        => $otp,                                            // inserting the otp
             'expires_at' => Carbon::now()->addMinute(2)->toDateTimeString(), // formatted expiration time
         ]);

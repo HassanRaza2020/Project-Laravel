@@ -27,8 +27,8 @@ class AuthController extends Controller
 
     public function signupForm(SignupRequest $request)
     {
-        $userinfo = $this->authenticationSerivce->create($request);               //sending the create verification request
-        return redirect()->route('view-verification-otp')->with('userinfo', $userinfo); //redirect the page to specified route with userinfo array
+        $userinfo = $this->authenticationSerivce->create($request);   //sending the create verification request
+        return redirect()->route('view-verification-otp', ["userinfo"=>$userinfo]); //redirect the page to specified route with userinfo array
     }
 
     public function loginForm(LoginRequest $request)

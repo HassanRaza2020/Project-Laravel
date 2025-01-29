@@ -14,7 +14,7 @@ class UserService {
   }
 
   public function create($data){
-    $this->userRespository->create($data);
+    $this->userRespository->create($data);   //creating the user
 
   }
 

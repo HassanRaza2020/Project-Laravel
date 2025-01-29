@@ -33,6 +33,7 @@
   </div>
 @endif
 
+
     <form action="{{ route('verification-otp')}}" method="POST">
 
     @csrf
@@ -51,10 +52,10 @@
 
         <button type="submit" id="submit" class="btn btn-outline-danger" name="login">Submit</button>
     </form>
-
-
-    <form action="{{ route('resend-otp', ['userArray' => base64_encode(json_encode($userinfo))]) }}" method="POST">
+       
+    <form action="{{ route('resend-otp',  ['userarray' => base64_encode(json_encode($userinfo))]) }}) }}" method="POST">
      @csrf
+
              
     @foreach ($userinfo as $key => $value)
         <input type="hidden" name="userinfo[{{ $key }}]" value="{{ $value }}">
@@ -68,7 +69,8 @@
     </div>
     <div id="timer" style="font-size: 20px; color: rgb(245, 35, 35);" class="timer"></div>
     <script>
-        // End time from Laravel (passed as a server-side variable)
+   
+    // End time from Laravel (passed as a server-side variable)
     let endTime = @json($endTime);
     console.log(endTime, "endtime");
 
@@ -122,6 +124,12 @@
         timerInterval = setInterval(updateTimer, 1000); // Restart the timer
     }
 
+     
+    // if (performance.navigation.type === 2) { // 2 means "Back/Forward" navigation
+    //     window.location.href = "{{ route('view-signup') }}"; 
+    // }
+    
+    
 
     </script>
 

@@ -13,41 +13,31 @@ class AuthenticationService
 
     protected $authenticationRepo, $user;
 
-    public function __construct(AuthenticationRepository $authenticationRepo ,User $user)
+    public function __construct(AuthenticationRepository $authenticationRepo, User $user)
     {
         $this->authenticationRepo = $authenticationRepo;
-        $this->user = $user;
+        $this->user               = $user;
     }
 
     public function create($data)
     {
-        
+
         $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT); // Ensure 6-digit OTP
-      
+
         try {
 
-            $userInfo = [
+            $userData = [
                 'username' => $data->username,
                 'email'    => $data->email,
                 'password' => Hash::make($data->password), // Securely hash the password
                 'address'  => $data->address,
             ];
 
-            
             // Save the user and OTP
-            $this->authenticationRepo->create($userInfo,$otp);
-
-            session()->flush(); //clear the previous data in the session
-           
-            session()->put($userInfo); //entering the data in the session
-            
-             // Debug session data
-            
-           // Store necessary data in the session
-
+            $this->authenticationRepo->create($userData, $otp);
 
             // Dispatch the email verification job
-            MailVerification::dispatch($userInfo['username'], $userInfo['email'], $otp);
+            MailVerification::dispatch($userData['username'], $userData['email'], $otp);
 
         } catch (\Exception $e) {
             // Log the error for debugging
@@ -57,7 +47,7 @@ class AuthenticationService
             return redirect()->back()->with('error', 'An error occurred. Please try again.');
         }
 
-        return ['username' => $userInfo['username'], 'email' => $userInfo['email']]; // Return non-sensitive data
+        return $userData; // Return non-sensitive data
     }
 
     public function LoginRequest($data)
@@ -65,8 +55,7 @@ class AuthenticationService
 
         // Get credentials from the request
         $credentials = $data->only('email', 'password');
-        // dd($credentials['password']);
-//  dd(Auth::attempt($credentials));
+
         // Attempt to log in with the provided credentials
         if (Auth::attempt($credentials)) {
             $user = Auth::user(); // Get the authenticated user

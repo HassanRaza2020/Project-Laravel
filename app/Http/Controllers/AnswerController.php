@@ -41,7 +41,7 @@ class AnswerController extends Controller
 
         $this->answerService->delete($answerId); //delete query using the where clause
 
-        Question::where('question_id', $questionKey)->select('question_id', 'title', 'Description')->first(); //selecting the columns
+        //Question::where('question_id', $questionKey)->select('question_id', 'title', 'Description')->first(); //selecting the columns
 
         $this->answerService->find($answerId); //after deleting the answer, this query will show all answers
 
@@ -52,18 +52,7 @@ class AnswerController extends Controller
     public function editAnswer(AnswerRequest $request)
     {
 
-        $validator = Validator::make($request->all(), //validation form added here
-            [
-                'answerfield' => 'required|string|max:2000',
-            ]);
-
-        if ($validator->fails()) { //if validation fails here
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-       $this->answerService->edit($request);
+        $this->answerService->edit($request);
         return redirect()->back()->with('status', 'Answer updated successfully'); //returns to page with this message
 
     }

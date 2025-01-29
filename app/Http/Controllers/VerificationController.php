@@ -2,10 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OtpRequest;
-use App\Http\Requests\ResentOtpRequest;
 use App\Services\AuthenticationService;
 use App\Services\UserService;
 use App\Services\VerificationService;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
@@ -19,13 +19,13 @@ class VerificationController extends Controller
         $this->userService           = $userService;
     }
 
-    public function viewOtpVerification($userInfoResent = null)
+    public function viewOtpVerification(Request $request)
     {
-        $arrayOtp = $this->verificationService->OtpVerification($userInfoResent); //calling the otp function
-                                                                                 
-        [$userinfo, $endTime] = [$arrayOtp["userinfo"], $arrayOtp["endTime"]];    //accessing and storing the variables
 
-        return view('auth.verification', compact('userinfo', 'endTime'));     // Pass data to the view
+        $arrayOtp             = $this->verificationService->OtpVerification($request); //calling the otp function
+        [$userinfo, $endTime] = [$arrayOtp["userinfo"], $arrayOtp["endTime"]];         //accessing and storing the variables
+
+        return view('auth.verification', compact('userinfo', 'endTime')); // Pass data to the view
     }
 
     public function verificationOtp(OtpRequest $request)
@@ -49,9 +49,9 @@ class VerificationController extends Controller
         }
 
     }
-    public function resentOtp(ResentOtpRequest $request)
+    public function resentOtp($userarray)
     {
-        return $this->verificationService->resentOtp($request); // resent the the OTP using the service
+        return $this->verificationService->resentOtp($userarray); // resent the the OTP using the service
 
     }
 

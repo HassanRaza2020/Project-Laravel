@@ -55,9 +55,9 @@ class AnswerService
     // edit an answer by ID
     public function edit($data)
     {
-        $editAnswer=$this->answerRepository->edit($data->answer_id);           //fetching the answer_id
-        $editAnswer->description = $data->answerfield;                         //editing the answer
-        $editAnswer->save();                                                   //saving the updated answer
+        $editAnswer              = $this->answerRepository->edit($data->answer_id); //fetching the answer_id
+        $editAnswer->description = $data->answerfield;                              //editing the answer
+        $editAnswer->save();                                                        //saving the updated answer
 
     }
 }
