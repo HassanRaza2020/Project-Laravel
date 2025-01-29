@@ -29,7 +29,7 @@ class ForgetPasswordService
         $user = $this->forgetPasswordRepository->findUserByEmail($email);
         $name = $user->username;
         // Create a signed link valid for 2 minutes
-        $link = URL::temporarySignedRoute('module.redirected', Carbon::now()->addMinutes(2), ['email' => $email]);
+        $link = URL::temporarySignedRoute('forget-password.redirect', Carbon::now()->addMinutes(2), ['email' => $email]);
         // Dispatch the forget password email
         ForgetMail::dispatch($name, $link, $email);
 

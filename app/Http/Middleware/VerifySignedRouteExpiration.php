@@ -21,8 +21,8 @@ public function handle(Request $request, Closure $next): Response
             return $next($request);
         }
 
-        // Check only the 'module.redirected' route
-        if ($route->getName() !== 'module.redirected') {
+        // Check only the 'forget-password.redirect' route
+        if ($route->getName() !== 'forget-password.redirect') {
             return $next($request);
         }
 

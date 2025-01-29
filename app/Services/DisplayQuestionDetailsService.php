@@ -16,8 +16,9 @@ class DisplayQuestionDetailsService
     public function displayQuestionDetails($questionId)
     {
 
-        $key = decrypt($questionId->key);                                          //decrypting the question_id
-        return $this->displayQuestionDetailsService->displayQuestionDetails($key); //displaying the question details
+        $questionKey = $this->displayQuestionDetailsService->displayQuestionDetails(decrypt($questionId->key)); //displaying the question details   
+        $answerKey = $this->displayAnswerList($questionId->key);                                       //decrypting the question_id
+        return   $answerKey;
 
     }
 

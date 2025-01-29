@@ -53,14 +53,10 @@
         <button type="submit" id="submit" class="btn btn-outline-danger" name="login">Submit</button>
     </form>
        
-    <form action="{{ route('resend-otp',  ['userarray' => base64_encode(json_encode($userinfo))]) }}) }}" method="POST">
+    <form action="{{ route('resend-otp') }}" method="POST">
      @csrf
-
-             
-    @foreach ($userinfo as $key => $value)
-        <input type="hidden" name="userinfo[{{ $key }}]" value="{{ $value }}">
-    @endforeach
    
+       <input type="hidden" name="userinfo" value="{{json_encode($userinfo, true)}}" />
     
         <button type="submit" id="Resent" style="visibility:hidden;" onclick="OtpResent()" class="btn btn-outline-danger" name="Resent">Resent</button>
 

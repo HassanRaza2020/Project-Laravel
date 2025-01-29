@@ -8,7 +8,6 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\LatestQuestionsController;
-use App\Repositories\ForgetPasswordRepository;
 
 
 Route::group(['middleware' => 'guest'], function() //Using the guest middleware for unauthenticated users
@@ -21,10 +20,11 @@ Route::group(['middleware' => 'guest'], function() //Using the guest middleware 
     Route::post('/post-signup',[AuthController::class, 'signupForm'])->name('signup');  //
     Route::get('/view-otp-verification',[VerificationController::class, 'viewOtpVerification'])->name('view-verification-otp')->middleware('prevent-back-button');
     Route::post('/verification-otp', [VerificationController::class, 'verificationOtp'])->name('verification-otp'); //sending the otp request for email verification
-    Route::post('/resent-otp/{userarray}', [VerificationController::class, 'resentOtp'])->name('resend-otp');// posting the resent request when the opt gets expire after 2 mins
+    Route::post('/resent-otp', [VerificationController::class, 'resentOtp'])->name('resend-otp');// posting the resent request when the opt gets expire after 2 mins
     Route::get('/latest-question', [LatestQuestionsController::class, 'filterQuestion'])->name('latest-question');  //fitering the question which has been posted recently within one day
-    Route::get('/forget-password', function(){return  view('auth.forget-password');})->name('forget-password');  //displaying the forget password page
-    Route::get('/redirect-to-mail', [ForgetPasswordController::class, 'forgetPassword'])->name('module.redirect'); // sending the email for reseting the password
+    Route::get('/forget-password', function(){return  view('auth.forget-password'); })->name('forget-password');  //displaying the forget password page
+    Route::get('/password-reset', [ForgetPasswordController::class, 'forgetPassword'])->name('forget-password.redirect'); // sending the email for reseting the password
+    Route::get('/redirect-to-password/{email}', [ForgetPasswordController::class, 'redirectToPassword'])->name('forget-link.redirected')->middleware('signed');
     Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword'])->name('confirm-password');// displayong the confirm password page
     
            
@@ -45,6 +45,4 @@ Route::group(['middleware' => 'auth'], function() {
    
    });
 
-   Route::get('/redirect-to-password/{email}', [ForgetPasswordController::class, 'redirectToPassword'])
-   ->name('module.redirected')
-   ->middleware(['guest', 'signed']);
+   

@@ -15,8 +15,6 @@ class ForgetPasswordController extends Controller
         $this->forgetPasswordService = $forgetPasswordService; 
     }
 
-
-
     // Handle forget password request
     public function forgetPassword(ForgetPasswordRequest $request)
     { 

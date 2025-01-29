@@ -25,7 +25,7 @@ class VerificationService
 
     public function resentOtp($userarray)
     {
-        $userInfo = json_decode(base64_decode($userarray), true);                    // Decode the array
+        $userInfo = json_decode(($userarray->userinfo), true);                    // Decode the array
         $otp      = rand(100000, 999999);                                            //otp generator using rand function
         $duration = 20;                                                              // otp durcation timer
         $endTime  = time() + $duration;                                              // Calculate OTP expiration time
@@ -36,20 +36,20 @@ class VerificationService
     }
 
     public function searchOtp($data)
+    
     {
-
+        $otp = $data->otpverification;
         $searchOtp = $this->verificationRepo->searchOtp($data); //searching the otp through the id
-        if ($searchOtp)                                         //if query satisfies, it wll return the results
-        {
-            return $searchOtp;
-        } else if ($searchOtp === null) //if query is null, it wll return the results
-        {
-            return "invalid";
-        } else if (Carbon::now()->greaterThan($searchOtp->expires_at)) //if otp gets expired
-        {
-            return "expired";
-
-        }
+        if ($searchOtp===$otp)                                         //if otp matches here 
+       {
+            $this->userRepository->create($data);
+            session()->flash($data->userinfo['username']); //entering the username in the session
+            return to_route('login')->with('status', 'Your Credentials Successfully Created, Please Login'); //redirecting to login when credentials are being set
+       }
+         else if ($searchOtp === null) //if query is null, it wll return the results
+         return redirect()->back()->with(['errors' => 'otp is invalid here', 'userinfo' => $data->userinfo]);
+         else if (Carbon::now()->greaterThan($searchOtp->expires_at)) //if otp gets expired
+         return redirect()->back()->with(['errors' => 'otp is expired here', 'userinfo' => $data->userinfo]);  
     }
 
     public function OtpVerification($data)
