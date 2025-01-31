@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Question')</title>
-    <link rel="icon" href="{{ asset('question.png') }}" type="image/png">
-
-
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @extends('layouts.app')
-
-
-</head>
-
+@extends('layouts.app')
+@section('title', 'Sign Up')
 <body>
     @include('header.navbar')
 
@@ -32,22 +17,12 @@
         </ul>
     </div>
     @endif
-
-
-
     <div class="information">
         <h4 style="font-family: cursive">{{$question->title}}</h4>
 
         <p style="font-family: cursive">{{$question->description}}</p>
-       
-
-
-
     </div>
     <p hidden>{{ $id = auth()->id() }} </p>
-
-  
-
 
     <div class="container">
 
@@ -83,4 +58,3 @@
 
 </body>
 
-</html>

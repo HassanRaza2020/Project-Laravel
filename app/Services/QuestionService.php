@@ -8,7 +8,7 @@ class QuestionService
 
     protected $questionRepository;
 
-    public function __construct(QuestionRepository $questionRepository) //injecting the constructor of Repo class
+    public function __construct(QuestionRepository $questionRepository) 
     {
         $this->questionRepository = $questionRepository;
     }
@@ -25,7 +25,8 @@ class QuestionService
 
     public function delete($id)
     {
-        return $this->questionRepository->deleteQuestion($id); //calling the deleteQuestion method
+        $this->questionRepository->deleteQuestion($id); //calling the deleteQuestion method
+        return redirect()->back();
     }
 
     public function find($id)
@@ -39,16 +40,17 @@ class QuestionService
 
     }
 
-    public function update($id, $data)
+    public function edit($data)
     {
-
-        return $this->questionRepository->updateQuestion($id, $data); //calling the updateQuestion
+        $selectedField = $data->only(['title', 'description']);
+        $this->questionRepository->updateQuestion($data->question_id,  $selectedField); //calling the updateQuestion
+        return redirect()->back()->with('status', 'Question updated successfully');
 
     }
 
     public function categoriesList()
     {
-        return $this->questionRepository->categoriesList();
+        return $this->questionRepository->categoriesList();   //retrieving the values of categories
     }
 
 }

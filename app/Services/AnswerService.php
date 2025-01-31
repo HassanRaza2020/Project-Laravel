@@ -24,7 +24,8 @@ class AnswerService
     // Create a new answer
     public function create($data)
     {
-        return $this->answerRepository->createAnswer($data);
+        $this->answerRepository->createAnswer($data);
+        return redirect()->back()->with('success', 'Your Answer has been Submitted!');
     }
 
     // Delete an answer by ID
@@ -37,17 +38,13 @@ class AnswerService
     public function find($request)
     {
         try {
-            $key          = urldecode($request->key);
+            $key = urldecode($request->key);
             $keyDecrypted = Crypt::decrypt($key); // Decrypt the key
-
-            // Fetch the answer by ID
-            $query = $this->answerRepository->findAnswerById($keyDecrypted);
-
-            // Return the view with the answer data
+                                                               // Fetch the answer by ID
+            $query = $this->answerRepository->findAnswerById($keyDecrypted); // Return the view with the answer data
             return view('questions.main-page', compact('query'));
 
-        } catch (DecryptException $e) {
-            // Redirect to the error page if decryption fails
+        } catch (DecryptException $e) {             // Redirect to the error page if decryption fails
             return redirect()->route('error.page')->with('error', 'Invalid or tampered key!');
         }
     }
@@ -55,9 +52,9 @@ class AnswerService
     // edit an answer by ID
     public function edit($data)
     {
-        $editAnswer              = $this->answerRepository->edit($data->answer_id); //fetching the answer_id
+        $editAnswer = $this->answerRepository->edit($data->answer_id);                 //fetching the answer_id
         $editAnswer->description = $data->answerfield;                              //editing the answer
         $editAnswer->save();                                                        //saving the updated answer
-
+        return redirect()->back()->with('status', 'Answer updated successfully');  
     }
 }

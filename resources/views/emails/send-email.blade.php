@@ -1,18 +1,6 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verification</title>
-    <link rel="icon" href="{{ asset('question.png') }}" type="image/png">
+@extends('layouts.app')
 
 
-    @extends('layouts.app')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-
-</head>
 <body>
 
 
@@ -31,4 +19,3 @@
 
 
 </body>
-</html>

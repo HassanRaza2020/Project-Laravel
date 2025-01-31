@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+@include('header.navbar')
 
-<head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('question.png') }}" type="image/png">
+@extends('layouts.app')
+@section('Questions', 'Sign Up')
 
-    <title>@yield('title', 'Questions')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="{{ asset('js/app.js') }}"></script>
 
-</head>
 
-<body>
-    @extends('layouts.app')
-
-    @include('header.navbar')
+    
 
     @section('content')
 
@@ -198,5 +188,3 @@
         </script>
 
 </body>
-
-</html>

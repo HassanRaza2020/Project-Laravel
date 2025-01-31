@@ -33,9 +33,7 @@ class AuthController extends Controller
 
     public function loginForm(LoginRequest $request)
     {
-         
-       return $this->authenticationSerivce->LoginRequest($request);  
-       
+       return $this->authenticationSerivce->LoginRequest($request);    
     }
 
 }

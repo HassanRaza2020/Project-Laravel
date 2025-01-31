@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Laravel Project</title>
-    <link rel="icon" href="{{ asset('question.png') }}" type="image/png">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" 
-        integrity="sha384-UqK1C8MLj5lI9T5Re1VGhe93JgC/KjHg5OTmv7XtZljD0hJpHtv3jv9UjR6g/UuK" 
-        crossorigin="anonymous"></script>
-    
-    @extends('layouts.app')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-</head>
-<body>
-
-
+@extends('layouts.app')
+@section('title', 'Sign Up')
 @include('header.navbar')
 
 
@@ -82,54 +62,6 @@
 
 
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+@section('page', 'signup')
 
 
-    console.log("success");
-    console.log(typeof $); // Should print 'function'
-
-    $(document).ready(function () {
-        $('#signupForm').on('submit', function (e) {
-            e.preventDefault(); // Prevent default form submission
-             alert("hewduh");
-            // Gather form data
-            let formData = {
-    _token: 'ldIykAZRP0m4Ca9MKHGAXO7e46mVmKmj2MYwW0Sh', // Replace with the token you debugged
-    username: $('#username').val(),
-    email: $('#email').val(),
-    password: $('#password').val(),
-    password_confirmation: $('#password_confirmation').val(),
-    address: $('#address').val(),};
-    console.log('Form Data:', formData);
-
-
-
-    $.ajax({
-    url: "http://127.0.0.1:8000/post-signup",
-    type: "POST", // Ensure this is POST
-    data: {
-        _token: $('meta[name="csrf-token"]').attr('content'), // Add CSRF token
-        username: $('#username').val(),
-        email: $('#email').val(),
-        password: $('#password').val(),
-        password_confirmation: $('#password_confirmation').val(),
-        address: $('#address').val(),
-    },
-    success: function (response) {
-        console.log('Response:', response);
-    },
-    error: function (xhr) {
-        console.error('Error:', xhr);
-    }});
-     
-        });
-    });
-</script>
-
-    
-    
-
-
-</body>
-</html>

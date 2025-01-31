@@ -5,7 +5,6 @@ use App\Repositories\DisplayQuestionDetailsRepository;
 
 class DisplayQuestionDetailsService
 {
-
     protected $displayQuestionDetailsService;
 
     public function __construct(DisplayQuestionDetailsRepository $displayQuestionDetailsService)
@@ -15,18 +14,12 @@ class DisplayQuestionDetailsService
 
     public function displayQuestionDetails($questionId)
     {
-
-        $questionKey = $this->displayQuestionDetailsService->displayQuestionDetails(decrypt($questionId->key)); //displaying the question details   
-        $answerKey = $this->displayAnswerList($questionId->key);                                       //decrypting the question_id
-        return   $answerKey;
-
+        $this->displayAnswerList($questionId);      
+        return $this->displayQuestionDetailsService->displayQuestionDetails($questionId); //displaying the question details 
     }
 
     public function displayAnswerList($questionId)
-    {
-        $key = decrypt($questionId->key);                                     //decrypting the question_id
-        return $this->displayQuestionDetailsService->displayAnswerList($key); //method for answers display
-
+    {                                                                                 
+        return $this->displayQuestionDetailsService->displayAnswerList($questionId); //method for answers display
     }
-
 }

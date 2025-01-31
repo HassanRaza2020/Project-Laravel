@@ -21,9 +21,8 @@ class VerificationController extends Controller
 
     public function viewOtpVerification(Request $request)
     {
-        [$userinfo, $endTime] = $this->verificationService->OtpVerification($request); //calling the otp function
-        
-        return view('auth.verification', compact('userinfo', 'endTime')); // Pass data to the view
+        $result = $this->verificationService->OtpVerification($request); //calling the otp function  
+        return view('auth.verification', ["endTime"=>$result['endTime'], "userinfo"=>$result['userinfo']]); // Pass data to the view
     }
 
     public function verificationOtp(OtpRequest $request)

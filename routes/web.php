@@ -24,11 +24,12 @@ Route::group(['middleware' => 'guest'], function() //Using the guest middleware 
     Route::get('/latest-question', [LatestQuestionsController::class, 'filterQuestion'])->name('latest-question');  //fitering the question which has been posted recently within one day
     Route::get('/forget-password', function(){return  view('auth.forget-password'); })->name('forget-password');  //displaying the forget password page
     Route::get('/password-reset', [ForgetPasswordController::class, 'forgetPassword'])->name('forget-password.redirect'); // sending the email for reseting the password
-    Route::get('/redirect-to-password/{email}', [ForgetPasswordController::class, 'redirectToPassword'])->name('forget-link.redirected')->middleware('signed');
     Route::put('/password-reset', [ForgetPasswordController::class, 'confirmPassword'])->name('confirm-password');// displayong the confirm password page
+    Route::get('/redirect-to-password/{email}', [ForgetPasswordController::class, 'redirectToResetPassword'])->name('forgetpassword-link.redirected')->middleware('signed');
     
            
 });
+
 
 Route::group(['middleware' => 'auth'], function() { 
     Route::get('/questions', [QuestionController::class, 'show'])->name('questions'); //display the questions

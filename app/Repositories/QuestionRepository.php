@@ -22,7 +22,7 @@ class QuestionRepository
 
     public function categoriesList()
     {
-        return $this->categoriesList = Content::select('content_id', 'content_name')->get();
+        return $this->categoriesList::select('content_id', 'content_name')->get();
 
     }
 
@@ -45,10 +45,8 @@ class QuestionRepository
     }
 
     public function searchQuestion($query)
-    {
-
-        return $this->questionRepo::where('title', 'LIKE', "%{query}%")->get(); //creating searchQuestion function
-
+    { 
+        return $this->questionRepo::where('title', 'LIKE', "%{$query}%")->get(); //creating searchQuestion function
     }
 
     public function deleteQuestion($id)

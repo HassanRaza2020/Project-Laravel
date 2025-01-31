@@ -16,24 +16,28 @@ class ForgetPasswordService
         $this->forgetPasswordRepository = $forgetPasswordRepository;
     }
 
-    public function create($email)
-    {
-        return $this->forgetPasswordRepository->create($email); // Store forget password record
-
-    }
-
+  
+ 
     // Handle forget password process
     public function processForgetPassword($email)
     {
 
         $user = $this->forgetPasswordRepository->findUserByEmail($email);
-        $name = $user->username;
-        // Create a signed link valid for 2 minutes
-        $link = URL::temporarySignedRoute('forget-password.redirect', Carbon::now()->addMinutes(2), ['email' => $email]);
-        // Dispatch the forget password email
-        ForgetMail::dispatch($name, $link, $email);
-
+        $name = $user->username;// Create a signed link valid for 2 minutes
+        
+        try
+        {
+        $link = URL::temporarySignedRoute('forgetpassword-link.redirected', Carbon::now()->addMinutes(2), ['email' => $email]); //creating a link through temporary sign route
+        ForgetMail::dispatch($name, $link, $email);   // Dispatch the forget password email
+        $this->forgetPasswordRepository->create($email); // Store forget password record
+                                     // Dispatch the forget password email
         return ['success' => true, 'message' => 'Email has been sent successfully'];
+        }
+
+        catch(\Exception $e){
+            return response()->json(['message' => 'Email sending failed'], 500);
+        }
+
     }
 
     // Handle password confirmation and update
