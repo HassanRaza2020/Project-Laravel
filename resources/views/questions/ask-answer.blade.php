@@ -1,7 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Sign Up')
-<body>
-    @include('header.navbar')
+@section('title', 'Ask Answer')
+@include('header.navbar')
 
     @section('content')
 

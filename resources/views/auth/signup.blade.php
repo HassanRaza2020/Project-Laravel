@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Sign Up')
 @include('header.navbar')
+@vite('resources/js/authentication/signup.js')
+
 
 
 @section('content')
@@ -58,10 +60,7 @@
     </form>
     
 </div>
-
-
-
 @endsection
-@section('page', 'signup')
+
 
 

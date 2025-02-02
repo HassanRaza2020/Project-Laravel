@@ -130,17 +130,18 @@
             @endif
 
 
-            <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p>
-        </div>
+            <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p></div>
+            <div id="count" data-end-time="{{ $count }}"></div>
+    
 
-
+          
         @endforeach
 
 
         @endsection
 
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
         let questionIdInput = document.getElementById('question-id-input');
         let modalButtonsArray = [];
         let modal = document.getElementById('modal');
@@ -187,4 +188,3 @@
             
         </script>
 
-</body>

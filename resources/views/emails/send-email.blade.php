@@ -1,7 +1,7 @@
+
 @extends('layouts.app')
 
 
-<body>
 
 
 @section('content')
@@ -18,4 +18,3 @@
 @endsection
 
 
-</body>
