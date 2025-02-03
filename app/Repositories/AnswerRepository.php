@@ -41,7 +41,8 @@ class AnswerRepository
 
     public function edit($data)
     {
-        return $this->answerRepo::find($data->answer_id); //creating edit answer function
+
+        return $this->answerRepo::find($data); //creating edit answer function
 
     }
 

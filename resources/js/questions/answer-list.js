@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let closeModalButton = document.getElementById('close-btn');
     let closeModalButton2 = document.getElementById('close-btn2');
     let countdownElement = document.getElementById("count");
-    let count = countdownElement.dataset.count;
+    let count = countdownElement.dataset.endTime;
 
 
 

@@ -1,23 +1,28 @@
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     let questionIdInput = document.getElementById('question-id-input');
     let modalButtonsArray = [];
     let modal = document.getElementById('modal');
     let closeModalButton = document.getElementById('close-btn');
     let closeModalButton2 = document.getElementById('close-btn2');
     let countdownElement = document.getElementById("count");
-    let count = countdownElement.dataset.count;
+    let count = countdownElement.dataset.endTime;
 
+
+    console.log(count);
     // Loop through the buttons that trigger the modal
     for (let i = 1; i <= count; i++) {
         const openModalButton = document.getElementById('open-modal' + i);
+       
+
         
         if (openModalButton) {
             modalButtonsArray.push(openModalButton); // Store the button in the array
         }
     }
 
+
+
     // Log the modal buttons array for debugging
-    console.log(modalButtonsArray);
 
     // Event listeners for opening the modal
     modalButtonsArray.forEach(button => {

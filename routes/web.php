@@ -39,8 +39,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/submit-form', [QuestionController::class, 'storeQuestion'])->name('submit'); // storing the questions
     Route::post('/answer-submit', [AnswerController::class, 'answerSubmit'])->name('answer-submit');//storing the answers
     Route::get('/show-answers', [AnswerController::class, 'showPage'])->name('show-answers'); //displaying the answers 
-    Route::delete('/delete-answer/{key}/{questionKey}', [AnswerController::class,'deleteAnswer'])->name('delete-answer'); //deleting the answers
-    Route::delete('/delete-question/{key}', [QuestionController::class, 'deleteQuestion'])->name('delete-question'); // deleting the questions
+    Route::delete('/delete-answer/{answerKey}/{questionKey}', [AnswerController::class,'deleteAnswer'])->name('delete-answer'); //deleting the answers
+    Route::delete('/delete-question/{questionKey}', [QuestionController::class, 'deleteQuestion'])->name('delete-question'); // deleting the questions
     Route::put('/edit-question', [QuestionController::class, 'editQuestion'])->name('edit-question'); //editing the questions  
     Route::put('/edit-answer', [AnswerController::class, 'editAnswer'])->name('edit-answer'); //editing the answers
    

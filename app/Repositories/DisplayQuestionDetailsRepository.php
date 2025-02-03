@@ -21,7 +21,7 @@ class DisplayQuestionDetailsRepository
 
     public function displayAnswerList($questionId)
     {
-        return $this->answerRepo::where('question_id', $questionId)->select('Description', 'Username', 'updated_at')->get(); //query for answers details display
+        return $this->answerRepo::where('question_id', $questionId)->select('user_id','answer_id','Description', 'Username', 'updated_at')->get(); //query for answers details display
     }
 
 }

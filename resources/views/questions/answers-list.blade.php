@@ -1,7 +1,6 @@
-
 @extends('layouts.app')
 @section('title', 'Answer List')
-@vite('resources/js/authentication/answer-list.js')
+@vite('resources/js/questions/answer-list.js')
 
 
 
@@ -10,16 +9,7 @@ $count = 0
 @endphp
 
 
-
-@if(session('status'))
-<div class="alert alert-success">
-    {{ session('status') }}
-</div>
-@endif
-
-
-
-<p hidden> {{$USER_ID = auth()->id()}}</p>
+<p hidden> {{$userId = auth()->id()}}</p>
 
 <h3 class="answers">Answers</h3>
 @if ($query->isEmpty())
@@ -39,11 +29,10 @@ $count = 0
         {{ $answers->Description }}
 
 
-
-        @if ($USER_ID === $answers->user_id)
+        @if ($userId === $answers->user_id)
 
         <form
-            action="{{route('delete-answer',  ['key' => $answers->answer_id, 'questionKey' => $question->question_id ]) }}"
+            action="{{route('delete-answer',  ['answerKey' => $answers->answer_id, 'questionKey' => $question->question_id ]) }}"
             method="post">
             @csrf
             @method('DELETE')
@@ -113,7 +102,6 @@ $count = 0
         <p>
 
     </div>
-    <div id="count" data-end-time="{{ $count }}"></div>
 
 </div>
 
@@ -121,5 +109,7 @@ $count = 0
 @endforeach
 
 @endif
+<div id="count" data-end-time="{{ $count }}"></div>
+
 
 @endsection

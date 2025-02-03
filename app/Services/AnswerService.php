@@ -35,17 +35,17 @@ class AnswerService
     }
 
     // Find an answer by ID and handle decryption
-    public function find($request)
+    public function find($data)
     {
         try {
-            $key = urldecode($request->key);
+            $key = urldecode($data);
             $keyDecrypted = Crypt::decrypt($key); // Decrypt the key
                                                                // Fetch the answer by ID
             $query = $this->answerRepository->findAnswerById($keyDecrypted); // Return the view with the answer data
             return view('questions.main-page', compact('query'));
 
         } catch (DecryptException $e) {             // Redirect to the error page if decryption fails
-            return redirect()->route('error.page')->with('error', 'Invalid or tampered key!');
+            return redirect()->back()->with('error', 'Invalid or tampered key!');
         }
     }
 
