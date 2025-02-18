@@ -17,7 +17,7 @@ Route::group(['middleware' => 'guest'], function() //Using the guest middleware 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); //displaying the login page
     Route::post('/login', [AuthController::class, 'loginForm'])->name('login-here'); //posting the login request
     Route::get('/', [AuthController::class, 'showSignUpForm'])->name('view-signup'); // displaying the signup page
-    Route::post('/post-signup',[AuthController::class, 'signupForm'])->name('signup');  //
+    //Route::post('/post-signup',[AuthController::class, 'signupForm'])->name('signup');  //
     Route::get('/view-otp-verification',[VerificationController::class, 'viewOtpVerification'])->name('view-verification-otp')->middleware('prevent-back-button');
     Route::post('/verification-otp', [VerificationController::class, 'verificationOtp'])->name('verification-otp'); //sending the otp request for email verification
     Route::post('/resent-otp', [VerificationController::class, 'resentOtp'])->name('resend-otp');// posting the resent request when the opt gets expire after 2 mins

@@ -2,14 +2,7 @@
 @section('Questions', 'Questions')
 @extends('layouts.app')
 @vite('resources/js/questions/question.js')
-
-
-
-
-
 @section('content')
-
-
 
 @if(session('status'))
 <div class="alert alert-success">
@@ -55,7 +48,7 @@ $count=0
 
 
         @if ($id === $question->user_id)
-        <form action="{{ route('delete-question', ['key' => $question->question_id]) }}" method="post">
+        <form action="{{ route('delete-question', ['questionKey' => $question->question_id]) }}" method="post">
             @csrf
             @method('DELETE')
 
@@ -75,7 +68,7 @@ $count=0
 
 
         <button type="submit" id="open-modal{{++$count}}" class="delete-button" data-value={{$question->question_id}}>
-           
+
 
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                 viewBox="0 0 16 16">
@@ -86,9 +79,9 @@ $count=0
 
         </button>
 
-      
 
-       
+
+
 
         <form action="{{ route('edit-question')}}" method="post">
             @csrf
@@ -129,19 +122,19 @@ $count=0
             </div>
         </form>
 
-        
+
 
         @endif
 
 
         <p class="timestamp">{{ $question->created_at->format('g:i a') }}</p>
     </div>
-   
+
 
     @endforeach
 
     <div id="count" data-end-time="{{$count}}"></div>
- 
+
 
 
     @endsection

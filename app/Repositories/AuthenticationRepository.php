@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Models\Verifications;
 use Carbon\Carbon;
 
+
+
 class AuthenticationRepository
 {
 
@@ -18,7 +20,7 @@ class AuthenticationRepository
 
     public function create($data, $otp) //to create verification
     {
-
+        
         $create = $this->verificationRepo::create([
             'email'      => $data['email'],                                  // inserting the email
             'otp'        => $otp,                                            // inserting the otp

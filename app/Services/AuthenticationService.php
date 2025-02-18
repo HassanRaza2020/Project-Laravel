@@ -21,9 +21,10 @@ class AuthenticationService
 
     public function create($data)
     {
+       
 
         $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT); // Ensure 6-digit OTP
-
+        
         try {
 
             $userData = [
@@ -32,6 +33,8 @@ class AuthenticationService
                 'password' => Hash::make($data->password), // Securely hash the password
                 'address'  => $data->address,
             ];
+
+        
 
             // Save the user and OTP
             $this->authenticationRepo->create($userData, $otp);
@@ -47,8 +50,13 @@ class AuthenticationService
             return redirect()->back()->with('error', 'An error occurred. Please try again.');
         }
 
-        return $userData; // Return non-sensitive data
-    }
+        return response()->json([
+            'message' => 'User registered successfully!',  // ✅ This is response.message
+            'user' => $userData
+        ], 201);
+
+
+      }
 
     public function LoginRequest($data)
     {

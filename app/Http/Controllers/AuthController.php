@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignupRequest;
+use Illuminate\Http\Request;
 use App\Services\AuthenticationService;
 
 class AuthController extends Controller
@@ -25,10 +25,11 @@ class AuthController extends Controller
         return view('auth.login'); // resources/views/auth/login.blade.php
     }
 
-    public function signupForm(SignupRequest $request)
+    public function signupForm(Request $request)
     {
+        dd($request->all());
         $userinfo = $this->authenticationSerivce->create($request);   //sending the create verification request
-        return redirect()->route('view-verification-otp', ["userinfo"=>$userinfo]); //redirect the page to specified route with userinfo array
+        return response()->json(["userinfo"=>$userinfo]); //redirect the page to specified route with userinfo array
     }
 
     public function loginForm(LoginRequest $request)

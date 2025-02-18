@@ -1,8 +1,4 @@
-@extends('layouts.app')
-@section('title', 'Answer List')
-@vite('resources/js/questions/answer-list.js')
-
-
+@section('content')
 
 @php
 $count = 0

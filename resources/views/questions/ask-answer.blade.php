@@ -1,6 +1,3 @@
-@extends('layouts.app')
-@section('title', 'Ask Answer')
-@include('header.navbar')
 
     @section('content')
 

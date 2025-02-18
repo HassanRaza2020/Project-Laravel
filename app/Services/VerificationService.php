@@ -54,6 +54,7 @@ class VerificationService
 
     public function OtpVerification($data)
     {
+        dd($data->all());
         $duration = 20;                                                // Duration in seconds
         $endTime  = time() + $duration;                                // Calculate OTP expiration time
         return ["endTime" => $endTime, "userinfo" => $data->userinfo]; 
