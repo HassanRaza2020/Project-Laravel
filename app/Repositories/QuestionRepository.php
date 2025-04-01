@@ -4,6 +4,9 @@ namespace App\Repositories;
 use App\Models\Content;
 use App\Models\Question;
 
+
+
+
 class QuestionRepository
 {
     protected $questionRepo, $categoriesList;
@@ -28,13 +31,14 @@ class QuestionRepository
 
     public function createQuestion($data)
     {
+        
         // Create a new question record
         Question::create([
-            'user_id'     => auth()->id(), // Assuming the user is logged in
-            'username'    => auth()->user()->username,
-            'title'       => $data->title,
-            'description' => $data->description,
-            'content'     => $data->category,
+            'user_id'     => $data->data['user_id'], // Assuming the user is logged in
+            'username'    => $data->data['username'],
+            'title'       => $data->data['title'],
+            'description' => $data->data['description'],
+            'category_name' => $data->data['category_name'],
         ]);
 
     }
@@ -45,7 +49,7 @@ class QuestionRepository
     }
 
     public function searchQuestion($query)
-    { 
+    {   
         return $this->questionRepo::where('title', 'LIKE', "%{$query}%")->get(); //creating searchQuestion function
     }
 
@@ -58,9 +62,19 @@ class QuestionRepository
 
     public function updateQuestion($id, $data)
     {
+     //    Log::info("Question Repo:",$id);
         $question = $this->findQuestionById($id); //creating updateQuestion function
         $question->update($data);
         return $question;
+
+    }
+
+    public function dashBoardCount(){
+        $totalCount = Question::selectRaw('category_name, COUNT(*) as total')
+        ->groupBy('category_name')
+        ->get();
+
+        return response()->json($totalCount);
 
     }
 
